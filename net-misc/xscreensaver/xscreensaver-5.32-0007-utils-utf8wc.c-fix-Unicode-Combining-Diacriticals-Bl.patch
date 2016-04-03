@@ -1,0 +1,38 @@
+From fc06b830187f40f3af28bc0fbf6217c34eb38e25 Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Tue, 10 Feb 2015 18:19:40 +0900
+Subject: [PATCH 7/7] utils/utf8wc.c: fix Unicode Combining Diacriticals Block
+ range
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+cppcheck warns:
+[utils/utf8wc.c:347]: (warning) Logical conjunction always evaluates to false: uc >= 8960 && uc <= 879.
+Actually the range check of this line is meaningless.
+
+http://unicode.org/charts/PDF/U0300.pdf says:
+Combining Diacritical Mark
+Range: 0300–036F
+
+So I guess "2" is accidentally typed.
+---
+ utils/utf8wc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/utils/utf8wc.c b/utils/utf8wc.c
+index ba6806f..d31f049 100644
+--- a/utils/utf8wc.c
++++ b/utils/utf8wc.c
+@@ -344,7 +344,7 @@ utf8_to_latin1 (const char *string, Bool ascii_p)
+ 
+       if (uc == '\240')	/* &nbsp; */
+         uc = ' ';
+-      else if (uc >= 0x2300 && uc <= 0x36F)
++      else if (uc >= 0x300 && uc <= 0x36F)
+         uc = 0;		/* Discard "Unicode Combining Diacriticals Block" */
+       else if (uc > 0xFF)
+         switch (uc) {
+-- 
+2.1.0
+

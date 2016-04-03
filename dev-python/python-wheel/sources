@@ -1,0 +1,6 @@
+4229bf84d4b85ee86f61065153cc3c22  pydist-schema.json
+33c5d4b640bd887d0c9db945b73c32ca  test-1.0-py2.py3-none-win32.whl
+16bb8eb3bdd3d93813295463bb949705  wheel-0.22.0.tar.gz
+be8a652242b8bd62ac2b3c37a6c12582  wheel-0.22-add-test-files-to-manifest.path
+013a3f526448092794c16b0014386f1d  wheel-0.22-fix-tests-broken-by-keyring-fix.patch
+c6dd76c763ae252169a313a92dcb595b  wheel-0.22-legacy-keyring-compatibility.patch

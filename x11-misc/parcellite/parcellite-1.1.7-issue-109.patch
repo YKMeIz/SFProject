@@ -1,0 +1,58 @@
+Index: src/keybinder.c
+===================================================================
+--- src/keybinder.c	(Revision 491)
++++ src/keybinder.c	(Revision 492)
+@@ -275,26 +275,26 @@
+ 	}
+ }
+ 
+-void
+-keybinder_unbind (const char           *keystring, 
+-			 BindkeyHandler  handler)
++void keybinder_unbind (const char *keystring, BindkeyHandler  handler)
+ {
+ 	GSList *iter;
+-
++  /*g_fprintf(stderr,"%s: key='%s'\n",__func__,keystring); */
++	if(NULL == keystring)		return;
+ 	for (iter = bindings; iter != NULL; iter = iter->next) {
+ 		Binding *binding = (Binding *) iter->data;
+-
+-		if (strcmp (keystring, binding->keystring) != 0 ||
+-		    handler != binding->handler) 
+-			continue;
+-
+-		do_ungrab_key (binding);
+-
+-		bindings = g_slist_remove (bindings, binding);
+-
+-		g_free (binding->keystring);
+-		g_free (binding);
+-		break;
++		if(NULL !=binding){
++			if (strcmp (keystring, binding->keystring) != 0 ||
++			    handler != binding->handler) 
++				continue;
++	
++			do_ungrab_key (binding);
++	
++			bindings = g_slist_remove (bindings, binding);
++	
++			g_free (binding->keystring);
++			g_free (binding);
++			break;	
++		}
+ 	}
+ }
+ 
+Index: ChangeLog
+===================================================================
+--- ChangeLog	(Revision 491)
++++ ChangeLog	(Revision 492)
+@@ -1,5 +1,6 @@
+ V1.1.8 Wednsday, October 16, 2013
+  +Fixed bug 107, segfault when action key missing in parcelliterc.
++ +Fixed bug 109, segfault when action key missing and history key changed.
+  
+ V1.1.7 Tuesday, October 15, 2013
+  +Added remote i386 build and upload to sourceforge.

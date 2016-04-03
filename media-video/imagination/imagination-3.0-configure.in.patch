@@ -1,0 +1,11 @@
+--- trunk/configure.in	2011/03/06 20:23:41	598
++++ trunk/configure.in	2011/04/23 06:57:35	599
+@@ -19,6 +19,8 @@
+ AC_PROG_LN_S
+ AC_PROG_INTLTOOL
+ 
++AC_SEARCH_LIBS([sqrtf], [m], [], [AC_MSG_ERROR([Unable to find math library])])
++
+ # for plugins
+ AC_DISABLE_STATIC
+ AM_PROG_LIBTOOL

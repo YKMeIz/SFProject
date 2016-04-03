@@ -1,0 +1,43 @@
+From 8b0464926ecabef09c5a5d9d6a982aec84226f7a Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Mon, 9 Mar 2015 13:21:53 +0900
+Subject: [PATCH] pong: adjust paddle position again on new game
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1199713
+
+Each time start_game() is called, paddle length is
+shortened. Then when calling new_game() paddle length
+is reset (so enlarged), and we have to adjust paddle
+position again.
+---
+ hacks/pong.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/hacks/pong.c b/hacks/pong.c
+index 38e1d84..a688728 100644
+--- a/hacks/pong.c
++++ b/hacks/pong.c
+@@ -106,6 +106,9 @@ enum {
+ };
+ 
+ static void
++p_hit_top_bottom(Paddle *p);
++
++static void
+ hit_top_bottom(struct state *st)
+ {
+   if ( (st->ball.y <= PONG_TMARG) ||
+@@ -155,6 +158,10 @@ new_game(struct state *st)
+ 
+   st->l_paddle.h = PONG_H/4;
+   st->r_paddle.h = PONG_H/4;
++  /* Adjust paddle position again, because
++     paddle length is enlarged (reset) above. */
++  p_hit_top_bottom(&st->l_paddle);
++  p_hit_top_bottom(&st->r_paddle);
+ }
+ 
+ static void
+-- 
+2.1.0
+

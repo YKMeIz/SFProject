@@ -1,0 +1,12 @@
+diff -rupN liblo-0.27.old/doc/reference.doxygen.in liblo-0.27/doc/reference.doxygen.in
+--- liblo-0.27.old/doc/reference.doxygen.in	2013-03-11 13:56:14.000000000 -0400
++++ liblo-0.27/doc/reference.doxygen.in	2013-06-22 23:21:00.004031515 -0400
+@@ -943,7 +943,7 @@ HTML_COLORSTYLE_GAMMA  = 80
+ # page will contain the date and time when the page was generated. Setting
+ # this to NO can help when comparing the output of multiple runs.
+ 
+-HTML_TIMESTAMP         = YES
++HTML_TIMESTAMP         = NO
+ 
+ # If the HTML_DYNAMIC_SECTIONS tag is set to YES then the generated HTML
+ # documentation will contain sections that can be hidden and shown after the

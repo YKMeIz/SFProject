@@ -1,0 +1,7 @@
+f7381508dca4acb9924d1618fce9a6dc  make-4.0-err-reporting.patch
+e73bf0b9c83f873b87c9569c763d9b37  make-4.0-getcwd.patch
+b4154bec6a044dc5234e8b19699770ef  make-4.0-j8k.patch
+2805f61aeba3efabd30167c6993629d9  make-4.0-newlines.patch
+ab7407caa6e93e1f063846521842e974  make-4.0-noclock_gettime.patch
+571d470a7647b455e3af3f92d79f1c18  make-4.0.tar.bz2
+2a93a4a75de3f50ad5091a3856086e49  make-4.0-weird-shell.patch

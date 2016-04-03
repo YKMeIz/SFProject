@@ -1,0 +1,5 @@
+1756ed987a1017057022516efb04efb1  nvidia-settings-256.35-validate.patch
+47327d09908764402e7d8c253ac6b479  nvidia-settings-346.16-defaults.patch
+bb4e872e60d5d00acc2a2b57ef0757c0  nvidia-settings-346.16-libXNVCtrl-so.patch
+6c04f94a2b8c6b4ccd374cf23b50b011  nvidia-settings-352.79.tar.bz2
+6bf7068886becc862cba0b7adb71cc14  nvidia-settings-load.desktop

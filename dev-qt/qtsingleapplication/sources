@@ -1,0 +1,7 @@
+902795eb13ecedbdc112f00d7ec22949  qtsingleapplication-2.6_1-opensource.tar.gz
+aa288258d17e87b091ccd0d42297415f  qtsingleapplication-add-api.patch
+fb47bb8e60c2a3539003d6a97d786bd8  qtsingleapplication-build.diff
+ee0f39540035b37df2a46804fb3d4817  qtsingleapplication-dont-bundle-external-libs.patch
+d55ec63e4d0c929c80e9767c03aed4d4  qtsingleapplication-gcc47.patch
+3993231e655025ddf9bc15b46b3de7ed  qtsingleapplication.prf
+76923dc7ad0d2e1e7f576adcb6c1417a  qtsinglecoreapplication.prf

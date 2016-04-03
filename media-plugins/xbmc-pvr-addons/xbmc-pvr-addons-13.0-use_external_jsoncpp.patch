@@ -1,0 +1,40 @@
+diff -up ./addons/pvr.argustv/Makefile.am.orig ./addons/pvr.argustv/Makefile.am
+--- ./addons/pvr.argustv/Makefile.am.orig	2014-03-14 11:52:32.000000000 +0100
++++ ./addons/pvr.argustv/Makefile.am	2014-03-22 05:27:06.543000000 +0100
+@@ -10,11 +10,11 @@ ADDONNAME       = pvr.argustv
+ LIBNAME         = libargustv-addon
+ lib_LTLIBRARIES = libargustv-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/jsoncpp/libjsoncpp.la
++LIBS            = $(shell pkg-config --libs jsoncpp)
+ 
+ include ../Makefile.include.am
+ 
+-INCLUDES+=-Isrc -Isrc/lib/filesystem -I@abs_top_srcdir@/lib/jsoncpp/include
++INCLUDES+=-Isrc -Isrc/lib/filesystem $(shell pkg-config --cflags jsoncpp)
+ 
+ libargustv_addon_la_SOURCES = src/activerecording.cpp \
+                                    src/channel.cpp \
+diff -up ./configure.ac.orig ./configure.ac
+--- ./configure.ac.orig	2014-03-14 11:52:32.000000000 +0100
++++ ./configure.ac	2014-03-22 05:27:54.844000000 +0100
+@@ -265,7 +265,6 @@ AC_SUBST(DATADIR)
+ 
+ AC_CONFIG_FILES([Makefile \
+                  lib/Makefile \
+-                 lib/jsoncpp/Makefile \
+                  lib/libhts/Makefile \
+                  lib/tinyxml/Makefile \
+                  lib/cmyth/Makefile \
+diff -up ./lib/Makefile.am.orig ./lib/Makefile.am
+--- ./lib/Makefile.am.orig	2014-03-14 11:52:32.000000000 +0100
++++ ./lib/Makefile.am	2014-03-22 05:28:17.299000000 +0100
+@@ -2,7 +2,7 @@ if ADDON_MYTHTV
+           ADDITIONAL_SUBDIRS = cmyth
+ endif
+ 
+-SUBDIRS = libhts tinyxml tinyxml2 jsoncpp libdvblinkremote $(ADDITIONAL_SUBDIRS)
++SUBDIRS = libhts tinyxml tinyxml2 libdvblinkremote $(ADDITIONAL_SUBDIRS)
+ 
+ zip:
+ 

@@ -1,0 +1,5 @@
+1f5c3a58fd4a4198887c59563d9fed7f  apr-1.2.2-libdir.patch
+4bed50af8cc4d73299183216ad2f735d  apr-1.2.2-locktimeout.patch
+1bb4b97403ad809b30bf861c838e3a5f  apr-1.2.7-pkgconf.patch
+4e9769f3349fe11fc0a5e1b224c236aa  apr-1.5.2.tar.bz2
+e42c2445298d1725da0d3630ab8a1579  apr-wrapper.h

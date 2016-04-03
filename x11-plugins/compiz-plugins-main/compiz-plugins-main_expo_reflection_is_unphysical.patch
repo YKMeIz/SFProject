@@ -1,0 +1,14 @@
+Description: Change default reflection scale value from 0.75 to 1.0. Anything else is unphysical 
+Bug: https://bugs.launchpad.net/bugs/326995
+
+--- a/metadata/expo.xml.in
++++ b/metadata/expo.xml.in
+@@ -237,7 +237,7 @@
+ 					<option name="scale_factor" type="float">
+ 						<_short>Reflection Scale</_short>
+ 						<_long>Scale factor of the expo wall reflection</_long>
+-						<default>0.75</default>
++						<default>1.0</default>
+ 						<min>0.0</min>
+ 						<max>2.0</max>
+ 						<precision>0.01</precision>

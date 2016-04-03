@@ -1,0 +1,41 @@
+From 861d28549f972e07f43838d56175e130810d7823 Mon Sep 17 00:00:00 2001
+From: Ken Dreyer <ktdreyer@ktdreyer.com>
+Date: Thu, 8 May 2014 15:32:46 -0600
+Subject: [PATCH] [pvr.wmc] use safe format arg to snprintf
+
+Prior to this commit, the wmc PVR addon failed to build if
+-Werror=format-security was used. The compiler could not examine the
+contents of the results array.
+
+Adjust the snprintf calls so that the format string is a string literal.
+
+Fedora recently enabled this compiler option in their RPM builds, so
+this fixes the build on Fedora 21.
+---
+ addons/pvr.wmc/src/pvr2wmc.cpp | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/addons/pvr.wmc/src/pvr2wmc.cpp b/addons/pvr.wmc/src/pvr2wmc.cpp
+index 094f930..74db379 100644
+--- a/addons/pvr.wmc/src/pvr2wmc.cpp
++++ b/addons/pvr.wmc/src/pvr2wmc.cpp
+@@ -1087,11 +1087,11 @@ PVR_ERROR Pvr2Wmc::SignalStatus(PVR_SIGNAL_STATUS &signalStatus)
+ 			if (results.size() >= 9)
+ 			{
+ 				memset(&cachedSignalStatus, 0, sizeof(cachedSignalStatus));
+-				snprintf(signalStatus.strAdapterName, sizeof(signalStatus.strAdapterName), results[0]);
+-				snprintf(signalStatus.strAdapterStatus, sizeof(signalStatus.strAdapterStatus), results[1]);
+-				snprintf(signalStatus.strProviderName, sizeof(signalStatus.strProviderName), results[2]);
+-				snprintf(signalStatus.strServiceName, sizeof(signalStatus.strServiceName), results[3]);
+-				snprintf(signalStatus.strMuxName, sizeof(signalStatus.strMuxName), results[4]);
++				snprintf(signalStatus.strAdapterName, sizeof(signalStatus.strAdapterName), "%s", results[0].c_str());
++				snprintf(signalStatus.strAdapterStatus, sizeof(signalStatus.strAdapterStatus), "%s", results[1].c_str());
++				snprintf(signalStatus.strProviderName, sizeof(signalStatus.strProviderName), "%s", results[2].c_str());
++				snprintf(signalStatus.strServiceName, sizeof(signalStatus.strServiceName), "%s", results[3].c_str());
++				snprintf(signalStatus.strMuxName, sizeof(signalStatus.strMuxName), "%s", results[4].c_str());
+ 				signalStatus.iSignal = atoi(results[5]) * 655.35;
+ 				signalStatus.dVideoBitrate = atof(results[6]);
+ 				signalStatus.dAudioBitrate = atof(results[7]);
+-- 
+1.9.1
+

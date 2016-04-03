@@ -1,0 +1,94 @@
+diff -up mdbtools-0.6pre1/src/gmdb2/gladefiles/gmdb.glade.crash mdbtools-0.6pre1/src/gmdb2/gladefiles/gmdb.glade
+--- mdbtools-0.6pre1/src/gmdb2/gladefiles/gmdb.glade.crash	2007-08-14 23:23:17.000000000 +0200
++++ mdbtools-0.6pre1/src/gmdb2/gladefiles/gmdb.glade	2007-08-14 23:23:17.000000000 +0200
+@@ -67,7 +67,7 @@
+ 		      </child>
+ 
+ 		      <child>
+-			<widget class="GtkImageMenuItem" id="close1">
++			<widget class="GtkImageMenuItem" id="close_menu">
+ 			  <property name="visible">True</property>
+ 			  <property name="stock_item">GNOMEUIINFO_MENU_CLOSE_ITEM</property>
+ 			  <signal name="activate" handler="gmdb_file_close_cb" last_modification_time="Fri, 20 Dec 2002 16:43:24 GMT"/>
+@@ -327,8 +327,9 @@
+ 	      </child>
+ 
+ 	      <child>
+-		<widget class="GtkToolButton" id="button7">
++		<widget class="GtkToolButton" id="close_button">
+ 		  <property name="visible">True</property>
++		  <property name="sensitive">False</property>
+ 		  <property name="tooltip" translatable="yes">Close database file</property>
+ 		  <property name="stock-id">gtk-close</property>
+ 		  <signal name="clicked" handler="gmdb_file_close_cb"/>
+@@ -440,6 +441,7 @@
+ 			  <child>
+ 			    <widget class="GtkButton" id="table_definition">
+ 			      <property name="visible">True</property>
++			      <property name="sensitive">False</property>
+ 			      <property name="can_focus">True</property>
+ 			      <property name="label" translatable="yes">Definition</property>
+ 			      <property name="use_underline">True</property>
+@@ -456,6 +458,7 @@
+ 			  <child>
+ 			    <widget class="GtkButton" id="table_data">
+ 			      <property name="visible">True</property>
++			      <property name="sensitive">False</property>
+ 			      <property name="can_focus">True</property>
+ 			      <property name="label" translatable="yes">Data</property>
+ 			      <property name="use_underline">True</property>
+@@ -472,6 +475,7 @@
+ 			  <child>
+ 			    <widget class="GtkButton" id="table_export">
+ 			      <property name="visible">True</property>
++			      <property name="sensitive">False</property>
+ 			      <property name="can_focus">True</property>
+ 			      <property name="label" translatable="yes">Export</property>
+ 			      <property name="use_underline">True</property>
+diff -up mdbtools-0.6pre1/src/gmdb2/main2.c.crash mdbtools-0.6pre1/src/gmdb2/main2.c
+--- mdbtools-0.6pre1/src/gmdb2/main2.c.crash	2007-08-14 23:23:17.000000000 +0200
++++ mdbtools-0.6pre1/src/gmdb2/main2.c	2007-08-14 23:25:23.000000000 +0200
+@@ -170,7 +170,7 @@ gmdb_load_icons(GladeXML *xml)
+ }
+ int main(int argc, char *argv[]) 
+ {
+-GtkWidget *gmdb;
++GtkWidget *gmdb, *w;
+ GnomeProgram *program;
+ 
+ #ifdef SQL
+@@ -195,6 +195,13 @@ GnomeProgram *program;
+ 
+ 	/* load the interface */
+ 	mainwin_xml = glade_xml_new(GMDB_GLADEDIR "gmdb.glade", NULL, NULL);
++	/* greyout the some File Menu entries, doing this in the glade file
++	   doesn't work for menu entries, it probably gets overriden by the
++	   stock_item option. */
++	w = glade_xml_get_widget (mainwin_xml, "info_menu");
++	gtk_widget_set_sensitive (w, FALSE);
++	w = glade_xml_get_widget (mainwin_xml, "close_menu");
++	gtk_widget_set_sensitive (w, FALSE);
+ 	/* connect the signals in the interface */
+ 	glade_xml_signal_autoconnect(mainwin_xml);
+ 
+diff -up mdbtools-0.6pre1/src/gmdb2/file.c~ mdbtools-0.6pre1/src/gmdb2/file.c
+--- mdbtools-0.6pre1/src/gmdb2/file.c~	2007-08-14 23:31:37.000000000 +0200
++++ mdbtools-0.6pre1/src/gmdb2/file.c	2007-08-14 23:31:37.000000000 +0200
+@@ -29,7 +29,7 @@ MdbHandle *mdb;
+ extern int main_show_debug;
+ extern GladeXML *mainwin_xml;
+ 
+-#define MAX_ACTIONITEMS 7
++#define MAX_ACTIONITEMS 9
+ #define MAX_ICONVIEWS 6
+ typedef struct {
+ 	GtkWidget* actionitems[MAX_ACTIONITEMS];
+@@ -157,7 +157,7 @@ gmdb_file_init (void) {
+ 	GtkWidget* w;
+ 	GtkListStore* store;
+ 	int i;
+-	gchar* ainames[] = { "sql_menu", "debug_menu", "schema_menu", "info_menu", "sql_button", "schema_button", "info_button" };
++	gchar* ainames[] = { "sql_menu", "debug_menu", "schema_menu", "info_menu", "close_menu", "sql_button", "schema_button", "info_button", "close_button" };
+ 	gchar* swnames[] = { "sw_form", "sw_macro", "sw_module", "sw_query", "sw_report", "sw_table" };
+ 
+ 	if (gmdbwidgets) {

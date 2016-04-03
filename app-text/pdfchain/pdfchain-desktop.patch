@@ -1,0 +1,17 @@
+diff -up pdfchain-0.3.3/application/pdfchain.desktop.orig pdfchain-0.3.3/application/pdfchain.desktop
+--- pdfchain-0.3.3/application/pdfchain.desktop.orig	2011-11-20 19:09:00.000000000 +0200
++++ pdfchain-0.3.3/application/pdfchain.desktop	2012-01-08 10:11:23.977583135 +0200
+@@ -1,11 +1,10 @@
+ [Desktop Entry]
+-Version=ALPHA
+ Encoding=UTF-8
+ Name=PDF Chain
+ GenericName=pdfchain
+-Comment=GUI for the PDFTK - A graphical tool for manipulating PDF
++Comment=A graphical tool for manipulating PDF files
+ Exec=pdfchain
+-Icon=pdfchain.png
++Icon=pdfchain
+ Type=Application
+ StartupNotify=false
+ Categories=Office;

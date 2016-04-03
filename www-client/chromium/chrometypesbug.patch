@@ -1,0 +1,12 @@
+diff -up src/sandbox/linux/seccomp-bpf/linux_seccomp.h.typesbug src/sandbox/linux/seccomp-bpf/linux_seccomp.h
+--- src/sandbox/linux/seccomp-bpf/linux_seccomp.h.typesbug	2014-06-27 15:08:43.525998374 -0400
++++ src/sandbox/linux/seccomp-bpf/linux_seccomp.h	2014-06-27 15:09:18.932011297 -0400
+@@ -17,6 +17,8 @@
+ #include <linux/filter.h>
+ 
+ #include <sys/cdefs.h>
++#include <sys/types.h>
++
+ // Old Bionic versions do not have sys/user.h.  The if can be removed once we no
+ // longer need to support these old Bionic versions.
+ // All x86_64 builds use a new enough bionic to have sys/user.h.

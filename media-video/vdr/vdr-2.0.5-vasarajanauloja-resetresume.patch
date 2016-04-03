@@ -1,0 +1,24 @@
+diff -up vdr-2.0.5/dvbplayer.c~ vdr-2.0.5/dvbplayer.c
+--- vdr-2.0.5/dvbplayer.c~	2014-01-07 19:00:26.483871477 +0200
++++ vdr-2.0.5/dvbplayer.c	2014-01-07 19:01:30.715138152 +0200
+@@ -376,7 +376,7 @@ bool cDvbPlayer::Save(void)
+      if (Index >= 0) {
+         int backup = int(round(RESUMEBACKUP * framesPerSecond));
+         if (Index >= index->Last() - backup)
+-           Index = 0;
++           index->GetNextIFrame(0, true);
+         else {
+            Index -= backup;
+            if (Index > 0)
+diff -up vdr-2.0.5/recording.h~ vdr-2.0.5/recording.h
+--- vdr-2.0.5/recording.h~	2014-01-07 19:00:26.487871556 +0200
++++ vdr-2.0.5/recording.h	2014-01-07 19:02:15.812069420 +0200
+@@ -132,7 +132,7 @@ public:
+   int FileSizeMB(void) const;
+        ///< Returns the total file size of this recording (in MB), or -1 if the file
+        ///< size is unknown.
+-  bool IsNew(void) const { return GetResume() < 0; }
++  bool IsNew(void) const { return GetResume() <= 0; }
+   bool IsEdited(void) const;
+   bool IsPesRecording(void) const { return isPesRecording; }
+   bool IsOnVideoDirectoryFileSystem(void) const;

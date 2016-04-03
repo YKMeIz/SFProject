@@ -1,0 +1,13 @@
+54bfe7e747b01b85345232f8541eb1aa  docker-0f5ac89.tar.gz
+5ef1feff7c841b45f6f873f90791f623  docker-logrotate.sh
+d4fa8a35c813dac393f629dc2ce2852e  docker-network.sysconfig
+03b40ac0202501bd25cf8365cc2aeaff  docker-novolume-plugin-77a55c1.tar.gz
+c2a5d34f07c9abd474dca95deab58f73  docker-selinux-afc876c.tar.gz
+c80ec97232b1ef77b6437056acc5d411  docker.service
+3cdff1d3539b5bbb8e84700a59dc26be  docker-storage-setup-1c2b95b.tar.gz
+ab8c4963d7da2df915a052babb0e1b89  docker-storage.sysconfig
+17a78e92fbb67b827115fb642a4fa9aa  docker.sysconfig
+41de66f15f8151b1cb81b8d88c14d0e1  docker-utils-dab51ac.tar.gz
+3c2ad0a601717cf736c05b99061f5790  forward-journald-3b80098.tar.gz
+a666fd3c082c3c5a7225d51d79f500f5  README.docker-logrotate
+1f7d112be5ba2380804762d965f9954d  v1.10-migrator-994c35c.tar.gz

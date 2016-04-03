@@ -1,0 +1,44 @@
+From be149af1735ba52aefd85d6d318b11e45c3244b5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Mon, 22 Jul 2013 09:32:29 +0200
+Subject: [PATCH] Empty cflags are valid cflags
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+ExtUtils::PkgConfig-find() croaked on emptry cflags:
+
+$ pkg-config --cflags 'libffi >= 3.0.0'| hexdump -C
+00000000  0a                                                |.|
+00000001
+$ perl -MData::Dumper -MExtUtils::PkgConfig -e 'print
+Dumper(ExtUtils::PkgConfig->find(q{libffi}))'
+*** can't find cflags for "libffi"
+*** is it properly installed and available in PKG_CONFIG_PATH?
+ at -e line 1.
+
+That's wrong. Empty string cflags are valid cflafs too.
+
+<https://rt.cpan.org/Public/Bug/Display.html?id=84026>
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ lib/ExtUtils/PkgConfig.pm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/ExtUtils/PkgConfig.pm b/lib/ExtUtils/PkgConfig.pm
+index 075d8dc..0f68256 100644
+--- a/lib/ExtUtils/PkgConfig.pm
++++ b/lib/ExtUtils/PkgConfig.pm
+@@ -129,7 +129,7 @@ sub find {
+                 $data{$what} =~ s/[\015\012]+$//;
+ 		croak "*** can't find $what for \"$data{pkg}\"\n"
+ 		    . "*** is it properly installed and available in PKG_CONFIG_PATH?\n"
+-			unless $data{$what};
++			unless defined $data{$what};
+ 	}
+ 	return %data;
+ }
+-- 
+1.8.1.4
+

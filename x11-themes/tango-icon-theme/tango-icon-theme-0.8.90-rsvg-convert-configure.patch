@@ -1,0 +1,29 @@
+--- tango-icon-theme-0.8.90/configure~	2009-02-26 03:08:00.000000000 +0000
++++ tango-icon-theme-0.8.90/configure	2013-08-24 12:16:13.000000000 +0100
+@@ -6530,7 +6530,7 @@
+    fi
+ fi
+ 
+-# Check for rsvg or ksvgtopng for creating large scale bitmaps from svg
++# Check for rsvg-convert or ksvgtopng for creating large scale bitmaps from svg
+ # Check whether --enable-png-creation was given.
+ if test "${enable_png_creation+set}" = set; then
+   enableval=$enable_png_creation; enable_large_bitmaps=$enableval
+@@ -6545,7 +6545,7 @@
+ if test "x$enable_large_bitmaps" = "xyes"; then
+    if test -n "$PKG_CONFIG" && \
+     { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"librsvg-2.0 >= 2.12.3\"") >&5
+-  ($PKG_CONFIG --exists --print-errors "librsvg-2.0 >= 2.12.3") 2>&5
++  ($PKG_CONFIG --exists --print-errors "librsvg-2.0 >= 2.35.2") 2>&5
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); }; then
+@@ -6554,7 +6554,7 @@
+   enable_large_bitmaps=no
+ fi
+    if test "x$enable_large_bitmaps" = "xyes"; then
+-      svgconvert_prog="rsvg"
++      svgconvert_prog="rsvg-convert"
+    else
+       svgconvert_prog="ksvgtopng"
+    fi

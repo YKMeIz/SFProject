@@ -1,0 +1,15 @@
+diff --git a/glchess/help/fr/fr.po b/glchess/help/fr/fr.po
+index 8fa235b..55c59dc 100644
+--- a/glchess/help/fr/fr.po
++++ b/glchess/help/fr/fr.po
+@@ -552,8 +552,8 @@ msgid ""
+ "srccredit=\"Andreas\"/> </imageobject> <textobject> <phrase>Start new game "
+ "dialog for glChess.</phrase> </textobject>"
+ msgstr ""
+-"<imageobject> <imagedata fileref=\"figures/new_game.png\" format=\"PNG"
+-"\"srccredit=\"Andreas\"/> </imageobject> <textobject> <phrase>Ouvrir la "
++"<imageobject> <imagedata fileref=\"figures/new_game.png\" format=\"PNG\" "
++"srccredit=\"Andreas\"/> </imageobject> <textobject> <phrase>Ouvrir la "
+ "boîte de dialogue nouveau jeu pour glChess.</phrase> </textobject>"
+ 
+ #: C/glchess.xml:232(sect2/title)

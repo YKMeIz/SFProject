@@ -1,0 +1,7 @@
+2124ffefeaf2dc9a0824adf6e001388b  compiz-manager-0.6.0.diff
+f793dc2db4fc88b5de18f3c749f762f7  compiz-manager-0.6.0.tar.gz
+c1088812d3630cf379649e93957d03ee  compiz-manager_add_mate-session_to_gtk-window-decorator.patch
+41c60d32fbc092cacd313cbb30edeb55  compiz-manager_improve-glx-call.patch
+94d55d512a9ba36caa9b7df079bae19f  compiz-manager.license
+5cf77e65e00a26d3d89aaa702c114b45  compiz-manager_marco.patch
+b7e3cc6e0776363c28f8a3007028f9a0  README.fedora

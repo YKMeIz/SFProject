@@ -1,0 +1,73 @@
+diff -up mdbtools-0.6pre1/src/odbc/odbc.c.odbc mdbtools-0.6pre1/src/odbc/odbc.c
+--- mdbtools-0.6pre1/src/odbc/odbc.c.odbc	2008-11-24 09:57:03.000000000 +0100
++++ mdbtools-0.6pre1/src/odbc/odbc.c	2008-11-24 10:20:06.000000000 +0100
+@@ -597,7 +597,7 @@ SQLRETURN SQL_API SQLDescribeCol(
+     SQLSMALLINT FAR   *pibScale,
+     SQLSMALLINT FAR   *pfNullable)
+ {
+-	int namelen, i;
++	int i;
+ 	struct _hstmt *stmt = (struct _hstmt *) hstmt;
+ 	struct _hdbc *dbc = (struct _hdbc *) stmt->hdbc;
+ 	struct _henv *env = (struct _henv *) dbc->henv;
+@@ -620,9 +620,10 @@ SQLRETURN SQL_API SQLDescribeCol(
+      }
+ 
+ 	if (szColName) {
+-		namelen = MIN(cbColNameMax,strlen(sqlcol->name));
+-		strncpy(szColName, sqlcol->name, namelen);
+-		szColName[namelen]='\0';
++		strncpy(szColName, sqlcol->name, cbColNameMax);
++		szColName[cbColNameMax - 1] = '\0';
++		if (pcbColName)
++			*pcbColName = strlen(sqlcol->name);
+ 	}
+ 	if (pfSqlType) {
+ 		*pfSqlType = _odbc_get_client_type(col->col_type);
+@@ -650,7 +651,7 @@ SQLRETURN SQL_API SQLColAttributes(
+     SQLSMALLINT FAR   *pcbDesc,
+     SQLLEN FAR        *pfDesc)
+ {
+-	int namelen, i;
++	int i;
+ 	struct _hstmt *stmt;
+ 	struct _hdbc *dbc;
+ 	struct _henv *env;
+@@ -690,9 +691,10 @@ SQLRETURN SQL_API SQLColAttributes(
+ 	switch(fDescType) {
+ 		case SQL_COLUMN_NAME:
+ 		case SQL_COLUMN_LABEL:
+-			namelen = MIN(cbDescMax,strlen(sqlcol->name));
+-			strncpy(rgbDesc, sqlcol->name, namelen);
+-			((char *)rgbDesc)[namelen]='\0';
++			strncpy(rgbDesc, sqlcol->name, cbDescMax);
++			((char *)rgbDesc)[cbDescMax - 1] = '\0';
++ 			if (pcbDesc)
++				*pcbDesc = strlen(sqlcol->name);
+ 			break;
+ 		case SQL_COLUMN_TYPE:
+ 			*pfDesc = SQL_CHAR;
+@@ -1162,13 +1164,21 @@ SQLRETURN SQL_API SQLGetData(
+ 		strcpy(rgbValue, (col->cur_value_len)?"0":"1");
+ 		if (pcbValue)
+ 			*pcbValue = 1;
++	} else if (col->col_type == MDB_OLE) {
++		int len;
++		col->bind_ptr = rgbValue;
++		len = mdb_ole_read(mdb, col, mdb->pg_buf + col->cur_value_start, cbValueMax);
++		col->bind_ptr = NULL;
++		if (pcbValue)
++			*pcbValue = len;
+ 	} else if (col->cur_value_len) {
+ 		char *str = mdb_col_to_string(mdb,mdb->pg_buf,
+ 			col->cur_value_start,col->col_type,col->cur_value_len);
+-		strcpy(rgbValue, str);
++		strncpy(rgbValue, str, cbValueMax);
++		((char *)rgbValue)[cbValueMax - 1] = 0;
+ 		g_free(str);
+ 		if (pcbValue)
+-			*pcbValue = col->cur_value_len;
++			*pcbValue = strlen(rgbValue);
+ 	} else {
+ 		/* When NULL data is retrieved, non-null pcbValue is required */
+ 		if (pcbValue) {

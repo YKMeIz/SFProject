@@ -1,0 +1,8 @@
+b55a3324a1cb0be88a20139ac3e6f555  0005-Make-the-About-dialog-work.patch
+ec8cf127ddb53fc34001647ec731d51e  0021-add-include.patch
+cbd8a19a789b83278a90bdee4f2f8863  0031-Store-and-install-kamoso.desktop-with-755-permission.patch
+5c6d10e6f551ebd5024810b4a7560406  0032-use-camera-web-icon-instead-of-webcamreceive.patch
+831f32eabd57a08d9d21251dbba10532  0033-initial-port-to-libkipi-2.x.patch
+8d97dcf68ec1dde0f3c337884473adc7  0034-add-license-header.patch
+7923ba874279eff37a3b3084d2d85889  0035-fix-build-for-libkipi-2.patch
+c2125e3cbe10ddc397ec4308891a9f4c  kamoso-2.0.2.tar.bz2

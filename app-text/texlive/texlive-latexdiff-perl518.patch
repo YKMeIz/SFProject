@@ -1,0 +1,121 @@
+--- latexdiff.pl	2015-04-19 16:00:38.000000000 -0600
++++ latexdiff.pl	2015-12-15 19:14:13.581563397 -0700
+@@ -1434,7 +1434,7 @@ sub flatten {
+   $bblfile=~s/\.tex$//;
+   $bblfile.=".bbl";
+ 
+-  if ( ($includeonly) = ($preamble =~ m/\\includeonly{(.*?)}/ ) ) {
++  if ( ($includeonly) = ($preamble =~ m/\\includeonly\{(.*?)}/ ) ) {
+     $includeonly =~ s/,/|/g;
+   } else {
+     $includeonly = '.*?';
+@@ -1443,7 +1443,7 @@ sub flatten {
+   print STDERR "DEBUG: includeonly $includeonly\n" if $debug;
+ 
+   # recursively replace \\input and \\include files
+-  $text=~s/(^(?:[^%\n]|\\%)*)\\input{(.*?)}|\\include{(${includeonly}(?:\.tex)?)}/{ 
++  $text=~s/(^(?:[^%\n]|\\%)*)\\input\{(.*?)}|\\include\{(${includeonly}(?:\.tex)?)}/{ 
+ 	    $begline=(defined($1)? $1 : "") ;
+ 	    $fname = $2 if defined($2) ;
+ 	    $fname = $3 if defined($3) ;
+@@ -1460,7 +1460,7 @@ sub flatten {
+ 	    "$begline$newpage$replacement$newpage";
+           }/exgm;
+   # replace bibliography with bbl file if it exists
+-  $text=~s/(^(?:[^%\n]|\\%)*)\\bibliography{(.*?)}/{ 
++  $text=~s/(^(?:[^%\n]|\\%)*)\\bibliography\{(.*?)}/{ 
+            if ( -f $bblfile ){
+ 	     $replacement=read_file_with_encoding(File::Spec->catfile($bblfile), $encoding);
+ 	   } else {
+@@ -1471,7 +1471,7 @@ sub flatten {
+ 	   "$begline$replacement";
+   }/exgm;
+   # replace subfile with contents (subfile package)
+-  $text=~s/(^(?:[^%\n]|\\%)*)\\subfile{(.*?)}/{ 
++  $text=~s/(^(?:[^%\n]|\\%)*)\\subfile\{(.*?)}/{ 
+            $begline=(defined($1)? $1 : "") ;
+      	   $fname = $2; 
+            #      # add tex extension unless there is a three letter extension already 
+@@ -2166,7 +2166,7 @@ sub marktags {
+ sub preprocess {
+   for (@_) { 
+     #    Change \{ to \QLEFTBRACE and \} to \QRIGHTBRACE
+-    s/(?<!\\)\\{/\\QLEFTBRACE /sg;
++    s/(?<!\\)\\\{/\\QLEFTBRACE /sg;
+     s/(?<!\\)\\}/\\QRIGHTBRACE /sg;
+     s/(?<!\\)\\&/\\AMPERSAND /sg;
+ # replace {,} in comments with \\CLEFTBRACE,\\CRIGHTBRACE
+@@ -2180,23 +2180,23 @@ sub preprocess {
+     s/\\begin\{(verbatim\*?)\}(.*?)\\end\{\1\}/"\\${1}{". tohash(\%verbhash,"${2}") . "}"/esg;
+     # Convert _n or _\cmd into \SUBSCRIPTNB{n} or \SUBSCRIPTNB{\cmd} and _{nnn} into \SUBSCRIPT{nn}
+     1 while s/(?<!\\)_([^{\\]|\\\w+)/\\SUBSCRIPTNB{$1}/g ;
+-    1 while s/(?<!\\)_{($pat6)}/\\SUBSCRIPT{$1}/g ;
++    1 while s/(?<!\\)_\{($pat6)}/\\SUBSCRIPT{$1}/g ;
+     # Convert ^n into \SUPERSCRIPTNB{n} and ^{nnn} into \SUPERSCRIPT{nn}
+     1 while s/(?<!\\)\^([^{\\]|\\\w+)/\\SUPERSCRIPTNB{$1}/g ;
+-    1 while s/(?<!\\)\^{($pat6)}/\\SUPERSCRIPT{$1}/g ;
++    1 while s/(?<!\\)\^\{($pat6)}/\\SUPERSCRIPT{$1}/g ;
+     # Convert $$ $$ into \begin{DOLLARDOLLAR} \end{DOLLARDOLLAR}
+     s/\$\$(.*?)\$\$/\\begin{DOLLARDOLLAR}$1\\end{DOLLARDOLLAR}/sg;
+     # Convert \[ \] into \begin{SQUAREBRACKET} \end{SQUAREBRACKET}
+     s/(?<!\\)\\\[/\\begin{SQUAREBRACKET}/sg;
+     s/\\\]/\\end{SQUAREBRACKET}/sg;
+     # Convert all picture environmentent (\begin{PICTUREENV} .. \end{PICTUREENV} \PICTUREBLOCKenv
+-    s/\\begin{($PICTUREENV)}(.*?)\\end{\1}/\\PICTUREBLOCK$1\{$2\}/sg;
++    s/\\begin\{($PICTUREENV)}(.*?)\\end\{\1}/\\PICTUREBLOCK$1\{$2\}/sg;
+     #    For --block-math-markup option -convert all \begin{MATH} .. \end{MATH}
+     #    into \MATHBLOCKMATH{...} commands, where MATH is any valid math environment
+     #    Also convert all array environments into ARRAYBLOCK environments
+     if ( $mathmarkup != FINE ) {
+-      s/\\begin{($ARRENV)}(.*?)\\end{\1}/\\ARRAYBLOCK$1\{$2\}/sg;
+-      s/\\begin{($MATHENV|$MATHARRENV|SQUAREBRACKET)}(.*?)\\end{\1}/\\MATHBLOCK$1\{$2\}/sg;
++      s/\\begin\{($ARRENV)}(.*?)\\end\{\1}/\\ARRAYBLOCK$1\{$2\}/sg;
++      s/\\begin\{($MATHENV|$MATHARRENV|SQUAREBRACKET)}(.*?)\\end\{\1}/\\MATHBLOCK$1\{$2\}/sg;
+     }
+     # add final token " STOP"
+     $_ .= " STOP"
+@@ -2438,15 +2438,15 @@ sub postprocess {
+     # environments) are between the \begin{$MATHENV} and \end{MATHMODE} commands. This is necessary as the minimal matching 
+     # is not globally minimal but only 'locally' (matching is beginning from the left side of the string)
+     if ( $mathmarkup == FINE ) {
+-      1 while s/\\begin{((?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}((?:.(?!(?:\\end{(?:(?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}|\\begin{MATHMODE})))*?)\\end{MATHMODE}/\\begin{$1}$2\\end{$1}/s;
+-      1 while s/\\begin{MATHMODE}((?:.(?!\\end{MATHMODE}))*?)\\end{((?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}/\\begin{$2}$1\\end{$2}/s;
+-      # convert remaining \begin{MATHMODE} \end{MATHMODE} (and not containing & or \\ )into MATHREPL environments
+-      s/\\begin{MATHMODE}((?:(.(?!(?<!\\)\&|\\\\))*)?)\\end{MATHMODE}/\\begin{$MATHREPL}$1\\end{$MATHREPL}/sg;
++      1 while s/\\begin\{((?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}((?:.(?!(?:\\end\{(?:(?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}|\\begin\{MATHMODE})))*?)\\end\{MATHMODE}/\\begin{$1}$2\\end{$1}/s;
++      1 while s/\\begin\{MATHMODE}((?:.(?!\\end\{MATHMODE}))*?)\\end\{((?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}/\\begin{$2}$1\\end{$2}/s;
++      # convert remaining \begin\{MATHMODE} \end{MATHMODE} (and not containing & or \\ )into MATHREPL environments
++      s/\\begin\{MATHMODE}((?:(.(?!(?<!\\)\&|\\\\))*)?)\\end\{MATHMODE}/\\begin{$MATHREPL}$1\\end{$MATHREPL}/sg;
+       # others into MATHARRREPL
+-      s/\\begin{MATHMODE}(.*?)\\end{MATHMODE}/\\begin{$MATHARRREPL}$1\\end{$MATHARRREPL}/sg;
++      s/\\begin\{MATHMODE}(.*?)\\end\{MATHMODE}/\\begin{$MATHARRREPL}$1\\end{$MATHARRREPL}/sg;
+ 
+       # now look for AUXCMD math-mode pairs which have only comments (or empty lines between them), and remove the added commands
+-      s/\\begin{((?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}$AUXCMD\n((?:\s*%.[^\n]*\n)*)\\end{\1}$AUXCMD\n/$2/sg;       
++      s/\\begin\{((?:$MATHENV)|(?:$MATHARRENV)|SQUAREBRACKET)}$AUXCMD\n((?:\s*%.[^\n]*\n)*)\\end{\1}$AUXCMD\n/$2/sg;       
+     } else {
+       #   math modes OFF,WHOLE,COARSE: Convert \MATHBLOCKmath{..} commands back to environments
+       s/\\MATHBLOCK($MATHENV|$MATHARRENV|SQUAREBRACKET)\{($pat6)\}/\\begin{$1}$2\\end{$1}/sg;
+@@ -2524,16 +2524,16 @@ sub postprocess {
+     # undo renaming of the \begin and \end,{,}  and dollars in comments 
+     1 while s/(%.*)DOLLARDIF/$1\$/mg ;
+ #   Convert \begin{SQUAREBRACKET} \end{SQUAREBRACKET} into \[ \]
+-    s/\\end{SQUAREBRACKET}/\\\]/sg;
+-    s/\\begin{SQUAREBRACKET}/\\\[/sg;
++    s/\\end\{SQUAREBRACKET}/\\\]/sg;
++    s/\\begin\{SQUAREBRACKET}/\\\[/sg;
+ # 4. Convert \begin{DOLLARDOLLAR} \end{DOLLARDOLLAR} into $$ $$
+     s/\\begin\{DOLLARDOLLAR\}(.*?)\\end\{DOLLARDOLLAR\}/\$\$$1\$\$/sg;
+ # 5. Convert  \SUPERSCRIPTNB{n} into ^n  and  \SUPERSCRIPT{nn} into ^{nnn}
+-    1 while s/\\SUPERSCRIPT{($pat6)}/^{$1}/g ;
+-    1 while s/\\SUPERSCRIPTNB{($pat0)}/^$1/g ;
++    1 while s/\\SUPERSCRIPT\{($pat6)}/^{$1}/g ;
++    1 while s/\\SUPERSCRIPTNB\{($pat0)}/^$1/g ;
+     # Convert  \SUBSCRIPNB{n} into _n  and  \SUBCRIPT{nn} into _{nnn}
+-    1 while s/\\SUBSCRIPT{($pat6)}/_{$1}/g ;
+-    1 while s/\\SUBSCRIPTNB{($pat0)}/_$1/g ;
++    1 while s/\\SUBSCRIPT\{($pat6)}/_{$1}/g ;
++    1 while s/\\SUBSCRIPTNB\{($pat0)}/_$1/g ;
+     1 while s/(%.*)\\CRIGHTBRACE (.*)$/$1\}$2/mg ;
+     1 while s/(%.*)\\CLEFTBRACE (.*)$/$1\{$2/mg ;
+ 

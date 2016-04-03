@@ -1,0 +1,12 @@
+c249d833c701f6ff0add9b8d4cf9c194  curvecpclient.1
+d46007ec423ac0ada91b7822ec0d72ad  curvecpmakekey.1
+56ace03dd3425ee9c40b1f6d6c90859e  curvecpmessage.1
+e31d730756f497267c8a42c1dfe83e57  curvecpprintkey.1
+e4d2d7da8c2477a4960ce0aa7d6c0d2d  curvecpserver.1
+31718d3d3dbf797bda84eae3cc02026f  nacl-20110221-build-dir.patch
+eabfa74ffa9a3d851b2ff09f1da5e035  nacl-20110221-cpufreq-fallback.patch
+5cf4985e909dcb345a44cc07224fa646  nacl-20110221-dist-flags.patch
+fdc1fefdd08e3e30b1fdedbfe7060863  nacl-20110221-noexec-stack.patch
+7efb5715561c3d10dafd3fa97b4f2d20  nacl-20110221.tar.bz2
+64df9c5ad7441a2f3ea911b4bc8ef90d  nacl-sha256.1
+26dfc8b5b5c84fa1e507692157a7c63b  nacl-sha512.1

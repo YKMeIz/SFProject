@@ -1,0 +1,12 @@
+diff -p -up gnome-color-chooser-0.2.5/src/gnome-color-chooser.desktop.in~ gnome-color-chooser-0.2.5/src/gnome-color-chooser.desktop.in
+--- gnome-color-chooser-0.2.5/src/gnome-color-chooser.desktop.in~	2008-04-27 21:18:14.000000000 +0200
++++ gnome-color-chooser-0.2.5/src/gnome-color-chooser.desktop.in	2009-10-05 13:17:11.000000000 +0200
+@@ -5,6 +5,6 @@ _Comment=Customize your GNOME desktop
+ Exec=gnome-color-chooser
+ Terminal=false
+ Type=Application
+-Icon=gnome-color-chooser.svg
+-Categories=GNOME;Settings;
++Icon=gnome-color-chooser
++Categories=GTK;GNOME;Settings;
+ StartupNotify=true

@@ -1,0 +1,34 @@
+From 990462363724a09cfbc314d7e6451a4000db548e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jos=C3=A9=20Manuel=20Santamar=C3=ADa=20Lema?=
+ <panfaust@gmail.com>
+Date: Fri, 22 Jul 2011 20:09:22 +0200
+Subject: [PATCH 05/32] Make the About dialog work.
+
+---
+ src/kamoso.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/kamoso.cpp b/src/kamoso.cpp
+index ae4c048..6026bdd 100644
+--- a/src/kamoso.cpp
++++ b/src/kamoso.cpp
+@@ -670,7 +670,8 @@ void Kamoso::settingsMenu(bool )
+         m.addSeparator();
+     }
+     m.addAction(KIcon("configure"), i18n("Settings"), this, SLOT(configuration()));
+-    m.addMenu(customHelpMenu());
++    KMenu *help = helpMenu();
++    m.addMenu(help);
+ 
+     m.exec(mainWidgetUi->configure->parentWidget()->mapToGlobal(mainWidgetUi->configure->geometry().bottomLeft()));
+ }
+@@ -726,4 +727,4 @@ void Kamoso::updateThumbnails(const KUrl::List& urls)
+ 
+         mainWidgetUi->thumbnailView->update(idx);
+     }
+-}
+\ No newline at end of file
++}
+-- 
+1.8.0.2
+

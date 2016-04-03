@@ -1,0 +1,20 @@
+For legal and other reasons, the following files have been removed
+from the original tarfile:
+
+stk-4.5.0/projects/demo/scores/*.ski
+stk-4.5.0/projects/eguitar/scores/*.ski
+stk-4.5.0/projects/examples/midifiles/*.mid
+stk-4.5.0/projects/examples/scores/*.ski
+stk-4.5.0/src/include/asio.cpp
+stk-4.5.0/src/include/asio.h
+stk-4.5.0/src/include/asiodrivers.cpp
+stk-4.5.0/src/include/asiodrivers.h
+stk-4.5.0/src/include/asiodrvr.h
+stk-4.5.0/src/include/asiolist.cpp
+stk-4.5.0/src/include/asiolist.h
+stk-4.5.0/src/include/asiosys.h
+stk-4.5.0/src/include/dsound.h
+stk-4.5.0/src/include/iasiodrv.h
+stk-4.5.0/src/include/iasiothiscallresolver.cpp
+stk-4.5.0/src/include/iasiothiscallresolver.h
+stk-4.5.0/src/include/soundcard.h

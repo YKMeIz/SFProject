@@ -1,0 +1,4 @@
+55a027cbee416985f9998bd8fbd016d3  buffer-overflow.patch
+1205cffa4d7dc296559564d6d1b4eaa2  fix_bash_completion.patch
+601b54e3655a99d867efa0018256a21e  udisks-1.0.4-neuter-stdout-and-stderr.patch
+86c63b2b5484f2060499a052b5b6256b  udisks-1.0.4.tar.gz

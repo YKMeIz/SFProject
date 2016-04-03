@@ -1,0 +1,32 @@
+From efb7c6b3df445a5895df5c16e2279d20895082e2 Mon Sep 17 00:00:00 2001
+From: David Maciejak <david.maciejak@gmail.com>
+Date: Thu, 9 Oct 2014 12:04:43 +0700
+Subject: [PATCH] wmaker: fix maximizing window in multiple screens env
+
+This patch is fixing the maximize window feature.
+As it was reported by Miikka Veijonen, in multiple
+screens env wmaker is reserving some space for the dock
+even on screen that are not displaying it.
+
+This patch is only adjusting the working area for the head
+that is displaying the dock.
+---
+ src/xinerama.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/xinerama.c b/src/xinerama.c
+index d490b0c..3d26139 100644
+--- a/src/xinerama.c
++++ b/src/xinerama.c
+@@ -306,7 +306,7 @@ WArea wGetUsableAreaForHead(WScreen * scr, int head, WArea * totalAreaPtr, Bool
+ 
+ 	if (noicons) {
+ 		/* check if user wants dock covered */
+-		if (scr->dock && wPreferences.no_window_over_dock) {
++		if (scr->dock && wPreferences.no_window_over_dock && wAppIconTouchesHead(scr->dock->icon_array[0], head)) {
+ 			int offset = wPreferences.icon_size + DOCK_EXTRA_SPACE;
+ 
+ 			if (scr->dock->on_right_side)
+-- 
+1.7.6.6.GIT
+

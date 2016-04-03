@@ -1,0 +1,5 @@
+1878d32cfc0cb05fe8b9aa02db38e1b9  cairo-dock-plugins-3.4.1-0001-demo_ruby-fix-traceback-when-changing-themes.patch
+abac3a153327852320629d7c74d6b311  cairo-dock-plugins-3.4.1-0002-Default-to-xdg-screensaver-for-lock_screen.patch
+78eac052b85423616a2382e9e742c61f  cairo-dock-plugins-3.4.1-0003-lock-screen.sh-used-xdg-screensaver-if-available.patch
+39b4d71d7a46b1ffb1eb6c86d338bde2  cairo-dock-plug-ins-create-fedora-tarball.sh
+0767bf68cb8aba586cb13c9d02173497  cairo-dock-plugins-fedora-3.4.1.tar.gz

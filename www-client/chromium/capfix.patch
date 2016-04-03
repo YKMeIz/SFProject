@@ -1,0 +1,36 @@
+diff -up chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.cc.capfix chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.cc
+--- chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.cc.capfix	2015-01-15 10:13:19.928482966 -0500
++++ chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.cc	2015-01-15 13:43:39.010947469 -0500
+@@ -33,7 +33,7 @@ static bool HasUsableFormats(int fd, uin
+     v4l2_buf_type buf_type;
+   } kCapabilityAndBufferTypes[] = {
+     {V4L2_CAP_VIDEO_CAPTURE, V4L2_BUF_TYPE_VIDEO_CAPTURE},
+-    {V4L2_CAP_VIDEO_CAPTURE_MPLANE, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE}
++    {V4L2_CAP_VIDEO_CAPTURE_MPLANE, (v4l2_buf_type)V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE}
+   };
+ 
+   for (const auto& capability_and_buffer_type : kCapabilityAndBufferTypes) {
+@@ -201,7 +201,7 @@ void VideoCaptureDeviceFactoryLinux::Get
+   supported_formats->clear();
+ 
+   const v4l2_buf_type kCaptureTypes[] = {V4L2_BUF_TYPE_VIDEO_CAPTURE,
+-                                         V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE};
++                                         (v4l2_buf_type)V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE};
+   for (const auto& buf_type : kCaptureTypes)
+     GetSupportedFormatsForV4L2BufferType(fd.get(), buf_type, supported_formats);
+   return;
+diff -up chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.h.capfix chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.h
+--- chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.h.capfix	2015-01-12 15:37:32.901056217 -0500
++++ chromium-41.0.2267.0/media/video/capture/linux/video_capture_device_factory_linux.h	2015-01-15 14:48:56.518226225 -0500
+@@ -11,6 +11,11 @@
+ 
+ #include "media/video/capture/video_capture_types.h"
+ 
++#define V4L2_CAP_VIDEO_CAPTURE_MPLANE   0x00001000
++#define V4L2_CAP_VIDEO_OUTPUT_MPLANE    0x00002000
++#define V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE   9
++
++
+ namespace media {
+ 
+ // Extension of VideoCaptureDeviceFactory to create and manipulate Linux

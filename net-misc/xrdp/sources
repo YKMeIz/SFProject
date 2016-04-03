@@ -1,0 +1,12 @@
+558b08849d88e862fbf034a7c0eebd45  xrdp-0.6.1-implicit-decl.patch
+afcd4c3ed8ab2fc424ef23d37d5bf2e9  xrdp-0.6.1-memset.patch
+8e2335181a670006f5c6741aaf1c854a  xrdp-0.6.1-syslog-format.patch
+42b41181564ee4760158921585a678cd  xrdp-endian.patch
+35727dd6eef15b807497a1a3e3e3ee35  xrdp.logrotate
+e69ef498d0b5103e8ff824678e087f39  xrdp-pam-auth.patch
+ac91ca76559f66d58768f0e52a45220b  xrdp-pam_session.patch
+4e3ce8bb5ef58f2a7af2a9223e74fcd1  xrdp.service
+19d8471a0a083a92fab29e3e363750c8  xrdp-sesman.service
+ae19ae5c0d8be05d62c959417ea6a90c  xrdp.sysconfig
+439d9f4e1ad755a79c36abf459c376ae  xrdp-use-xinitrc-in-startwm-sh.patch
+26099c6588943262023607c1b4e774d8  xrdp-v0.6.1.tar.gz

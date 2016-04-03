@@ -1,0 +1,29 @@
+From e8f47eb281bb031d78b5ff744bac7019beff53a8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Ha=C3=AFkel=20Gu=C3=A9mar?= <hguemar@fedoraproject.org>
+Date: Tue, 29 May 2012 12:37:19 +0200
+Subject: [PATCH 5/9] no mono
+
+---
+ Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6ea41de..94a4c1a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -7,10 +7,10 @@
+ #
+ # **********************************************************************
+ 
+-SUBDIRS			= cpp java cs py rb php
++SUBDIRS			= cpp java py rb php
+ CLEAN_SUBDIRS		= java cs py rb php cpp
+ DEPEND_SUBDIRS		= cpp cs py rb php
+-INSTALL_SUBDIRS		= cpp java cs py rb php
++INSTALL_SUBDIRS		= cpp java py rb php
+ 
+ all::
+ 	@for subdir in $(SUBDIRS); \
+-- 
+1.7.10.2
+

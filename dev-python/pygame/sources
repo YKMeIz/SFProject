@@ -1,0 +1,6 @@
+9f2527ec3542d9e7be95300f030db1e1  pygame-1.9.1-config.patch
+b9d6f13df878c4b2dad1cff7d9bc0156  pygame-1.9.1-no-test-install.patch
+dfe2e1d89223591960843067e008fa2d  pygame-1.9.1-porttime.patch
+1c4cdc708d17c8250a2d78ef997222fc  pygame-1.9.1release.tar.gz
+337a02144de2dc60ceea20f731fa5f1b  pygame-png-leak.patch
+b94e41bece7293e03a1d5f2d21da2f78  pygame-remove-v4l.patch

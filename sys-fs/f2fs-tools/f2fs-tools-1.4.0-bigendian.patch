@@ -1,0 +1,11 @@
+diff -up f2fs-tools-1.4.0/include/f2fs_fs.h.orig f2fs-tools-1.4.0/include/f2fs_fs.h
+--- f2fs-tools-1.4.0/include/f2fs_fs.h.orig	2015-01-03 09:45:23.000000000 +0100
++++ f2fs-tools-1.4.0/include/f2fs_fs.h	2015-01-03 09:45:20.000000000 +0100
+@@ -34,6 +34,7 @@ typedef unsigned long	pgoff_t;
+ #define cpu_to_le32(x)	((__u32)(x))
+ #define cpu_to_le64(x)	((__u64)(x))
+ #elif __BYTE_ORDER == __BIG_ENDIAN
++#include <byteswap.h>
+ #define le16_to_cpu(x)	bswap_16(x)
+ #define le32_to_cpu(x)	bswap_32(x)
+ #define le64_to_cpu(x)	bswap_64(x)

@@ -1,0 +1,8 @@
+# Android devices - UDEV Rule
+
+# For ASUS Transformer TF101
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0b05", ATTRS{idProduct}=="4e0f", SYMLINK+="libmtp-%k", MODE="0666", GROUP="users"
+# For Samsung GT
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04e8", ATTRS{idProduct}=="6860", SYMLINK+="libmtp-%k", MODE="0666", GROUP="users"
+
+RUN+="udev-acl --action=$env{action} --device=$env{DEVNAME}"

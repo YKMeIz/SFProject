@@ -1,0 +1,5 @@
+be23120f342250e8352f6499cb960fd2  mpd-0.18.11.tar.xz
+f8a114356a034690ada9dd6706196ccc  mpd-0.18.11.tar.xz.sig
+d1f96d157fba01c12ef48e80338e744d  mpd-0.18-mpdconf.patch
+3fa753764e94260fc0437b49fed69b7b  mpd.logrotate
+d52386018cdded7fe2157fa907bb49c8  mpd.tmpfiles.d

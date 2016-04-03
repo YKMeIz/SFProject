@@ -1,0 +1,11 @@
+DSSI 1.1.1 Release Notes
+
+DSSI is a plugin API for software instruments with user interfaces,
+permitting them to be hosted in-process by audio applications. It is
+intended to be simple, GUI-toolkit-agnostic, and slightly biased
+towards familiarity with MIDI. The DSSI distribution package
+contains a JACK/ALSA-sequencer reference host and some plugins as
+well as the specification and header. 
+
+Changes: The only change since the 1.1.0 release is a fix to a crash
+on startup in one of the example plugins (less_trivial_synth).

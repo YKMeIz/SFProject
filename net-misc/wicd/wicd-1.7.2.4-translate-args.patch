@@ -1,0 +1,12 @@
+diff -up wicd-1.7.2.4/wicd/misc.py.orig wicd-1.7.2.4/wicd/misc.py
+--- wicd-1.7.2.4/wicd/misc.py.orig	2014-09-25 15:58:24.170052173 -0400
++++ wicd-1.7.2.4/wicd/misc.py	2014-09-25 16:00:04.175052173 -0400
+@@ -433,7 +433,7 @@ def sanitize_config(s):
+ 
+     # s is a dbus.String -- since we don't allow unicode property keys,
+     # make it simple.
+-    return str(s).translate(None, table)
++    return str(s).translate(table)
+ 
+ def sanitize_escaped(s):
+     """ Sanitize double-escaped unicode strings. """

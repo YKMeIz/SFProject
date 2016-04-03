@@ -1,0 +1,31 @@
+From d9c55e9192e8fbd5c84b6a7bfbf28ed88e119717 Mon Sep 17 00:00:00 2001
+From: Pierre-Yves Chibon <pingou@pingoured.fr>
+Date: Wed, 1 Aug 2012 22:30:12 +0200
+Subject: [PATCH] Let allow the signal.SIGTERM to fail
+
+If os.kill(pid, signal.SIGTERM) fails, currently guake fails as well
+we should allow this command to fail withouth throwing an
+exception.
+---
+ src/guake |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/src/guake b/src/guake
+index 6d8f9c5..72ea56e 100644
+--- a/src/guake
++++ b/src/guake
+@@ -1259,7 +1259,10 @@ class Guake(SimpleGladeApp):
+         call this in another thread. This doesn't change any thing in
+         UI, so you can use python's start_new_thread.
+         """
+-        os.kill(pid, signal.SIGTERM)
++        try:
++            os.kill(pid, signal.SIGTERM)
++        except OSError:
++            pass
+         num_tries = 30
+ 
+         while num_tries > 0:
+-- 
+1.7.7.6
+

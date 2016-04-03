@@ -1,0 +1,52 @@
+From a01873693afcfcc689a108079b31837e16b79e1e Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <xscreensaver-owner@fedoraproject.org>
+Date: Sun, 1 Feb 2015 00:02:59 +0900
+Subject: [PATCH] visual.c: pick_best_gl_visual fix one byte ahead access
+
+gcc5 -fsanitize=address detected the following error
+
+==29284==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6030000a067c at pc 0x000000453543 bp 0x7fff014d7fa0 sp 0x7fff014d7f90
+READ of size 4 at 0x6030000a067c thread T0
+    #0 0x453542 in pick_best_gl_visual ../../utils/visual.c:298
+    #1 0x453542 in get_visual ../../utils/visual.c:132
+    #2 0x415f00 in select_visual ../../driver/windows.c:1929
+    #3 0x420c34 in select_visual_of_hack ../../driver/subprocs.c:769
+    #4 0x423d4a in spawn_screenhack ../../driver/subprocs.c:989
+    #5 0x407994 in main_loop ../../driver/xscreensaver.c:1281
+    #6 0x407994 in main ../../driver/xscreensaver.c:1559
+    #7 0x37ae2209df in __libc_start_main (/lib64/libc.so.6+0x37ae2209df)
+    #8 0x409de8 in _start (/home/tasaka1/rpmbuild/fedora-specific/xscreensaver/master/xscreensaver-5.32/x86_64-unknown-linux-gnu/driver/xscreensaver+0x409de8)
+
+0x6030000a067c is located 0 bytes to the right of 28-byte region [0x6030000a0660,0x6030000a067c)
+allocated by thread T0 here:
+    #0 0x7f28f212037a in malloc (/lib64/libasan.so.2+0x9637a)
+    #1 0x37b2a21fa8 in XListDepths (/lib64/libX11.so.6+0x37b2a21fa8)
+    #2 0x62100001b8ff  (<unknown module>)
+
+man XListDepths says
+The XListDepths function returns the array of depths that are available
+on the specified screen.  If the specified screen_number is valid and
+sufficient memory for the array can be allocated, XListDepths sets
+count_return to the number of available depths.
+
+So fix XListDepths return usage.
+---
+ utils/visual.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/utils/visual.c b/utils/visual.c
+index b3f0606..f0cd20d 100644
+--- a/utils/visual.c
++++ b/utils/visual.c
+@@ -295,7 +295,7 @@ pick_best_gl_visual (Screen *screen)
+ 
+   int ndepths = 0;
+   int *depths = XListDepths (dpy, screen_number (screen), &ndepths);
+-  int screen_depth = depths[ndepths];
++  int screen_depth = (depths && ndepths) ? depths[ndepths - 1] : 0;
+   XFree (depths);
+ 
+   vi_in.class = TrueColor;
+-- 
+2.2.2
+

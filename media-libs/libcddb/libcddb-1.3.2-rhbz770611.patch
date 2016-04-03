@@ -1,0 +1,14 @@
+diff -up libcddb-1.3.2/lib/cddb_net.c~ libcddb-1.3.2/lib/cddb_net.c
+--- libcddb-1.3.2/lib/cddb_net.c~	2009-03-01 04:28:07.000000000 +0100
++++ libcddb-1.3.2/lib/cddb_net.c	2011-12-29 15:54:30.180122335 +0100
+@@ -19,6 +19,10 @@
+     Boston, MA  02111-1307, USA.
+ */
+ 
++/* The way we use setjmp/longjmp to catch DNS timeouts is not compatible
++   with the extra checks FORTIFY_SOURCE causes to happen on longjmp */
++#undef _FORTIFY_SOURCE
++
+ #include "cddb/cddb_ni.h"
+ 
+ #include <errno.h>

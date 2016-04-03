@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=PAC
+Comment=Perl Auto Connector (auto start)
+Terminal=false
+Icon=pac
+Type=Application
+Exec=pac
+StartupNotify=true
+Name[en_US]=PAC
+Comment[en_US]=Perl Auto Connector
+Categories=Applications;Network;
+X-GNOME-Autostart-enabled=false
+

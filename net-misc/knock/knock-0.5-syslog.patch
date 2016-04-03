@@ -1,0 +1,12 @@
+diff -Naur knock-0.5.orig/src/knockd.c knock-0.5/src/knockd.c
+--- knock-0.5.orig/src/knockd.c	Mon Jun 27 07:11:34 2005
++++ knock-0.5/src/knockd.c	Thu Mar  2 13:14:04 2006
+@@ -183,7 +183,7 @@
+ 		strncpy(o_int, "eth0", sizeof(o_int));	/* no explicit termination needed */
+ 	}
+ 	if(o_usesyslog) {
+-		openlog("knockd", 0, LOG_USER);
++		openlog("knockd", 0, LOG_AUTHPRIV);
+ 	}
+ 	if(strlen(o_logfile)) {
+ 		/* open the log file */

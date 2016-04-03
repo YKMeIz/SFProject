@@ -1,0 +1,48 @@
+--- latexpand.old	2015-12-14 14:23:11.624505410 -0500
++++ latexpand	2015-12-14 14:37:45.196569657 -0500
+@@ -123,7 +123,7 @@ sub process_file
+ 		# ignored by LaTeX, but we don't allow anything before
+ 		# to avoid e.g. \verb|\end{document}| from terminating
+ 		# the file.
+-		if (!$keep_comments && $line =~ /^[ \t]*\\end{document}/) {
++		if (!$keep_comments && $line =~ /^[ \t]*\\end\{document}/) {
+ 			last;
+ 		}
+ 	}
+@@ -133,7 +133,8 @@ sub process_file
+ 
+ sub process_line
+ {
+-	my ($_, $prefix, $file) = @_;
++	my ($line, $prefix, $file) = @_;
++	$_ = $line;
+ 	# Consider \makeatletter only in preamble, because we do want
+ 	# to warn on \someCommand{\makeatletter\command@with@arobase}.
+ 	if ($in_preamble && /^[^%]*\\makeatletter/) {
+@@ -203,7 +204,7 @@ sub process_line
+ 	if ($expand_usepackage) {
+ 		# Don't bother with before and after text, we just require the
+ 		# usepackage to be alone on its line.
+-		if (my ($package_name) = /^\s*\\usepackage{([^}]*)}\s*(%.*)?$/) {
++		if (my ($package_name) = /^\s*\\usepackage\{([^}]*)}\s*(%.*)?$/) {
+ 			my $full = find_file($package_name . ".sty", $TEXINPUTS);
+ 			if ($full) {
+ 				say $prefix . "Found package file: $full\n";
+@@ -216,7 +217,7 @@ sub process_line
+ 	}
+ 	if ($expand_bbl) {
+ 		if (my ($before, $bib_name, $after)
+-			 = /^(.*)\\bibliography{([^}]*)}(.*)$/) {
++			 = /^(.*)\\bibliography\{([^}]*)}(.*)$/) {
+ 			# The BBL file is not necessarily $bib_name.
+ 			# Take it from the command-line.
+ 			print $before . $nl;
+@@ -233,7 +234,7 @@ sub process_line
+ 			print STDERR "$full\n";
+ 		}
+ 	}
+-	if (/^[ \t]*\\begin{document}/) {
++	if (/^[ \t]*\\begin\{document}/) {
+ 		$in_preamble = 0;
+ 		if ($makeatletter) {
+ 			print '\makeatletter' . $nl;

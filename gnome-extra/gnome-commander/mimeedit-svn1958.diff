@@ -1,0 +1,107 @@
+Index: mimeedit.sh
+===================================================================
+--- mimeedit.sh	(revision 1962)
++++ mimeedit.sh	(working copy)
+@@ -63,11 +63,13 @@
+ # Build a list with registered apps for this mimetype.
+ #
+ function deflist (){
+-  if [ -e "$UTMP.avail" ]; then cleanup;fi
++  TMP_AVAIL="`mktemp /tmp/gnome-commander.XXXXXX`"
++  TMP_CHOSEN="`mktemp /tmp/gnome-commander.XXXXXX`"
++  # if [ -e "$UTMP.avail" ]; then cleanup;fi
+   # Create the list in "$UTMP.avail" to be used by the zenity list-box
+   if [ "$NONEW" == 1 ]
+   then
+-   echo "FALSE Add_New_App New" > "$UTMP.avail"
++   echo "FALSE Add_New_App New" > $TMP_AVAIL
+   fi
+   # Get all sub-mimetypes, one per row.
+   SUB="$(grep -hs "^$MTPE" $SUBC $G_CACHE $U_CACHE | awk -F= '{print $1}' | sed 's/ /\n/g')"
+@@ -77,14 +79,14 @@
+   then
+     for i in $(echo "$MTPEs" | sort -u); do
+       echo "FALSE $i $(grep -hs "^Name=" $GDATA_DIR/$i $DATA_DIR/$i | \
+-      sed 's/Name=//;s/ /_/g')" >> "$UTMP.avail"
++      sed 's/Name=//;s/ /_/g')" >> $TMP_AVAIL
+     done
+   fi
+   # Change FALSE to TRUE for the default app. 
+-  if grep -q "desktop" "$UTMP.avail"
++  if grep -q "desktop" $TMP_AVAIL
+   then
+     DEF_APP=$(gnomevfs-info -s "$ARGU" | grep "Default app" | sed 's/.*: //')
+-    sed -i "s|FALSE $DEF_APP|TRUE $DEF_APP|" "$UTMP.avail"
++    sed -i "s|FALSE $DEF_APP|TRUE $DEF_APP|" $TMP_AVAIL
+   fi
+   # Show the list
+   zenity --height="350" --width="550" --list --radiolist --text \
+@@ -99,17 +101,17 @@
+ 
+ Please select" \
+   --column "Pick" --column ".desktop file" --column "Application" \
+-  $(cat "$UTMP.avail") > "$UTMP.chosen" 
++  $(cat $TMP_AVAIL ) > $TMP_CHOSEN 
+   retval=$?
+-  choice=$(cat "$UTMP.chosen")
++  choice=$(cat $TMP_CHOSEN )
+   if grep -q "$MTPE=$choice" $U_DEF
+   then
+     retval=2
+   fi
+   case $retval in
+   0)
+-    DEF_CH=$(grep -s "$choice" "$UTMP.avail" | awk '{print $2}')
+-    DEF_NME=$(grep -s "$choice" "$UTMP.avail" | awk '{print $3}')
++    DEF_CH=$(grep -s "$choice" $TMP_AVAIL | awk '{print $2}')
++    DEF_NME=$(grep -s "$choice" $TMP_AVAIL | awk '{print $3}')
+     if [ "$DEF_CH" = Add_New_App ]
+     then
+       newmime
+@@ -305,8 +307,8 @@
+ # Remove tempfiles.
+ #
+ function cleanup (){
+-  rm -f "$UTMP.avail"
+-  rm -f "$UTMP.chosen"
++  rm -f $TMP_AVAIL
++  rm -f $TMP_CHOSEN
+ }
+ 
+ #
+@@ -342,6 +344,7 @@
+ # The .desktop file editor
+ #
+ function dtfedit (){ 
++  TMPFILE=`mktemp /tmp/gnome-commander.XXXXXX`
+   USER_DTF="$DT_FILE-$EXT"
+   if [ -n "$DT_FILE" ]
+   then 
+@@ -350,15 +353,22 @@
+     then
+       TO_EDIT="$DATA_DIR/$USER_DTF"
+     else
+-      TO_EDIT="$GDATA_DIR/$DT_FILE.desktop"
++      DT_FILE_PREFIX=$(echo $DT_FILE | sed -e 's|-[0-9][0-9]*||')
++      DT_FILE_SUFFIX=$(echo $DT_FILE | sed -n -e 's|^.*-\([0-9][0-9]*\)$|\1|p')
++      if [ -e $DATA_DIR/${DT_FILE_PREFIX}-usercreated-$DT_FILE_SUFFIX.desktop ]
++      then
++	TO_EDIT="$DATA_DIR/${DT_FILE_PREFIX}-usercreated-$DT_FILE_SUFFIX.desktop"
++      else
++        TO_EDIT="$GDATA_DIR/$DT_FILE.desktop"
++      fi
+     fi
+     cat "$TO_EDIT" | zenity --height="350" --width="550" --text-info --editable \
+-    --title "Edititng the file: $USER_DTF" > $UTMP.$USER_DTF 
+-    if [ -s $UTMP.$USER_DTF ]
++    --title "Edititng the file: $USER_DTF" > $TMPFILE
++    if [ -s $TMPFILE ]
+     then 
+-      mv $UTMP.$USER_DTF $DATA_DIR/$USER_DTF 
++      mv $TMPFILE $DATA_DIR/$USER_DTF
+     else 
+-      rm -f $UTMP.$USER_DTF 
++      rm -f $TMPFILE
+       DT_FILE=""
+     fi
+   fi

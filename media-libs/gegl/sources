@@ -1,0 +1,6 @@
+c6d463325de27893b41f7482c9997d08  0001-matting-levin-Fix-the-build-with-recent-suitesparse-.patch
+f160c308ccf772ad8955a8be1d9cf2f5  gegl-0.2.0-CVE-2012-4433.patch
+8f26f72666767b9ccef9bf06721d96e3  gegl-0.2.0-linker-flags.patch
+dff0f1008ef851fc0ece706b382c3d10  gegl-0.2.0-lua-5.2.patch
+7c1a4fced1c2cdfe43700db17e3468aa  gegl-0.2.0-remove-src-over-op.patch
+32b00002f1f1e316115c4ed922e1dec8  gegl-0.2.0.tar.bz2

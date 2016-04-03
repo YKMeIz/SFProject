@@ -1,0 +1,30 @@
+From b824d36c28124955eda4aced5e637aa75eea4d6c Mon Sep 17 00:00:00 2001
+From: Ilia Mirkin <imirkin@alum.mit.edu>
+Date: Wed, 13 Jan 2016 11:55:06 -0500
+Subject: [PATCH] HAS_DIRTYTRACKING_ROTATION also supports multiple CRTCs
+
+A port of commit ff9a6b6f from xf86-video-ati.
+
+Bugzilla: https://bugs.freedesktop.org/show_bug.cgi?id=93670
+Reported-by: Thomas D. <thfrdue@gmx.de>
+Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
+---
+ src/drmmode_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/drmmode_display.c b/src/drmmode_display.c
+index 1dc48c5..b950f42 100644
+--- a/src/drmmode_display.c
++++ b/src/drmmode_display.c
+@@ -704,7 +704,7 @@ drmmode_set_scanout_pixmap(xf86CrtcPtr crtc, PixmapPtr ppix)
+ 			if (max_height < iter->mode.VDisplay)
+ 				max_height = iter->mode.VDisplay;
+ 		}
+-#ifndef HAS_DIRTYTRACKING2
++#if !defined(HAS_DIRTYTRACKING_ROTATION) && !defined(HAS_DIRTYTRACKING2)
+ 	if (iter != crtc) {
+ 		ErrorF("Cannot do multiple crtcs without X server dirty tracking 2 interface\n");
+ 		return FALSE;
+-- 
+2.5.0
+

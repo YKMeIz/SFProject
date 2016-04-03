@@ -1,0 +1,67 @@
+From 273729db903c73d39fd129ab8d317309755b3eac Mon Sep 17 00:00:00 2001
+From: Jan Chaloupka <jchaloup@redhat.com>
+Date: Thu, 15 Oct 2015 17:37:15 +0200
+Subject: [PATCH] use system golang packages
+
+---
+ diff.go    | 2 +-
+ rewrite.go | 2 +-
+ save.go    | 2 +-
+ vcs.go     | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/diff.go b/diff.go
+index 9f78c9c..5328b43 100644
+--- a/diff.go
++++ b/diff.go
+@@ -5,7 +5,7 @@ import (
+ 	"fmt"
+ 	"log"
+ 
+-	"github.com/tools/godep/Godeps/_workspace/src/github.com/pmezard/go-difflib/difflib"
++	"github.com/pmezard/go-difflib/difflib"
+ )
+ 
+ var cmdDiff = &Command{
+diff --git a/rewrite.go b/rewrite.go
+index 7f26423..fa331a5 100644
+--- a/rewrite.go
++++ b/rewrite.go
+@@ -13,7 +13,7 @@ import (
+ 	"go/printer"
+ 	"go/token"
+ 
+-	"github.com/tools/godep/Godeps/_workspace/src/github.com/kr/fs"
++	"github.com/kr/fs"
+ )
+ 
+ // rewrite visits the go files in pkgs, plus all go files
+diff --git a/save.go b/save.go
+index 2ec464b..a1d5d36 100644
+--- a/save.go
++++ b/save.go
+@@ -12,7 +12,7 @@ import (
+ 	"regexp"
+ 	"strings"
+ 
+-	"github.com/tools/godep/Godeps/_workspace/src/github.com/kr/fs"
++	"github.com/kr/fs"
+ )
+ 
+ var cmdSave = &Command{
+diff --git a/vcs.go b/vcs.go
+index e6011c7..c99e5c1 100644
+--- a/vcs.go
++++ b/vcs.go
+@@ -8,7 +8,7 @@ import (
+ 	"path/filepath"
+ 	"strings"
+ 
+-	"github.com/tools/godep/Godeps/_workspace/src/golang.org/x/tools/go/vcs"
++	"golang.org/x/tools/go/vcs"
+ )
+ 
+ // VCS represents a version control system.
+-- 
+1.9.3
+

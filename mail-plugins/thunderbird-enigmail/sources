@@ -1,0 +1,11 @@
+4a2bbcb020bdb282a660fda8c70d5608  enigmail-1.6.tar.gz
+258c9ad13d6033673b4ebe9ba6c55a4d  mozilla-build-arm.patch
+b85cf25a19309dc024777dc71275227a  rhbz-966424.patch
+38f4b2e574751e4e6cbe36dc8b3bce20  thunderbird-24.0.source.tar.bz2
+b63b60ce93924ff781c84a0a162610c6  thunderbird-8.0-enable-addons.patch
+dcebd48ea59b8d40716486f530a592ab  thunderbird-install-dir.patch
+2703e8380817d274aa04cb86005b11bf  thunderbird-mozconfig
+8cd6359fe44f904b491fa336b00d0ad6  thunderbird-mozconfig-branded
+bc3fc437b24b3fb6805ba85f5e7d7e17  xulrunner-10.0-gcc47.patch
+276548a75edb3bc52160c639f05ec5d7  xulrunner-10.0-secondary-ipc.patch
+f4541ba8e79a61127d3d0de1129acdc0  xulrunner-24.0-jemalloc-ppc.patch

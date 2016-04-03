@@ -1,0 +1,6 @@
+32b901130810ff53b217b615342a8e84  lmms-1.1.3-gcc47.patch
+0be6bb850c228a93a576e7168576cecf  lmms-1.1.3-libexecdir.patch
+7695cad5b31d20034cdcb117e8240d7d  lmms-1.1.3-no_werror.patch
+ad9fd350907cc817c6a2d67cf497035c  lmms-1.1.3-vst-nowine.patch
+ca8d174d7a8ad732515cd6f2762289ed  README.fedora
+906211b524e916d0238e476d5fff7dbf  v1.1.3.stripped.tar.gz

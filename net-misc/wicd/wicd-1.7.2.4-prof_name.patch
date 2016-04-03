@@ -1,0 +1,12 @@
+diff -up wicd-1.7.2.4/curses/netentry_curses.py.orig wicd-1.7.2.4/curses/netentry_curses.py
+--- wicd-1.7.2.4/curses/netentry_curses.py.orig	2014-11-25 11:22:47.141413897 -0500
++++ wicd-1.7.2.4/curses/netentry_curses.py	2014-11-25 11:25:19.904413897 -0500
+@@ -264,7 +264,7 @@ class WiredSettingsDialog(AdvancedSettin
+         self.set_values()
+         
+         self.prof_name = name
+-        title = ''.join([_('Configuring preferences for wired profile'), self.prog_name])
++        title = ''.join([_('Configuring preferences for wired profile'), self.prof_name])
+         self._w.header = urwid.Text( ('header',title),align='right' )
+ 
+         self.set_values()

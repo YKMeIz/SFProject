@@ -1,0 +1,5 @@
+5bcdbaced54f40b6cb1e9c9a8dbac411  miredo-1.2.6.tar.xz
+84651ea60e9ab2fb000dc87a153d6db5  miredo-client.service
+6ad4ccc5de84ae779b5bb2d232e5872f  miredo-config-not-exec
+25c8bd16752536e5e06d347624a24f51  miredo-server.service
+699360ebc28340c40d89877ed4d799e1  reread-resolv-before-resolv-ipv4.patch

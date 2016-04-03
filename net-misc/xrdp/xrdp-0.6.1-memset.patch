@@ -1,0 +1,16 @@
+diff -ruN xrdp-v0.6.1-orig/common/os_calls.c xrdp-v0.6.1/common/os_calls.c
+--- xrdp-v0.6.1-orig/common/os_calls.c	2013-11-10 07:11:15.000000000 +1100
++++ xrdp-v0.6.1/common/os_calls.c	2014-04-01 18:29:15.585633769 +1100
+@@ -567,10 +567,10 @@
+ {
+   struct sockaddr_in s;
+   struct in_addr in;
+-  int len;
++  socklen_t len;
+   int ip_port;
+ 
+-  memset(&s,0,sizeof(&s));
++  memset(&s,0,sizeof(s));
+   len = sizeof(s);
+   getpeername(rcv_sck,(struct sockaddr*)&s, &len);
+ 

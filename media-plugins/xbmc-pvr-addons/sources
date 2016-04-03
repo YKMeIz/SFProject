@@ -1,0 +1,7 @@
+e2f68196be58f3b935288d32d4dd28ee  xbmc-pvr-addons-13.0-snprintf.patch
+f8b1f042003f7ed946c7b66e163fefd9  xbmc-pvr-addons-13.0-use_external_jsoncpp.patch
+a06c4fa6822a902f101bb7e977b126cd  xbmc-pvr-addons-13.0-use_external_rapidxml.patch
+c2ce3f308cd5e2494f486f0ed93ab317  xbmc-pvr-addons-13.0-use_external_tinyxml2.patch
+5cf862a65e535a8aea72940ca8967a34  xbmc-pvr-addons-13.0-use_external_tinyxml.patch
+b6a39cc52f186da0aa657068a8846fba  xbmc-pvr-addons-13.0-use_external_xbmc.patch
+6a9889c01d333ffe9c0d80ebeb4bafa8  xbmc-pvr-addons-be12a8d.tar.gz

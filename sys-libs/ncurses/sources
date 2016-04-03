@@ -1,0 +1,6 @@
+4eaddf7c83e01ebad63bb5ba999045ca  ncurses-6.0-20160116.tgz
+421a8dc389382f8ee4f2ef5641394877  ncurses-compheader.patch
+7dcb457965cb106d5a88758916ebb038  ncurses-config.patch
+0dfdf19fdea00d5e40186979452bb01d  ncurses-kbs.patch
+be62ca24da418d66b9bdc71e0638ea48  ncurses-libs.patch
+1c2320d8be5822456f86168ade3b88b4  ncurses-urxvt.patch

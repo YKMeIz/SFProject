@@ -1,0 +1,94 @@
+From 76f6a004b7df2ea686536e5197b0a99d8522d55f Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Tue, 10 Feb 2015 09:23:08 +0900
+Subject: [PATCH] flush_dialog_changes_and_save: strdup for TEXT entry
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1190846
+
+Backtrace shows:
+Thread 1 (Thread 0xb60f18c0 (LWP 15079)):
+#0  0xb7767bac in __kernel_vsyscall ()
+#1  0xb6683297 in __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:55
+#2  0xb6684b69 in __GI_abort () at abort.c:89
+#3  0xb66c3ade in __libc_message (do_abort=2, fmt=0xb67ce84c "*** Error in `%s': %s: 0x%s ***\n") at ../sysdeps/posix/libc_fatal.c:175
+#4  0xb66cb0d6 in malloc_printerr (ptr=<optimized out>, str=0xb67ce91c "double free or corruption (!prev)", action=<optimized out>) at malloc.c:4974
+#5  _int_free (av=0xb681f840 <main_arena>, p=<optimized out>, have_lock=0) at malloc.c:3841
+#6  0xb66cf346 in __GI___libc_free (mem=mem@entry=0x93fadb0) at malloc.c:2951
+#7  0x0805b6a6 in flush_dialog_changes_and_save (s=s@entry=0xbfca5c3c) at ../../driver/demo-Gtk.c:1712
+#8  0x0805e730 in pref_changed_cb (user_data=0x0, user_data@entry=0xbfca5c3c, widget=widget@entry=0x93c99a8) at ../../driver/demo-Gtk.c:1819
+#9  pref_changed_event_cb (widget=widget@entry=0x93c99a8, event=0x968e5e8, user_data=user_data@entry=0x0) at ../../driver/demo-Gtk.c:1827
+.....
+
+Related lines:
+
+   1491 static Bool
+   1492 flush_dialog_changes_and_save (state *s)
+   1493 {
+
+   1554 # define PATHNAME(FIELD,NAME) \
+   1555     w = name_to_widget (s, (NAME)); \
+   1556     (FIELD) = normalize_directory (gtk_entry_get_text (GTK_ENTRY (w)))
+
+   1557
+   1558 # define TEXT(FIELD,NAME) \
+   1559     w = name_to_widget (s, (NAME)); \
+   1560     (FIELD) = (char *) gtk_entry_get_text (GTK_ENTRY (w)) <==========
+
+   1591     TEXT     (p2->text_literal, "text_entry");
+   1592     PATHNAME (p2->text_file,    "text_file_entry");
+   1593     PATHNAME (p2->text_program, "text_program_entry");
+   1594     PATHNAME (p2->text_program, "text_program_entry");
+   1595     TEXT     (p2->text_url,     "text_url_entry");
+
+   1694 # define COPYSTR(FIELD,NAME) \
+   1695   if (!p->FIELD || \
+   1696       !p2->FIELD || \
+   1697       strcmp(p->FIELD, p2->FIELD)) \
+   1698     { \
+   1699       changed = True; \
+   1700       if (s->debug_p) \
+   1701         fprintf (stderr, "%s: %s => \"%s\"\n", blurb(), NAME, p2->FIELD); \
+   1702     } \
+   1703   if (p->FIELD && p->FIELD != p2->FIELD) \
+   1704     free (p->FIELD); \  <==========
+   1705   p->FIELD = p2->FIELD; \
+   1706   p2->FIELD = 0
+
+   1708   COPYSTR(image_directory, "image_directory");
+   1709   COPYSTR(text_literal,    "text_literal");
+   1710   COPYSTR(text_file,       "text_file");
+   1711   COPYSTR(text_program,    "text_program");
+   1712   COPYSTR(text_url,        "text_url"); <==========
+
+At the line 1712, this tries to free() a string returned by
+gtk_entry_get_text(), but GTK manual says it must not be free()ed.
+
+https://developer.gnome.org/gtk2/stable/GtkEntry.html#gtk-entry-get-text
+
+Actually Chaning "Text" in "Text Manipulation" also causes this segv.
+
+Note that for PATHNAME() string, the string returned by
+gtk_entry_get_text() is passed to normalize_directory(), and
+normalize_directory() returns malloc()ed buffer.
+
+To fix this, use strdup()ed string for TEXT entry.
+---
+ driver/demo-Gtk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/driver/demo-Gtk.c b/driver/demo-Gtk.c
+index d276ecc..27d2316 100644
+--- a/driver/demo-Gtk.c
++++ b/driver/demo-Gtk.c
+@@ -1557,7 +1557,7 @@ flush_dialog_changes_and_save (state *s)
+ 
+ # define TEXT(FIELD,NAME) \
+     w = name_to_widget (s, (NAME)); \
+-    (FIELD) = (char *) gtk_entry_get_text (GTK_ENTRY (w))
++    (FIELD) = (char *) g_strdup(gtk_entry_get_text (GTK_ENTRY (w)))
+ 
+   MINUTES  (&p2->timeout,         "timeout_spinbutton");
+   MINUTES  (&p2->cycle,           "cycle_spinbutton");
+-- 
+2.1.0
+

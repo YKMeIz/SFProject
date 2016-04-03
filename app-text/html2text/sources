@@ -1,0 +1,10 @@
+7e65893844c9e38ea73c0d033a4a2801  200-close-files-inside-main-loop.patch
+8056a183364b1d6fc9ae0b9cde92c9d4  400-remove-builtin-http-support.patch
+fad0774cef960fea982aa889a96f8384  500-utf8-support.patch
+252252c99875054b840938e48fa23ce9  510-disable-backspaces.patch
+77280d5cd14b2477eb769802c2996619  600-multiple-meta-tags.patch
+51589a740349d3e8b4d870e289a73fbd  611-recognize-input-encoding.patch
+ed199ea890152b9f4b30835f724df7b6  630-recode-output-to-locale-charset.patch
+71cfefa8cb23fe9d606aed74119dda0e  800-replace-zeroes-with-null.patch
+17dacf725c6c580e33f4b9b6da4a4bd6  810-fix-deprecated-conversion-warnings.patch
+6097fe07b948e142315749e6620c9cfc  html2text-1.3.2a.tar.gz

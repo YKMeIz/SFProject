@@ -1,0 +1,80 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ca1531d8e601e423002f6ffa490f2d5bb8dbf5d8..eaf116d14a7de5b330db3823e93477653319177c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -142,12 +142,19 @@ if(K3B_BUILD_FFMPEG_DECODER_PLUGIN)
+       int main() { enum AVMediaType t = AVMEDIA_TYPE_UNKNOWN; return 0; }
+       " HAVE_FFMPEG_AVMEDIA_TYPE)
+     check_c_source_compiles("
++      #define CALC_FFMPEG_VERSION(a,b,c) ( a<<16 | b<<8 | c )
+       #ifdef NEWFFMPEGAVCODECPATH
+       #include <libavcodec/avcodec.h>
+       #else
+       #include <ffmpeg/avcodec.h>
+       #endif
+-      int main() { enum CodecID t = CODEC_ID_MP3; return 0; }
++      int main() {
++      #if LIBAVCODEC_BUILD >= CALC_FFMPEG_VERSION(54,25,0)
++      # Not needed here. AV_CODEC_ID_MP3 exists. return 0;
++      #else
++      enum CodecID t = CODEC_ID_MP3; return 0;
++      #endif
++      }
+       " HAVE_FFMPEG_CODEC_MP3)
+ 
+     cmake_pop_check_state()
+diff --git a/plugins/decoder/ffmpeg/k3bffmpegwrapper.h b/plugins/decoder/ffmpeg/k3bffmpegwrapper.h
+index 1ec36b6e465a08f7fe42c80b926e98683be75a5e..88c44f3ec484be4ce0aaa719e219e4a61ec4ac25 100644
+--- a/plugins/decoder/ffmpeg/k3bffmpegwrapper.h
++++ b/plugins/decoder/ffmpeg/k3bffmpegwrapper.h
+@@ -18,6 +18,7 @@
+ 
+ #include "k3bmsf.h"
+ 
++#define CALC_FFMPEG_VERSION(a,b,c) ( a<<16 | b<<8 | c )
+ 
+ 
+ /**
+diff --git a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
+index a5ef087a5ac3a2dc8b7d385b9c3a2e16bf6622bb..5e97cbd7e8b0790f355e6d8b29b8dc55ea099617 100644
+--- a/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
++++ b/plugins/decoder/ffmpeg/k3bffmpegwrapper.cpp
+@@ -67,6 +67,13 @@ extern "C" {
+ #  define CODEC_ID_MP3 CODEC_ID_MP3LAME
+ #endif
+ 
++// Has been deprecated for ages. Now removed. For now do what ffmpeg does
++// http://ffmpeg.org/pipermail/ffmpeg-cvslog/2012-August/053785.html
++// 192000 = 1 second of 48khz 32bit audio
++#ifndef AVCODEC_MAX_AUDIO_FRAME_SIZE
++#define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000
++#endif
++
+ K3bFFMpegWrapper* K3bFFMpegWrapper::s_instance = 0;
+ 
+ 
+@@ -209,6 +216,16 @@ int K3bFFMpegFile::type() const
+ QString K3bFFMpegFile::typeComment() const
+ {
+     switch( type() ) {
++#if LIBAVCODEC_BUILD >= CALC_FFMPEG_VERSION(54,25,0)
++    case AV_CODEC_ID_WMAV1:
++        return i18n("Windows Media v1");
++    case AV_CODEC_ID_WMAV2:
++        return i18n("Windows Media v2");
++    case AV_CODEC_ID_MP3:
++        return i18n("MPEG 1 Layer III");
++    case AV_CODEC_ID_AAC:
++        return i18n("Advanced Audio Coding (AAC)");
++#else
+     case CODEC_ID_WMAV1:
+         return i18n("Windows Media v1");
+     case CODEC_ID_WMAV2:
+@@ -217,6 +234,7 @@ QString K3bFFMpegFile::typeComment() const
+         return i18n("MPEG 1 Layer III");
+     case CODEC_ID_AAC:
+         return i18n("Advanced Audio Coding (AAC)");
++#endif 
+     default:
+         return QString::fromLocal8Bit( d->codec->name );
+     }

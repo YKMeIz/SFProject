@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <id type="desktop">airtv.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>MIT and BSD-4-Clause and LGPL-2.1+</project_license>
+  <name>AirTV</name>
+  <summary>A Qt GUI to start a RAOP server</summary>
+  <description>
+    <p>
+      AirTV Qt is a GUI to start a RAOP server. Once started, AirTV will add an icon to the system tray using which you can stop the server.
+    </p>
+  </description>
+  <url type="homepage">https://github.com/juhovh/shairplay/</url>
+  <updatecontact>melmorabity_at_fedoraproject.com</updatecontact>
+</application>

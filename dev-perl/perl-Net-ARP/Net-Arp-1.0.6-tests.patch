@@ -1,0 +1,11 @@
+--- Net-ARP/t/arp_lookup.t.orig	2007-01-31 05:33:24.000000000 -0600
++++ Net-ARP/t/arp_lookup.t	2009-10-29 13:07:38.000000000 -0500
+@@ -10,7 +10,7 @@
+ $mac = Net::ARP::arp_lookup("strange_dev_value","127.0.0.1");
+ ok( $mac eq "unknown", "unkown mac on strange dev value -> $mac" );
+ 
+-$mac = Net::ARP::arp_lookup("$fu","127.0.0.1");
++$mac = Net::ARP::arp_lookup("fu","127.0.0.1");
+ ok( $mac eq "unknown", "unkown mac on strange dev value 2 -> $mac" );
+ 
+ $mac = Net::ARP::arp_lookup("eth0","this_is_not_an_ip_address");

@@ -1,0 +1,11 @@
+be0e265fc365ed2a68970509e579305e  geeqie-1.0-double_generic_dialog_close.patch
+1395f8b685de3480f4a7b5172e587a64  geeqie-1.0-fix-fullscreen.patch
+05dbadf72f9ba6a474f1b19970ebd254  geeqie-1.1-bar_keywords.c.diff
+3d2de71e4531b6db0b645ebcccadbcb6  geeqie-1.1-collection-and-history-inexistent-files.patch
+40bb45b901e9a46e194040d41da033b9  geeqie-1.1-editors-NULL.patch
+294d932a03a5d57d1cc6f032f9bba814  geeqie-1.1-filedata-change-notification.patch
+3b95e1cf724e597f33a02f069be60237  geeqie-1.1-large-files.patch
+fd0e89b795ac28d3cc13163bfba7de2b  geeqie-1.1-lcms2.patch
+e31d7291da0532bd21ef27f9cf89f974  geeqie-1.1-LDFLAGS.patch
+1353daf1ca2ebeb6a0ad334053bafa04  geeqie-1.1-percent-char-in-filenames.patch
+e63351988625c84b0fd80bc4eefd923b  geeqie-1.1.tar.gz

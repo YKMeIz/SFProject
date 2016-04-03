@@ -1,0 +1,9 @@
+bf9ee45effd7742651cde0e6de0ca3eb  fvwm-0001-Change-html-viewer-to-xdg-open.patch
+5e245577aabea312a0ab58567979de1f  fvwm-0002-Use-mimeopen-instead-of-EDITOR.patch
+aebe21cfd22feafe488af7f68a1cf3ea  fvwm-0003-Enable-auto-generate-menus-in-the-Setup-Form-config-.patch
+2e00dbcc36424fe35bf6fd17cccc2d6a  fvwm-0004-Increase-number-of-mouse-buttons-supported.patch
+28f8624cba0fc0f62c0655b29bbc5270  fvwm-0005-FvwmPager-be-more-careful-with-window-labels.patch
+a560d73cc4f0ee8a5891725087dfaee1  fvwm-0006-Comply-with-Debian-s-hardening-rules.patch
+090ba4e0c517e8b94f71317951530f69  fvwm-2.6.5.tar.bz2
+9f249a7bfd9494983524c38d04733939  fvwm.desktop
+e1f2ce60f0a49958f12d05dec44420a2  fvwm-xdg-menu.py

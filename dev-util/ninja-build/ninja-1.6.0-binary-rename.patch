@@ -1,0 +1,88 @@
+diff -u -r -U5 --no-dereference ninja-1.6.0/misc/zsh-completion ninja-1.6.0.binary-rename/misc/zsh-completion
+--- ninja-1.6.0/misc/zsh-completion	2015-06-29 13:21:30.000000000 -0400
++++ ninja-1.6.0.binary-rename/misc/zsh-completion	2015-11-16 17:56:39.313149083 -0500
+@@ -1,6 +1,6 @@
+-#compdef ninja
++#compdef ninja ninja-build
+ # Copyright 2011 Google Inc. All Rights Reserved.
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+diff -u -r -U5 --no-dereference ninja-1.6.0/src/msvc_helper_main-win32.cc ninja-1.6.0.binary-rename/src/msvc_helper_main-win32.cc
+--- ninja-1.6.0/src/msvc_helper_main-win32.cc	2015-06-29 13:21:30.000000000 -0400
++++ ninja-1.6.0.binary-rename/src/msvc_helper_main-win32.cc	2015-11-16 17:56:39.244148944 -0500
+@@ -25,11 +25,11 @@
+ 
+ namespace {
+ 
+ void Usage() {
+   printf(
+-"usage: ninja -t msvc [options] -- cl.exe /showIncludes /otherArgs\n"
++"usage: ninja-build -t msvc [options] -- cl.exe /showIncludes /otherArgs\n"
+ "options:\n"
+ "  -e ENVFILE load environment block from ENVFILE as environment\n"
+ "  -o FILE    write output dependency information to FILE.d\n"
+ "  -p STRING  localized prefix of msvc's /showIncludes output\n"
+          );
+diff -u -r -U5 --no-dereference ninja-1.6.0/src/ninja.cc ninja-1.6.0.binary-rename/src/ninja.cc
+--- ninja-1.6.0/src/ninja.cc	2015-06-29 13:21:30.000000000 -0400
++++ ninja-1.6.0.binary-rename/src/ninja.cc	2015-11-16 17:55:54.095057999 -0500
+@@ -188,11 +188,11 @@
+ };
+ 
+ /// Print usage information.
+ void Usage(const BuildConfig& config) {
+   fprintf(stderr,
+-"usage: ninja [options] [targets...]\n"
++"usage: ninja-build [options] [targets...]\n"
+ "\n"
+ "if targets are unspecified, builds the 'default' target (see manual).\n"
+ "\n"
+ "options:\n"
+ "  --version  print ninja version (\"%s\")\n"
+@@ -288,13 +288,13 @@
+     return node;
+   } else {
+     *err = "unknown target '" + path + "'";
+ 
+     if (path == "clean") {
+-      *err += ", did you mean 'ninja -t clean'?";
++      *err += ", did you mean 'ninja-build -t clean'?";
+     } else if (path == "help") {
+-      *err += ", did you mean 'ninja -h'?";
++      *err += ", did you mean 'ninja-build -h'?";
+     } else {
+       Node* suggestion = state_.SpellcheckNode(path);
+       if (suggestion) {
+         *err += ", did you mean '" + suggestion->path() + "'?";
+       }
+@@ -590,11 +590,11 @@
+     case 'r':
+       clean_rules = true;
+       break;
+     case 'h':
+     default:
+-      printf("usage: ninja -t clean [options] [targets]\n"
++      printf("usage: ninja-build -t clean [options] [targets]\n"
+ "\n"
+ "options:\n"
+ "  -g     also clean files marked as ninja generator output\n"
+ "  -r     interpret targets as a list of rules to clean instead\n"
+              );
+diff -u -r -U5 --no-dereference ninja-1.6.0/src/version.cc ninja-1.6.0.binary-rename/src/version.cc
+--- ninja-1.6.0/src/version.cc	2015-06-29 13:21:30.000000000 -0400
++++ ninja-1.6.0.binary-rename/src/version.cc	2015-11-16 17:55:54.167058144 -0500
+@@ -36,11 +36,11 @@
+   ParseVersion(kNinjaVersion, &bin_major, &bin_minor);
+   int file_major, file_minor;
+   ParseVersion(version, &file_major, &file_minor);
+ 
+   if (bin_major > file_major) {
+-    Warning("ninja executable version (%s) greater than build file "
++    Warning("ninja-build executable version (%s) greater than build file "
+             "ninja_required_version (%s); versions may be incompatible.",
+             kNinjaVersion, version.c_str());
+     return;
+   }
+ 

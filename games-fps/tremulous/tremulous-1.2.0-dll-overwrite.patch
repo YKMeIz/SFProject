@@ -1,0 +1,60 @@
+diff --git a/src/qcommon/files.c b/src/qcommon/files.c
+index 656b8fb..afeeb9b 100644
+--- a/src/qcommon/files.c
++++ b/src/qcommon/files.c
+@@ -531,7 +531,7 @@ static void FS_CheckFilenameIsNotExecutable( const char *filename,
+ 		const char *function )
+ {
+ 	// Check if the filename ends with the library extension
+-	if( !Q_stricmp( COM_GetExtension( filename ), DLL_EXT ) )
++	if(COM_CompareExtension(filename, DLL_EXT))
+ 	{
+ 		Com_Error( ERR_FATAL, "%s: Not allowed to manipulate '%s' due "
+ 			"to %s extension\n", function, filename, DLL_EXT );
+diff --git a/src/qcommon/q_shared.c b/src/qcommon/q_shared.c
+index 59ddf2e..c6ab101 100644
+--- a/src/qcommon/q_shared.c
++++ b/src/qcommon/q_shared.c
+@@ -97,6 +97,30 @@ void COM_StripExtension( const char *in, char *out, int destsize ) {
+ 		out[length] = 0;
+ }
+ 
++/*
++============
++COM_CompareExtension
++
++string compare the end of the strings and return qtrue if strings match
++============
++*/
++qboolean COM_CompareExtension(const char *in, const char *ext)
++{
++	int inlen, extlen;
++	
++	inlen = strlen(in);
++	extlen = strlen(ext);
++	
++	if(extlen <= inlen)
++	{
++		in += inlen - extlen;
++		
++		if(!Q_stricmp(in, ext))
++			return qtrue;
++	}
++	
++	return qfalse;
++}
+ 
+ /*
+ ==================
+diff --git a/src/qcommon/q_shared.h b/src/qcommon/q_shared.h
+index e1b166a..2456b81 100644
+--- a/src/qcommon/q_shared.h
++++ b/src/qcommon/q_shared.h
+@@ -693,6 +693,7 @@ float Com_Clamp( float min, float max, float value );
+ char	*COM_SkipPath( char *pathname );
+ const char	*COM_GetExtension( const char *name );
+ void	COM_StripExtension(const char *in, char *out, int destsize);
++qboolean COM_CompareExtension(const char *in, const char *ext);
+ void	COM_DefaultExtension( char *path, int maxSize, const char *extension );
+ 
+ void	COM_BeginParseSession( const char *name );

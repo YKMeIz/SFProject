@@ -1,0 +1,42 @@
+diff --git a/server/mpm/event/event.c b/server/mpm/event/event.c
+index cd70b7d..94813af 100644
+--- a/server/mpm/event/event.c
++++ b/server/mpm/event/event.c
+@@ -3042,8 +3042,7 @@ static int event_open_logs(apr_pool_t * p, apr_pool_t * plog,
+ 
+     all_buckets = apr_pcalloc(pconf, num_buckets * sizeof(*all_buckets));
+     for (i = 0; i < num_buckets; i++) {
+-        if (!one_process && /* no POD in one_process mode */
+-                (rv = ap_mpm_podx_open(pconf, &all_buckets[i].pod))) {
++        if (rv = ap_mpm_podx_open(pconf, &all_buckets[i].pod)) {
+             ap_log_error(APLOG_MARK, APLOG_CRIT | level_flags, rv,
+                          (startup ? NULL : s),
+                          "could not open pipe-of-death");
+diff --git a/server/mpm/prefork/prefork.c b/server/mpm/prefork/prefork.c
+index 343e51d..f4c3dbe 100644
+--- a/server/mpm/prefork/prefork.c
++++ b/server/mpm/prefork/prefork.c
+@@ -1326,8 +1326,7 @@ static int prefork_open_logs(apr_pool_t *p, apr_pool_t *plog, apr_pool_t *ptemp,
+     all_buckets = apr_pcalloc(pconf, num_buckets *
+                                      sizeof(prefork_child_bucket));
+     for (i = 0; i < num_buckets; i++) {
+-        if (!one_process && /* no POD in one_process mode */
+-                (rv = ap_mpm_pod_open(pconf, &all_buckets[i].pod))) {
++        if (rv = ap_mpm_pod_open(pconf, &all_buckets[i].pod)) {
+             ap_log_error(APLOG_MARK, APLOG_CRIT | level_flags, rv,
+                          (startup ? NULL : s),
+                          "could not open pipe-of-death");
+diff --git a/server/mpm/worker/worker.c b/server/mpm/worker/worker.c
+index 4a729c0..8a59219 100644
+--- a/server/mpm/worker/worker.c
++++ b/server/mpm/worker/worker.c
+@@ -2051,8 +2051,7 @@ static int worker_open_logs(apr_pool_t *p, apr_pool_t *plog, apr_pool_t *ptemp,
+ 
+     all_buckets = apr_pcalloc(pconf, num_buckets * sizeof(*all_buckets));
+     for (i = 0; i < num_buckets; i++) {
+-        if (!one_process && /* no POD in one_process mode */
+-                (rv = ap_mpm_podx_open(pconf, &all_buckets[i].pod))) {
++        if (rv = ap_mpm_podx_open(pconf, &all_buckets[i].pod)) {
+             ap_log_error(APLOG_MARK, APLOG_CRIT | level_flags, rv,
+                          (startup ? NULL : s),
+                          "could not open pipe-of-death");

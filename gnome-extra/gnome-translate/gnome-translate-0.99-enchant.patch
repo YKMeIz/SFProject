@@ -1,0 +1,277 @@
+diff -Nrbu gnome-translate-0.99/INSTALL gnome-translate-0.99-OK/INSTALL
+--- gnome-translate-0.99/INSTALL	2005-01-28 15:32:55.000000000 +0300
++++ gnome-translate-0.99-OK/INSTALL	2010-01-18 17:02:06.000000000 +0300
+@@ -35,8 +35,8 @@
+ 
+ 		* for language detection:
+ 
+-		  GNU Aspell
+-		  http://aspell.sourceforge.net/
++		  enchant
++		  http://www.abisource.com/projects/enchant/
+ 
+ 2. Instructions
+ 
+diff -Nrbu gnome-translate-0.99/Makefile.am gnome-translate-0.99-OK/Makefile.am
+--- gnome-translate-0.99/Makefile.am	2005-01-11 21:57:04.000000000 +0300
++++ gnome-translate-0.99-OK/Makefile.am	2010-01-18 17:02:06.000000000 +0300
+@@ -1,4 +1,4 @@
+-SUBDIRS = art data help m4 po src ui
++SUBDIRS = art data help po src ui
+ 
+ EXTRA_DIST = \
+ 	autogen.sh		\
+diff -Nrbu gnome-translate-0.99/configure.ac gnome-translate-0.99-OK/configure.ac
+--- gnome-translate-0.99/configure.ac	2010-01-18 17:03:06.000000000 +0300
++++ gnome-translate-0.99-OK/configure.ac	2010-01-18 17:02:06.000000000 +0300
+@@ -56,7 +56,7 @@
+ AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+ 
+ if GT_FEATURE_ENABLED(language-detection); then
+-	AM_PATH_ASPELL(, [GT_FEATURE_DISABLE(language-detection, [Aspell not found])])
++	PKG_CHECK_MODULES(ENCHANT, [enchant],, [AC_MSG_ERROR([unable to find enchant])])
+ fi
+ 
+ ### Automake conditionals
+@@ -74,7 +74,6 @@
+ 		data/Makefile
+ 		help/Makefile
+ 		help/C/Makefile
+-		m4/Makefile
+ 		po/Makefile.in
+ 		src/Makefile
+ 		ui/Makefile)
+diff -Nrbu gnome-translate-0.99/src/Makefile.am gnome-translate-0.99-OK/src/Makefile.am
+--- gnome-translate-0.99/src/Makefile.am	2005-01-12 20:30:47.000000000 +0300
++++ gnome-translate-0.99-OK/src/Makefile.am	2010-01-18 17:02:06.000000000 +0300
+@@ -37,7 +37,7 @@
+ 	gt-util.c			\
+ 	gt-util.h
+ 
+-AM_CPPFLAGS = $(WARN_CFLAGS) $(GNOME_CFLAGS) $(LIBTRANSLATE_CFLAGS) $(ASPELL_CFLAGS) \
++AM_CPPFLAGS = $(WARN_CFLAGS) $(GNOME_CFLAGS) $(LIBTRANSLATE_CFLAGS) $(ENCHANT_CFLAGS) \
+ 	-I$(top_srcdir) \
+ 	-DPREFIX="\"$(prefix)\"" \
+ 	-DSYSCONFDIR="\"$(sysconfdir)\"" \
+@@ -46,7 +46,7 @@
+ 	-DGNOMELOCALEDIR="\"$(datadir)/locale\"" \
+ 	-DUIDIR="\"$(pkgdatadir)/ui\"" \
+ 	-DG_LOG_DOMAIN="\"$(PACKAGE)\""
+-AM_LDFLAGS = $(INTLLIBS) $(GNOME_LIBS) $(LIBTRANSLATE_LIBS) $(ASPELL_LIBS)
++AM_LDFLAGS = $(INTLLIBS) $(GNOME_LIBS) $(LIBTRANSLATE_LIBS) $(ENCHANT_LIBS)
+ 
+ EXTRA_DIST = eggmarshalers.list
+ MAINTAINERCLEANFILES = $(BUILT_SOURCES)
+diff -Nrbu gnome-translate-0.99/src/gt-language-detection.c gnome-translate-0.99-OK/src/gt-language-detection.c
+--- gnome-translate-0.99/src/gt-language-detection.c	2010-01-18 17:03:06.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-language-detection.c	2010-01-18 17:11:17.000000000 +0300
+@@ -21,7 +21,7 @@
+ #include <glib.h>
+ #include <glib/gi18n.h>
+ #include <translate.h>
+-#include <aspell.h>
++#include <enchant.h>
+ #include <gconf/gconf-client.h>
+ #include "gt-language-detection.h"
+ #include "gt-app.h"
+@@ -33,7 +33,7 @@
+ {
+   int			ref_count;
+   char			*tag;
+-  AspellSpeller		*speller;
++  EnchantDict   *speller;
+   int			score;
+ } Speller;
+ 
+@@ -52,6 +52,7 @@
+ 
+ G_LOCK_DEFINE_STATIC(self);
+ 
++static EnchantBroker *broker = NULL;
+ static GSList *spellers = NULL;
+ static GAsyncQueue *detect_queue = NULL;
+ 
+@@ -74,7 +75,7 @@
+ static void gt_language_detection_enable (void);
+ static void gt_language_detection_disable (void);
+ 
+-static Speller *gt_language_detection_speller_new (const char *tag, GError **err);
++static Speller *gt_language_detection_speller_new (const char *tag);
+ static Speller *gt_language_detection_speller_ref (Speller *speller);
+ static void gt_language_detection_speller_unref (Speller *speller);
+ 
+@@ -125,6 +126,9 @@
+ {
+   TranslateSession *session;
+ 
++  if (!broker)
++    broker = enchant_broker_init();
++
+   session = gt_shell_get_translate_session(gt_shell);
+   gt_thread_create(gt_app_window, gt_language_detection_create_spellers_thread, g_object_ref(session));
+ }
+@@ -133,54 +137,34 @@
+ gt_language_detection_create_spellers_thread (gpointer data)
+ {
+   TranslateSession *session = data;
+-  AspellConfig *config;
+-  AspellDictInfoList *dict_list;
+-  AspellDictInfoEnumeration *dict_enum;
++  GSList *next;
+   GSList *pairs;
+-  const AspellDictInfo *dict_info;
+   GSList *new_spellers = NULL;
++  GHashTable *from_targets;
+ 
+-  config = new_aspell_config();
+-  dict_list = get_aspell_dict_info_list(config);
+-  delete_aspell_config(config);
++  from_targets = g_hash_table_new(g_str_hash, g_str_equal);
+ 
+-  dict_enum = aspell_dict_info_list_elements(dict_list);
+   pairs = translate_session_get_pairs(session);
+ 
+-  while ((dict_info = aspell_dict_info_enumeration_next(dict_enum)))
++  for (next = g_slist_next(pairs); next != NULL; next = g_slist_next (next))
+     {
+-      TranslatePair *pair = translate_pairs_find(pairs, dict_info->code, NULL);
++      TranslatePair *pair = next->data;
++      const char *lang_code;
+ 
+-      if (pair
+-	  && translate_pair_get_flags(pair) & TRANSLATE_PAIR_TEXT
+-	  && ! g_slist_find_custom(new_spellers,
+-				   dict_info->code,
+-				   (GCompareFunc) gt_language_detection_speller_compare_tag))
+-	{
+-	  Speller *speller;
+-	  GError *err = NULL;
++      lang_code = pair ? translate_pair_get_from(pair) : NULL;
+ 	  
+-	  speller = gt_language_detection_speller_new(dict_info->code, &err);
++      if (lang_code
++	  && (translate_pair_get_flags(pair) & TRANSLATE_PAIR_TEXT)
++	  && ! g_hash_table_lookup(from_targets, lang_code))
++	{
++	  Speller *speller = gt_language_detection_speller_new(lang_code);
+ 	  if (speller)
+ 	    new_spellers = g_slist_append(new_spellers, speller);
+-	  else
+-	    {
+-	      char *primary;
+-	      
+-	      primary = g_strdup_printf(_("Unable to use %s dictionary"), translate_get_language_name(dict_info->code));
+-	      
+-	      GDK_THREADS_ENTER();
+-	      gt_error_dialog(gt_app_window, primary, "%s", err->message);
+-	      gdk_flush();
+-	      GDK_THREADS_LEAVE();
+-	      
+-	      g_free(primary);
+-	      g_error_free(err);
+-	    }
++          g_hash_table_insert(from_targets, (gpointer) lang_code, (gpointer)1);
+ 	}
+     }
+ 
+-  delete_aspell_dict_info_enumeration(dict_enum);
++  g_hash_table_destroy(from_targets);
+   gt_g_object_slist_free(pairs);
+ 
+   G_LOCK(self);
+@@ -196,7 +180,7 @@
+       GDK_THREADS_ENTER();
+       gt_error_dialog(gt_app_window,
+ 		      _("Language detection not available"),
+-		      _("Less than two languages or Aspell dictionaries are available."));
++		      _("Less than two languages or spelling dictionaries are available."));
+       gdk_flush();
+       GDK_THREADS_LEAVE();
+ 
+@@ -249,37 +233,27 @@
+       g_slist_foreach(spellers, (GFunc) gt_language_detection_speller_unref, NULL);
+       g_slist_free(spellers);
+       spellers = NULL;
++      if (broker)
++        {
++          enchant_broker_free(broker);
++          broker = NULL;
++        }
+     }
+ }
+ 
+ static Speller *
+-gt_language_detection_speller_new (const char *tag, GError **err)
++gt_language_detection_speller_new (const char *tag)
+ {
+-  AspellConfig *config;
+   Speller *speller = NULL;
++  EnchantDict *dict;
+ 
+-  config = new_aspell_config();
+-  
+-  if (aspell_config_replace(config, "encoding", "utf-8")
+-      && aspell_config_replace(config, "master", tag))
+-    {
+-      AspellCanHaveError *possible_err;
+-
+-      possible_err = new_aspell_speller(config);
+-      if (aspell_error_number(possible_err) == 0)
++  if ((dict = enchant_broker_request_dict(broker, tag)))
+ 	{
+ 	  speller = g_new0(Speller, 1);
+ 	  speller->ref_count = 1;
+ 	  speller->tag = g_strdup(tag);
+-	  speller->speller = to_aspell_speller(possible_err);
+-	}
+-      else
+-	g_set_error(err, 0, 0, "%s", aspell_error_message(possible_err));
++      speller->speller = dict;
+     }
+-  else
+-    g_set_error(err, 0, 0, "%s", aspell_config_error_message(config));
+-  
+-  delete_aspell_config(config);
+   
+   return speller;
+ }
+@@ -302,7 +276,7 @@
+   if (g_atomic_int_dec_and_test(&speller->ref_count))
+     {
+       g_free(speller->tag);
+-      delete_aspell_speller(speller->speller);
++      enchant_broker_free_dict(broker, speller->speller);
+       g_free(speller);
+     }
+ }
+@@ -383,7 +357,7 @@
+       request = g_async_queue_pop(queue);
+ 
+     start:
+-      if (request->type == REQUEST_DETECT_LANGUAGE)
++      if (request->type == REQUEST_DETECT_LANGUAGE && request->spellers)
+ 	{
+ 	  GSList *l;
+ 	  Speller *speller1;
+@@ -412,7 +386,7 @@
+ 		      goto start;
+ 		    }
+ 
+-		  if (aspell_speller_check(speller->speller, word, -1) == 1)
++		  if (enchant_dict_check(speller->speller, word, strlen(word)) == 0)
+ 		    speller->score++;
+ 		}
+       
+@@ -458,12 +432,6 @@
+ }
+ 
+ static int
+-gt_language_detection_speller_compare_tag (const Speller *a, const char *tag)
+-{
+-  return g_ascii_strcasecmp(a->tag, tag);
+-}
+-
+-static int
+ gt_language_detection_speller_compare_score (const Speller *a, const Speller *b)
+ {
+   return a->score - b->score;

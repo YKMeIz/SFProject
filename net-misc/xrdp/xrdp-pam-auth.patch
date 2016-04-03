@@ -1,0 +1,19 @@
+diff -ruNp a/xrdp/instfiles/pam.d/xrdp-sesman b/xrdp/instfiles/pam.d/xrdp-sesman
+--- a/xrdp/instfiles/pam.d/xrdp-sesman	2009-09-20 16:06:14.000000000 -0300
++++ b/xrdp/instfiles/pam.d/xrdp-sesman	2009-09-16 16:39:16.000000000 -0300
+@@ -1,4 +1,12 @@
+ #%PAM-1.0
+-auth       required	pam_unix.so shadow nullok
+-auth       required	pam_env.so readenv=1
+-account    required	pam_unix.so
++# Generic Fedora config
++auth       include      password-auth
++account    include      password-auth
++password   include      password-auth
++session    include      password-auth
++
++# Gnome specific Fedora config
++#auth       include      gdm-password
++#account    include      gdm-password
++#password   include      gdm-password
++#session    include      gdm-password

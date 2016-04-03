@@ -1,0 +1,17 @@
+4f3a6b014f9698a7128f0bde48020627  update-xscreensaver-hacks
+4f65fd8d33f53a204966d8a112c11976  xscreensaver-5.00b5-sanitize-hacks.patch
+e52644a78846c64ff572f068b06c9aa2  xscreensaver-5.12-test-passwd-segv-tty.patch
+a8ce5684edfee749c6a1b71bf70659d1  xscreensaver-5.12-tests-miscfix.patch
+80a3448cf4ed51debb5012ead5fb577b  xscreensaver-5.26-webcollage-default-nonet.patch
+53dd53f708abae4bf74885235704bbd8  xscreensaver-5.32-0001-noof-enable-double-buffer-on-linux.patch
+1306e6b16848d6151d7c91be933fe897  xscreensaver-5.32-0003-visual.c-pick_best_gl_visual-fix-one-byte-ahead-acce.patch
+fd7f0d54f4792045519bf18684c4165f  xscreensaver-5.32-0004-cubestorm-enable-double-buffer-on-linux.patch
+f42837dbcbf1cb2d225f48fa9a18bdbb  xscreensaver-5.32-0005-flush_dialog_changes_and_save-strdup-for-TEXT-entry.patch
+e2805c1392180914cdd0dd1a9d1b420b  xscreensaver-5.32-0006-build_substrate-fix-possibly-wrong-memset-usage.patch
+1d261ce829f1ed2fbcf9e9a57101d3e3  xscreensaver-5.32-0007-utils-utf8wc.c-fix-Unicode-Combining-Diacriticals-Bl.patch
+c188f24b7886fdf5805036f347938813  xscreensaver-5.32-0008-pick_font_1-rescue-when-XftFontOpenXlfd-fails-correc.patch
+f36465bdf17e546dd950ece4a5e7b2e2  xscreensaver-5.32-0009-pong-adjust-paddle-position-again-on-new-game.patch
+43ad6c330a1af7b50d2bf2766d190230  xscreensaver-5.32-0010-providence-update_particles-aviod-one-byte-ahead-acc.patch
+cefe09be64684577ecb54654ca61a9a5  xscreensaver-5.32.ja.po.gz
+f64be89a575e3baa9e9743e2cd82765c  xscreensaver-5.32-jwz-GNOME-KeyPress.patch
+c003f79502e67f46aa5bedf24cbbd77c  xscreensaver-5.32.tar.gz

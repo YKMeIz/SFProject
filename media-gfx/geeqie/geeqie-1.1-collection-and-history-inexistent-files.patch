@@ -1,0 +1,31 @@
+Originally from Laurent Monin in Geeqie gitorious merge request 5.
+
+diff -Nurb --strip-trailing-cr geeqie-1.1-orig/src/collect.c geeqie-1.1/src/collect.c
+--- geeqie-1.1-orig/src/collect.c	2012-08-12 22:13:41.000000000 +0200
++++ geeqie-1.1/src/collect.c	2014-05-27 09:47:48.549380177 +0200
+@@ -635,6 +635,10 @@
+ 	struct stat st;
+ 	gboolean valid;
+ 
++	if (!fd) return FALSE;
++
++	g_assert(fd->magick == 0x12345678);
++
+ 	if (must_exist)
+ 		{
+ 		valid = (stat_utf8(fd->path, &st) && !S_ISDIR(st.st_mode));
+diff -Nurb --strip-trailing-cr geeqie-1.1-orig/src/filedata.c geeqie-1.1/src/filedata.c
+--- geeqie-1.1-orig/src/filedata.c	2012-08-12 22:13:41.000000000 +0200
++++ geeqie-1.1/src/filedata.c	2014-05-27 09:48:43.164458254 +0200
+@@ -1098,8 +1098,10 @@
+ 	filelist_read_real(dir, &files, NULL, TRUE);
+ 	
+ 	fd = g_hash_table_lookup(file_data_pool, path_utf8);
+-	g_assert(fd);
++	if (fd)
++		{
+ 	file_data_ref(fd);
++		}
+ 	
+ 	filelist_free(files);
+ 	g_free(dir);

@@ -1,0 +1,29 @@
+From a89b0042f5d7017f747c466679d63c29b9f3b01c Mon Sep 17 00:00:00 2001
+From: Rex Dieter <rdieter@math.unl.edu>
+Date: Fri, 21 Dec 2012 09:51:38 -0600
+Subject: [PATCH 32/32] use camera-web icon instead of webcamreceive
+
+BUG: 312039
+
+webcamreceive is (only?) provided by kopete, so we can't assume it
+is present at runtime, so use camera-web instead.
+---
+ src/photoshootmode.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/photoshootmode.cpp b/src/photoshootmode.cpp
+index c98f6c4..713b67a 100644
+--- a/src/photoshootmode.cpp
++++ b/src/photoshootmode.cpp
+@@ -73,7 +73,7 @@ void PhotoShootMode::shootClicked(bool pressed)
+ 
+ QIcon PhotoShootMode::icon() const
+ {
+-    return KIcon("webcamreceive");
++    return KIcon("camera-web");
+ }
+ 
+ QString PhotoShootMode::name() const
+-- 
+1.8.0.2
+

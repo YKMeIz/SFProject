@@ -1,0 +1,12 @@
+diff -durN devede-3.23.0.orig/devede devede-3.23.0/devede
+--- devede-3.23.0.orig/devede	2012-10-20 20:32:18.000000000 +0200
++++ devede-3.23.0/devede	2012-10-28 11:20:06.587976601 +0100
+@@ -262,7 +262,7 @@
+ global_vars["sub_codepage"]="ISO-8859-1"
+ global_vars["sub_language"]="EN (ENGLISH)"
+ global_vars["with_menu"]=True
+-global_vars["AC3_fix"]=False
++global_vars["AC3_fix"]=True
+ global_vars["AC3_fix_ffmpeg"]=False
+ global_vars["AC3_fix_avconv"]=False
+ (a,b)=get_cores()

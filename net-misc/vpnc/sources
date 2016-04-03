@@ -1,0 +1,10 @@
+e3b1cf5221ee790dabc764af412ae5b1  generic-vpnc.conf
+2874d6f61c87c7e66cf43021467dca9a  vpnc-0.5.1-dpd.patch
+2172b85ffb22853ae99e4ccdce0201f0  vpnc-0.5.3.svn457.tar.gz
+f4ae8a92fd2f17b07c195592262554ac  vpnc-0.5.3-use-autodie.patch
+0a31152fb8848179b2d220acac1f52e3  vpnc.consolehelper
+8a3321fb8e5ab132b98c060381729489  vpnc-disconnect.consolehelper
+a56248feb8ff59eb112c3eaf29794a78  vpnc-helper
+11e24bf0e1c89975d6745f4f009f7622  vpnc.pam
+59591a338f10ad5385b8641868ae1c31  vpnc-script
+cd749301ebb790dd492c0ce450963af7  vpnc-tmpfiles.conf

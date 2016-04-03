@@ -1,0 +1,50 @@
+--- pvm3/lib/pvmgetarch.arch	2008-06-20 12:11:42.000000000 -0400
++++ pvm3/lib/pvmgetarch	2008-06-20 12:11:42.000000000 -0400
+@@ -67,9 +67,9 @@ if [ -f /bin/uname -o -f /usr/bin/uname 
+ 	*,88k )                 ARCH=E88K ;;
+ 	*,mips )                ARCH=MIPS ;;
+ 	*,CRAY-2 )              ARCH=CRAY2 ;;
+-	Linux,i[3456]86 )       ARCH=LINUX ;;
+-	Linux,ia64 )            ARCH=LINUX64 ;;
+-	Linux,x86_64 )          ARCH=LINUX64 ;;
++	Linux,i[3456]86 )       ARCH=LINUXI386 ;;
++	Linux,ia64 )            ARCH=LINUXIA64 ;;
++	Linux,x86_64 )          ARCH=LINUXX86_64 ;;
+ 	Linux,alpha )           ARCH=LINUXALPHA ;;
+ 	Linux,arm* )            ARCH=LINUXARM ;;
+ 	Linux,sparc* )          ARCH=LINUXSPARC ;;
+--- pvm3/lib/debugger2.arch	2008-06-20 12:12:01.000000000 -0400
++++ pvm3/lib/debugger2	2008-06-20 12:12:50.000000000 -0400
+@@ -46,8 +46,13 @@ case TITN:
+ 	set DBFF=""
+ 	breaksw
+ 
+-case LINUX:
+-case LINUX64:
++case LINUXI386:
++case LINUXX86_64:
++case LINUXIA64:
++case LINUXPPC:
++case LINUXPPC64:
++case LINUXS390:
++case LINUXS390X:
+ case LINUXALPHA:
+ case LINUXHPPA:
+ case LINUXSPARC:
+--- pvm3/xpvm/src/xpvm.tcl.arch	1998-04-09 17:12:32.000000000 -0400
++++ pvm3/xpvm/src/xpvm.tcl	2008-06-20 12:14:51.000000000 -0400
+@@ -494,6 +494,14 @@ define_arch HPPA		"$xbm_dir/hppa.xbm"
+ define_arch I860		"$xbm_dir/i860.xbm"
+ define_arch IPSC2		"$xbm_dir/ipsc2.xbm"
+ define_arch LINUX		"$xbm_dir/linux.xbm"
++define_arch LINUX64		"$xbm_dir/linux.xbm"
++define_arch LINUXI386		"$xbm_dir/linux.xbm"
++define_arch LINUXX86_64		"$xbm_dir/linux.xbm"
++define_arch LINUXIA64		"$xbm_dir/linux.xbm"
++define_arch LINUXPPC		"$xbm_dir/linux.xbm"
++define_arch LINUXPPC64		"$xbm_dir/linux.xbm"
++define_arch LINUXS390		"$xbm_dir/linux.xbm"
++define_arch LINUXS390X		"$xbm_dir/linux.xbm"
+ define_arch LINUXSPARC	"$xbm_dir/linuxsparc.xbm"
+ define_arch LINUXALPHA	"$xbm_dir/linuxalpha.xbm"
+ define_arch KSR1		"$xbm_dir/ksr1.xbm"

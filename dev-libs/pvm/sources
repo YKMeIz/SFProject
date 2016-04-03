@@ -1,0 +1,17 @@
+52c60bea6e97bcc060451d7bf2c60bdd  pvm3.4.4-envvars.patch
+d502abaaf2d967b6c37e6068273651df  pvm-3.4.5-bug_147337.patch
+59c1dc09a4ec2b1cd889a05a58ddb492  pvm-3.4.5-ppc64arch.patch
+fe406acff6bb2e06ed8007ff1581f7d1  pvm-3.4.5-Pvmtev.patch
+548feda663862f5bd034456e7dec662c  pvm3.4.5-strerror.patch
+2b358bb1f53a8649c966f6099b8e67cc  pvm3.4.5-x86_64-segfault.patch
+7b5f0c80ea50b6b4b10b6128e197747b  pvm3.4.6.tgz
+310c057d27bb4b7f618de003e56987e7  pvm3-vaargfix.patch
+a12d94192ef7803a70cf0f93f4a7ed53  pvm-arch.patch
+026edae179548d293a02c0e33495ff59  pvm-s390.patch
+5e6c35ead480f807cb1e716bc3b1ef99  pvm.sh
+1db2495047666bef480e7bf9299baa98  README.RedHat
+781cba1fa60b0445c659850df7f2e461  xpvm-1.2.5-envvars.patch
+c799e70936f8aa1ffb0a2265693f39b3  xpvm.sh
+7b20143cb2ff61e3cb28baf8f9cb2770  XPVM.src.1.2.5.tgz
+cbbbdf5bdc6cdef5a5eb3d43b4c082f2  xpvm-tcltk.patch
+2a6ee50c48c45a22b2f50b7b09f8dbd7  xpvm-tk8.6.patch

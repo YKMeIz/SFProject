@@ -1,0 +1,152 @@
+mmv (1.01b-15) unstable; urgency=low
+
+  * New Maintainer (closes: #485999)
+  * Update to Standards-Version 3.8.1:
+    - Switch from DEB_BUILD_OPTIONS debug to noopt, add support for parallel.
+  * Replace call to dh_md5sums with direct creation and remove Build-Depends
+    on debhelper.
+  * Don't ignore make clean errors anymore and use $(MAKE) instead of make in
+    debian/rules.
+  * Add empty line before .ce The Task Options (closes: #411182)
+  * Initialize tv_usec (closes: #452993)
+  * Add mising linebreak to an italic line (closes: #411181)
+  * Wrap cmdname in basename() (closes: #452989)
+  * Add reference to the full text of the GPL file in the common-licenses
+    directory.
+  * Escape all relevant dashes in the manpage to not turn them into hyphens.
+
+ -- Gerfried Fuchs <rhonda@debian.at>  Sat, 30 May 2009 18:08:18 +0200
+
+mmv (1.01b-14) unstable; urgency=low
+
+  * Thanks for NMU to Joey, Ai and Uwe
+  * applied Patch to initialize var (Closes: Bug #316363)
+  * removed 2 dozent GCC warnings (uninitialized, unused, ambiquous else)
+
+ -- Bernd Eckenfels <ecki@debian.org>  Sat, 04 Feb 2006 23:58:43 +0100
+
+mmv (1.01b-12.3) unstable; urgency=low
+
+  * NMU
+  * Remove postinst and prerm, finishing /usr/doc transition. Closes: #322813
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 10 Jan 2006 00:54:51 -0500
+
+mmv (1.01b-12.2) unstable; urgency=low
+
+  * NMU
+  * Fix segfault at startup on amd64 (and possibly other architectures)
+    due to implicit declaration of functions from stdlib.h. (Closes: #322541)
+
+ -- Ari Pollak <ari@debian.org>  Sat, 13 Aug 2005 01:01:13 -0400
+
+mmv (1.01b-12.1) unstable; urgency=low
+
+  * Non-Maintainer Upload (BSP 2005-08-06).
+  * Fixed FTBFS with gcc 3.4 / 4.0 by applying patch from
+    Andreas Jochens (Closes: #260574).
+
+ -- Uwe Hermann <uwe@debian.org>  Sat,  6 Aug 2005 22:07:06 +0200
+
+mmv (1.01b-12) unstable; urgency=low
+
+  * LFS support! (not sure if this breaks something :) (Closes: Bug #106822)
+  * support -- as option terminator (Closes: Bug #52417)
+
+ -- Bernd Eckenfels <ecki@debian.org>  Tue, 20 Nov 2001 19:03:24 +0100
+
+mmv (1.01b-11) unstable; urgency=medium
+
+  * added Build-Depends (Closes: Bug #105025)
+  * bumped Standards Version from 3.0.1 to 3.6.5
+  * make strig/-g depending on environemnt variable
+  * added a comment about quoting 'to' patter (Closes: Bug #106076)
+
+ -- Bernd Eckenfels <ecki@debian.org>  Sat, 10 Nov 2001 18:28:56 +0100
+
+mmv (1.01b-10.1) unstable; urgency=LOW
+
+  * reupload cause it was rejected
+
+ -- Bernd Eckenfels <ecki@debian.org>  Thu,  3 Aug 2000 02:38:20 +0200
+
+mmv (1.01b-10) unstable; urgency=LOW
+
+  * debian/rules clean will now kill *~ files
+
+ -- Bernd Eckenfels <ecki@debian.org>  Sun, 23 Jul 2000 04:28:46 +0200
+
+mmv (1.01b-9) unstable; urgency=LOW
+
+  * closes: #67605 (no special handling for char > 127 anymore)
+  * clsoes: #60128 (i think it was fixed by hartmut already)
+  * man page and doc now in /usr/share, new standards version
+
+ -- Bernd Eckenfels <ecki@debian.org>  Sun, 23 Jul 2000 04:08:19 +0200
+
+mmv (1.01b-8.1) unstable; urgency=LOW
+
+  * NMU
+  * fixed the invalid initializer for glibc-2.1
+  * closes: #31929
+  * changed in debian/rules in the clean target:
+      + /bin/rm -f  into -rm -f 
+      + make into -make
+      + added *~
+
+ -- Hartmut Koptein <koptein@debian.org>  Fri,  9 Jul 1999 10:24:17 +0200
+
+mmv (1.01b-8) unstable; urgency=LOW
+
+  * should compile now with different headers (Bug#26955).
+
+ -- Bernd Eckenfels <ecki@debian.org>  Sun,  1 Nov 1998 05:36:36 +0100
+
+mmv (1.01b-7) frozen unstable; urgency=LOW
+
+  * Remove debian/files with make clean (Bug#21526).
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 22 Apr 1998 16:19:30 +0200
+
+mmv (1.01b-6) frozen unstable; urgency=LOW
+
+  * Make lintian happy.
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 17 Apr 1998 14:36:19 +0200
+
+mmv (1.01b-5) unstable; urgency=LOW
+
+  * Added new copyright notice and moved package back into main.
+    My thanks go to Joost for getting into touch with the upstream author.
+
+ -- Michael Meskes <meskes@debian.org>  Thu,  5 Mar 1998 10:42:42 +0100
+
+mmv (1.01b-4) unstable; urgency=LOW
+
+  * Updated standard
+  * Added man page links.
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 27 Feb 1998 15:33:54 +0100
+
+mmv (1.01b-3) unstable; urgency=LOW
+
+  * Moved package to non-free. Sorry, I cannot reach the upstream author to
+    clarify the problems with his copyright. (#14908).
+  * Do not comress copyright file. (#14460)
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 19 Dec 1997 10:47:37 +0100
+
+mmv (1.01b-2) unstable; urgency=LOW
+
+  * Put copyright file into /usr/doc/mmv/copyright (#10623)
+  * Removed -m486 option in Makefile (#10780).
+  * Corrected man page permission (#4913).
+  * Compiled against libc6.
+
+ -- Michael Meskes <meskes@debian.org>  Tue,  5 Aug 1997 13:11:36 +0200
+
+mmv (1.01b-1) unstable; urgency=LOW
+
+  * Initial release
+
+ -- Michael Meskes <meskes@debian.org>  Tue, 15 Oct 1996 13:02:46 +0200

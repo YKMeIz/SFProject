@@ -1,0 +1,24 @@
+From d3c5946f9f48f5d7a5249995424228fc51c84b67 Mon Sep 17 00:00:00 2001
+From: Aleix Pol <aleixpol@kde.org>
+Date: Wed, 8 Feb 2012 00:39:31 +0100
+Subject: [PATCH 21/32] add include
+
+---
+ src/plugins/youtube/kipiplugin_youtube.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/plugins/youtube/kipiplugin_youtube.cpp b/src/plugins/youtube/kipiplugin_youtube.cpp
+index 07fe1c4..7ebabf8 100644
+--- a/src/plugins/youtube/kipiplugin_youtube.cpp
++++ b/src/plugins/youtube/kipiplugin_youtube.cpp
+@@ -36,6 +36,7 @@
+ #include <kwallet.h>
+ #include <KDebug>
+ #include <libkipi/interface.h>
++#include <libkipi/imagecollection.h>
+ 
+ using KWallet::Wallet;
+ 
+-- 
+1.8.0.2
+

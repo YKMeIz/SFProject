@@ -1,0 +1,74 @@
+From 8b21a2679fe2ab4bcea23234a429cc845f1d3d56 Mon Sep 17 00:00:00 2001
+From: Rex Dieter <rdieter@math.unl.edu>
+Date: Fri, 21 Dec 2012 11:55:42 -0600
+Subject: [PATCH 35/35] fix build for < libkipi-2
+
+BUG: 307147
+
+---
+ src/kamoso.cpp                    | 5 +++++
+ src/pluginTester/pluginTester.cpp | 7 ++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/src/kamoso.cpp b/src/kamoso.cpp
+index 24dd0f2..4ca0dc4 100644
+--- a/src/kamoso.cpp
++++ b/src/kamoso.cpp
+@@ -78,6 +78,7 @@
+ 
+ #include <libkipi/plugin.h>
+ #include <libkipi/pluginloader.h>
++#include <libkipi/version.h>
+ #include <KPluginInfo>
+ 
+ const int max_exponential_value = 50;
+@@ -190,9 +191,13 @@ Kamoso::Kamoso(QWidget* parent)
+     connect(mTracker, SIGNAL(urlsChanged(KUrl::List)), SLOT(updateThumbnails(KUrl::List)));
+ 
+     QMetaObject::invokeMethod(this, "initialize");
++#if (KIPI_VERSION >= 0x020000)
+     mPluginLoader = new KIPI::PluginLoader();
+     mPluginLoader->setInterface(new KIPIInterface(this));
+     mPluginLoader->init();
++#else
++    mPluginLoader = new KIPI::PluginLoader(QStringList(), new KIPIInterface(this), "");
++#endif
+ }
+ 
+ KUrl::List Kamoso::selectedItems()
+diff --git a/src/pluginTester/pluginTester.cpp b/src/pluginTester/pluginTester.cpp
+index 2619eb8..36acdb5 100644
+--- a/src/pluginTester/pluginTester.cpp
++++ b/src/pluginTester/pluginTester.cpp
+@@ -26,6 +26,7 @@
+ #include <KCmdLineArgs>
+ #include <libkipi/plugin.h>
+ #include <libkipi/pluginloader.h>
++#include <libkipi/version.h>
+ 
+ PluginTester::PluginTester(QObject *parent) : QObject(parent)
+ {
+@@ -41,9 +42,13 @@ PluginTester::PluginTester(QObject *parent) : QObject(parent)
+         kurlList.append(KUrl(args->arg(i)));
+     }
+ 
++#if (KIPI_VERSION >= 0x020000)
+     m_pluginLoader = new KIPI::PluginLoader();
+     m_pluginLoader->setInterface(new FakeKIPIInterface(kurlList));
+     m_pluginLoader->init();
++#else
++    m_pluginLoader = new KIPI::PluginLoader(QStringList(), new FakeKIPIInterface(kurlList), "");
++#endif
+ 
+     bool found = false;
+     Q_FOREACH(KIPI::PluginLoader::Info *pluginInfo, m_pluginLoader->pluginList()) {
+@@ -60,4 +65,4 @@ PluginTester::PluginTester(QObject *parent) : QObject(parent)
+ PluginTester::~PluginTester()
+ {
+     delete m_action;
+-}
+\ No newline at end of file
++}
+-- 
+1.8.0.2
+

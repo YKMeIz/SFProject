@@ -1,0 +1,70 @@
+diff -uprN compiz-plugins-extra-0.8.8-orig/configure.ac compiz-plugins-extra-0.8.8/configure.ac
+--- compiz-plugins-extra-0.8.8-orig/configure.ac	2011-04-21 13:51:08.000000000 +0200
++++ compiz-plugins-extra-0.8.8/configure.ac	2013-04-23 16:41:08.765659794 +0200
+@@ -149,32 +149,6 @@ fi
+ PKG_CHECK_MODULES(COMPIZANIMATION, compiz-animation, [have_compiz_animation=yes], [have_compiz_animation=no])
+ AM_CONDITIONAL(ANIMATIONADDON_PLUGIN, test "x$have_compiz_animation" = "xyes")
+ 
+-AC_ARG_ENABLE(schemas,
+-  [  --enable-schemas         Build gconf schemas],
+-  [use_schemas=$enableval], [use_schemas=no])
+-
+-if test x"$use_schemas" = x"yes"; then
+-  AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+-  PKG_CHECK_MODULES(SCHEMAS, compiz-gconf, [use_schemas=yes], [use_schemas=no])
+-  if test x"$GCONFTOOL" = xno; then
+-    AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
+-  fi
+-  AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+-  if test x"$PKG_CONFIG" = xno ; then
+-    AC_MSG_ERROR([pkg-config executable not found in your path, unable to determine schema directory])
+-  fi
+-  xsltdir=`$PKG_CONFIG --variable=xsltdir compiz-gconf`
+-  AC_SUBST(xsltdir)
+-fi
+-
+-AM_GCONF_SOURCE_2
+-
+-
+-AM_CONDITIONAL(USE_SCHEMAS, test "x$use_schemas" = "xyes")
+-if test "$use_schemas" = yes; then
+-  AC_DEFINE(USE_SCHEMAS, 1, [Build gconf schemas])
+-fi
+-
+ AC_OUTPUT([
+ compiz-animationaddon.pc
+ Makefile
+diff -uprN compiz-plugins-extra-0.8.8-orig/metadata/Makefile.am compiz-plugins-extra-0.8.8/metadata/Makefile.am
+--- compiz-plugins-extra-0.8.8-orig/metadata/Makefile.am	2011-04-21 13:51:08.000000000 +0200
++++ compiz-plugins-extra-0.8.8/metadata/Makefile.am	2013-04-23 16:45:09.975034117 +0200
+@@ -62,22 +62,6 @@ xml_DATA     = $(xml_files)
+ 
+ @INTLTOOL_XML_RULE@
+ 
+-if USE_SCHEMAS
+-schemadir   = $(GCONF_SCHEMA_FILE_DIR)
+-schema_files = $(patsubst %.xml.in,compiz-%.schemas,$(xml_in_files))
+-schema_DATA  = $(schema_files)
+-
+-%.schemas: $(xml_files)
+-	xsltproc -o $@ $(xsltdir)/schemas.xslt $(subst compiz-,,$*).xml;
+-
+-if GCONF_SCHEMAS_INSTALL
+-install-data-local:
+-	if test -z "$(DESTDIR)" ; then \
+-               GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(schema_DATA); \
+-       fi
+-endif
+-endif
+-
+ EXTRA_DIST =				\
+ 	$(xml_in_files)			\
+ 	animationaddon.xml.in	\
+@@ -89,6 +73,5 @@ EXTRA_DIST =				\
+ 	3d.xml.in
+ 
+ DISTCLEANFILES =	\
+-	$(xml_files)    \
+-	$(schema_files)
++	$(xml_files)
+ 

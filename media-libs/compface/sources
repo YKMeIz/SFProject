@@ -1,0 +1,6 @@
+b606328ef12bd0231616c9ec13bb4fa9  compface-1.5.2-build.patch
+d2e2f96e5a869f7f1d51c2050d7a2089  compface-1.5.2-stack-smashing.patch
+62f4f79c0861ad292ba3cf77b4c48319  compface-1.5.2.tar.gz
+b121ba4073e488523e363f73e86d84c5  compface-README.copyright
+2ce3b64dcb3eab7ea09a0a6d45cf750c  compface-test.xbm
+1c805b94cbf31feda738fa1ceb0a6a80  libcompface_1.5.2-4.diff.gz

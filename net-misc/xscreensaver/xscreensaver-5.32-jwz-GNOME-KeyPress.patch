@@ -1,0 +1,146 @@
+diff --git a/driver/timers.c b/driver/timers.c
+index 55ade11..81c8adb 100644
+--- a/driver/timers.c
++++ b/driver/timers.c
+@@ -1,5 +1,5 @@
+ /* timers.c --- detecting when the user is idle, and other timer-related tasks.
+- * xscreensaver, Copyright (c) 1991-2013 Jamie Zawinski <jwz@jwz.org>
++ * xscreensaver, Copyright (c) 1991-2014 Jamie Zawinski <jwz@jwz.org>
+  *
+  * Permission to use, copy, modify, distribute, and sell this software and its
+  * documentation for any purpose is hereby granted without fee, provided that
+@@ -140,9 +140,10 @@ notice_events (saver_info *si, Window window, Bool top_p)
+ 
+   XGetWindowAttributes (si->dpy, window, &attrs);
+   events = ((attrs.all_event_masks | attrs.do_not_propagate_mask)
+-	    & KeyPressMask);
++	    & (KeyPressMask | PropertyChangeMask));
+ 
+   /* Select for SubstructureNotify on all windows.
++     Select for PropertyNotify on all windows.
+      Select for KeyPress on all windows that already have it selected.
+ 
+      Note that we can't select for ButtonPress, because of X braindamage:
+@@ -161,7 +162,8 @@ notice_events (saver_info *si, Window window, Bool top_p)
+      systems that have it.  Oh, if it's a PS/2 mouse, not serial or USB.
+      This sucks!
+    */
+-  XSelectInput (si->dpy, window, SubstructureNotifyMask | events);
++  XSelectInput (si->dpy, window,
++                SubstructureNotifyMask | PropertyChangeMask | events);
+ 
+   if (top_p && p->debug_p && (events & KeyPressMask))
+     {
+@@ -687,6 +689,7 @@ swallow_unlock_typeahead_events (saver_info *si, XEvent *e)
+       explicitly informed by SGI SCREEN_SAVER server event;
+       explicitly informed by MIT-SCREEN-SAVER server event;
+       select events on all windows, and note events on any of them;
++      note that a client updated their window's _NET_WM_USER_TIME property;
+       note that /proc/interrupts has changed;
+       deactivated by clientmessage.
+ 
+@@ -984,6 +987,37 @@ sleep_until_idle (saver_info *si, Bool until_idle_p)
+ 
+ 	break;
+ 
++      case PropertyNotify:
++
++        if (event.x_event.xproperty.state == PropertyNewValue &&
++            event.x_event.xproperty.atom == XA_NET_WM_USER_TIME)
++          {
++            /* Let's just assume that they only ever set USER_TIME to the
++               current time, and don't do something stupid like repeatedly
++               setting it to 20 minutes ago. */
++
++            why = "WM_USER_TIME";
++
++            if (p->debug_p)
++              {
++                Window w = event.x_event.xproperty.window;
++                XWindowAttributes xgwa;
++                int i;
++                XGetWindowAttributes (si->dpy, w, &xgwa);
++                for (i = 0; i < si->nscreens; i++)
++                  if (xgwa.root == RootWindowOfScreen (si->screens[i].screen))
++                    break;
++                fprintf (stderr,"%s: %d: %s on 0x%lx\n",
++                         blurb(), i, why, (unsigned long) w);
++              }
++
++            if (until_idle_p)
++              reset_timers (si);
++            else
++              goto DONE;
++          }
++        break;
++
+       default:
+ 
+ #ifdef HAVE_MIT_SAVER_EXTENSION
+diff --git a/driver/windows.c b/driver/windows.c
+index 52d5669..45e4dbc 100644
+--- a/driver/windows.c
++++ b/driver/windows.c
+@@ -74,10 +74,10 @@ typedef long PROP32;
+ extern int kill (pid_t, int);		/* signal() is in sys/signal.h... */
+ 
+ Atom XA_VROOT, XA_XSETROOT_ID, XA_ESETROOT_PMAP_ID, XA_XROOTPMAP_ID;
++Atom XA_NET_WM_USER_TIME;
+ Atom XA_SCREENSAVER, XA_SCREENSAVER_VERSION, XA_SCREENSAVER_ID;
+ Atom XA_SCREENSAVER_STATUS;
+ 
+-
+ extern saver_info *global_si_kludge;	/* I hate C so much... */
+ 
+ static void maybe_transfer_grabs (saver_screen_info *ssi,
+diff --git a/driver/xscreensaver.c b/driver/xscreensaver.c
+index d2dbeb9..d747837 100644
+--- a/driver/xscreensaver.c
++++ b/driver/xscreensaver.c
+@@ -1,4 +1,4 @@
+-/* xscreensaver, Copyright (c) 1991-2013 Jamie Zawinski <jwz@jwz.org>
++/* xscreensaver, Copyright (c) 1991-2014 Jamie Zawinski <jwz@jwz.org>
+  *
+  * Permission to use, copy, modify, distribute, and sell this software and its
+  * documentation for any purpose is hereby granted without fee, provided that
+@@ -93,6 +93,14 @@
+  *   subwindows.  It is an incredible misdesign that one client can make
+  *   another client malfunction in this way.
+  *
++ *   But here's a new kink that started showing up in late 2014: GNOME programs
++ *   don't actually select for or receive KeyPress events! They do it behind
++ *   the scenes through some kind of Input Method magic, even when running in
++ *   an en_US locale.  However, in that case, those applications *do* seem to
++ *   update the _NET_WM_USER_TIME on their own windows every time they have
++ *   received a secret KeyPress, so we *also* monitor that property on every
++ *   window, and treat changes to it as identical to KeyPress.
++ *
+  *   To detect mouse motion, we periodically wake up and poll the mouse
+  *   position and button/modifier state, and notice when something has
+  *   changed.  We make this check every five seconds by default, and since the
+@@ -659,6 +667,7 @@ connect_to_server (saver_info *si, int *argc, char **argv)
+   XA_XSETROOT_ID = XInternAtom (si->dpy, "_XSETROOT_ID", False);
+   XA_ESETROOT_PMAP_ID = XInternAtom (si->dpy, "ESETROOT_PMAP_ID", False);
+   XA_XROOTPMAP_ID = XInternAtom (si->dpy, "_XROOTPMAP_ID", False);
++  XA_NET_WM_USER_TIME = XInternAtom (si->dpy, "_NET_WM_USER_TIME", False);
+   XA_ACTIVATE = XInternAtom (si->dpy, "ACTIVATE", False);
+   XA_DEACTIVATE = XInternAtom (si->dpy, "DEACTIVATE", False);
+   XA_RESTART = XInternAtom (si->dpy, "RESTART", False);
+diff --git a/driver/xscreensaver.h b/driver/xscreensaver.h
+index 98aa445..d67966e 100644
+--- a/driver/xscreensaver.h
++++ b/driver/xscreensaver.h
+@@ -1,4 +1,4 @@
+-/* xscreensaver, Copyright (c) 1993-2012 Jamie Zawinski <jwz@jwz.org>
++/* xscreensaver, Copyright (c) 1993-2014 Jamie Zawinski <jwz@jwz.org>
+  *
+  * Permission to use, copy, modify, distribute, and sell this software and its
+  * documentation for any purpose is hereby granted without fee, provided that
+@@ -201,6 +201,7 @@ Bool safe_XF86VidModeGetViewPort (Display *, int, int *, int *);
+ #endif /* HAVE_XF86VMODE */
+ 
+ extern Atom XA_VROOT, XA_XSETROOT_ID, XA_ESETROOT_PMAP_ID, XA_XROOTPMAP_ID;
++extern Atom XA_NET_WM_USER_TIME;
+ extern Atom XA_SCREENSAVER, XA_SCREENSAVER_VERSION, XA_SCREENSAVER_ID;
+ extern Atom XA_SCREENSAVER_STATUS, XA_LOCK, XA_BLANK;
+ extern Atom XA_DEMO, XA_PREFS;

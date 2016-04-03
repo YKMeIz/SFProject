@@ -1,0 +1,480 @@
+From aa2083b40c83fad6b931a2088ae69bc206a7edc7 Mon Sep 17 00:00:00 2001
+From: Chris Burel <chrisburel@gmail.com>
+Date: Fri, 23 Aug 2013 12:04:01 -0700
+Subject: [PATCH 1/2] Changes to support perl 5.18.0.
+
+Perl no longer calls the AUTOLOAD method for DESTROY.  So that has to be defined explicitly.
+It also didn't like bless \shift, $package, so I've changed that as well.
+defined @array is deprecated, update that code.
+Also remove spurious breakpoints in example code.
+Also, CMake seems to have changed, so the prove "macro" is now a function, because functions support actual scope on cmake variables.
+---
+ cmake/MacroProve.cmake                             |   4 +-
+ qtcore/lib/QtCore4.pm                              |  85 ++++-----
+ qtcore/src/QtCore4.xs                              |   2 +
+ qtcore/src/util.cpp                                | 190 ++++++++++++---------
+ qtcore/src/util.h                                  |   1 +
+ qtcore/t/d_sigslot.t                               |   1 -
+ qtcore/t/qabstractitemmodel.t                      |   1 -
+ qtgui/examples/tools/customcompleter/TextEdit.pm   |   1 -
+ .../tools/settingseditor/VariantDelegate.pm        |   1 -
+ qtgui/t/itemviewspuzzle.t                          |   2 -
+ 10 files changed, 154 insertions(+), 134 deletions(-)
+
+SKIP diff --git a/cmake/MacroProve.cmake b/cmake/MacroProve.cmake
+SKIP index 13387af..489878a 100644
+SKIP --- a/cmake/MacroProve.cmake
+SKIP +++ b/cmake/MacroProve.cmake
+SKIP @@ -1,5 +1,5 @@
+SKIP  
+SKIP -MACRO( MACRO_PROVE _testname _path)
+SKIP +FUNCTION( MACRO_PROVE _testname _path)
+SKIP  
+SKIP      if(WIN32)
+SKIP          set(prove_cmd "prove.bat")
+SKIP @@ -20,4 +20,4 @@ MACRO( MACRO_PROVE _testname _path)
+SKIP      endif(_workingdir)
+SKIP  
+SKIP      add_test(${_testname} ${prove_cmd} ${prove_args} ${escaped_path})
+SKIP -ENDMACRO( MACRO_PROVE _testname _path )
+SKIP +ENDFUNCTION( MACRO_PROVE _testname _path )
+diff --git a/qtcore/lib/QtCore4.pm b/qtcore/lib/QtCore4.pm
+index b14e817..0459dd8 100644
+--- a/qtcore/lib/QtCore4.pm
++++ b/qtcore/lib/QtCore4.pm
+@@ -1301,12 +1301,15 @@ sub init_class {
+ 
+     foreach my $sp ('', ' ') {
+         my $where = $sp . $perlClassName;
+-        installautoload($where);
+-        # Putting this in one package gives XS_AUTOLOAD one spot to look for
+-        # the autoload variable
+-        package Qt::AutoLoad;
+-        my $autosub = \&{$where . '::_UTOLOAD'};
+-        Qt::_internal::installSub( $where.'::AUTOLOAD', sub{&$autosub} );
++
++        if (!exists &{$where . '::AUTOLOAD'}) {
++            installautoload($where);
++            # Putting this in one package gives XS_AUTOLOAD one spot to look for
++            # the autoload variable
++            package Qt::AutoLoad;
++            my $autosub = \&{$where . '::_UTOLOAD'};
++            Qt::_internal::installSub( $where.'::AUTOLOAD', sub{&$autosub} );
++        }
+     }
+ 
+     installSub("$perlClassName\::NEW", sub {
+@@ -1417,9 +1420,9 @@ sub makeMetaData {
+     my $signals = $meta->{signals};
+     my $slots = $meta->{slots};
+ 
+-    @{$classinfos} = () if !defined @{$classinfos};
+-    @{$signals} = () if !defined @{$signals};
+-    @{$slots} = () if !defined @{$slots};
++    @{$classinfos} = () if !defined $classinfos;
++    @{$signals} = () if !defined $signals;
++    @{$slots} = () if !defined $slots;
+ 
+     # Each entry in 'stringdata' corresponds to a string in the
+     # qt_meta_stringdata_<classname> structure.
+@@ -1805,67 +1808,67 @@ Qt::_internal::installSub(' Qt::Variant::value', sub {
+ });
+ 
+ sub String {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::String';
+-    } else {
+-        return bless '', 'Qt::String';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::String';
+ }
+ 
+ sub CString {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::CString';
+-    } else {
+-        return bless '', 'Qt::CString';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::CString';
+ }
+ 
+ sub Int {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::Int';
+-    } else {
+-        return bless '', 'Qt::Int';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::Int';
+ }
+ 
+ sub Uint {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::Uint';
+-    } else {
+-        return bless '', 'Qt::Uint';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::Uint';
+ }
+ 
+ sub Bool {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::Bool';
+-    } else {
+-        return bless '', 'Qt::Bool';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::Bool';
+ }
+ 
+ sub Short {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::Short';
+-    } else {
+-        return bless '', 'Qt::Short';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::Short';
+ }
+ 
+ sub Ushort {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::Ushort';
+-    } else {
+-        return bless '', 'Qt::Ushort';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::Ushort';
+ }
+ 
+ sub Uchar {
+-    if ( @_ ) {
+-        return bless \shift, 'Qt::Uchar';
+-    } else {
+-        return bless '', 'Qt::Uchar';
++    my ($val) = @_;
++    if ( !$val ) {
++        $val = '';
+     }
++    return bless \$val, 'Qt::Uchar';
+ }
+ 
+ 1;
+diff --git a/qtcore/src/QtCore4.xs b/qtcore/src/QtCore4.xs
+index fd219c5..a699132 100644
+--- a/qtcore/src/QtCore4.xs
++++ b/qtcore/src/QtCore4.xs
+@@ -249,6 +249,8 @@ installautoload( package )
+         char* autoload = new char[strlen(package) + 11];
+         sprintf(autoload, "%s::_UTOLOAD", package);
+         newXS(autoload, XS_AUTOLOAD, __FILE__);
++        sprintf(autoload, "%s::DESTROY", package);
++        newXS(autoload, XS_DESTROY, __FILE__);
+         delete[] autoload;
+ 
+ void
+diff --git a/qtcore/src/util.cpp b/qtcore/src/util.cpp
+index f66fb6b..a163e7e 100644
+--- a/qtcore/src/util.cpp
++++ b/qtcore/src/util.cpp
+@@ -1939,6 +1939,109 @@ XS(XS_qvariant_from_value) {
+     XSRETURN(1);
+ }
+ 
++XS(XS_DESTROY) {
++    dXSARGS;
++    PERL_SET_CONTEXT(PL_curinterp);
++    char* package = HvNAME(SvSTASH(SvRV(ST(0))));
++    ++package;
++
++#ifdef PERLQTDEBUG
++    if( do_debug && ( do_debug & qtdb_autoload ) ) {
++        fprintf(stderr, "In XS DESTROY for %s", package);
++        if((do_debug & qtdb_verbose)) {
++            smokeperl_object *o = sv_obj_info(ST(0));
++            if(o)
++                fprintf(stderr, " - SV*: %p this: (%s)%p\n", ST(0), o->smoke->classes[o->classId].className, o->ptr);
++            else
++                fprintf(stderr, " - this: (unknown)(nil)\n");
++        }
++        else {
++            fprintf(stderr, "\n");
++        }
++    }
++#endif
++
++    // For anything we do here where withObject is true, sv_this should be set
++    // to the first argument on the stack, since that's where perl puts it.
++    // Wherever we return, be sure to restore sv_this.
++    SV* old_this = 0;
++    old_this = sv_this;
++    sv_this = newSVsv(ST(0));
++
++    smokeperl_object* o = sv_obj_info(sv_this);
++
++    // Check to see that o exists (has a smokeperl_object in sv_this), has
++    // a valid pointer, and (is allocated or has an entry in the pointer
++    // map).  If all of that's true, or we're in global destruction, we
++    // don't really care what happens.
++    if( PL_dirty ) {
++        // This block will be repeated a lot to clean stuff up.
++        // Restore sv_this
++        SvREFCNT_dec(sv_this);
++        sv_this = old_this;
++        XSRETURN_YES;
++    }
++    if( !(o && o->ptr && (o->allocated || getPointerObject(o->ptr))) ) {
++        // This block will be repeated a lot to clean stuff up.
++        // Restore sv_this
++        SvREFCNT_dec(sv_this);
++        sv_this = old_this;
++        XSRETURN_YES;
++    }
++
++    // Check to see if a delete of this object has been tried before, by
++    // seeing if the object's hash has the "has been hidden" key
++    static const char* key = "has been hidden";
++    U32 klen = 15;
++    SV** svp = 0;
++    if( SvROK(sv_this) && SvTYPE(SvRV(sv_this)) == SVt_PVHV ) {
++        HV* hv = (HV*)SvRV(sv_this);
++        svp = hv_fetch( hv, key, klen, 0);
++    }
++    if(svp) {
++        // Found "has been hidden", so don't do anything, just clean up 
++        // Restore sv_this
++        SvREFCNT_dec(sv_this);
++        sv_this = old_this;
++        XSRETURN_YES;
++    }
++
++#ifdef PERLQTDEBUG
++    // The following perl call seems to stomp on the package name, let's copy it
++    char* packagecpy = new char[strlen(package)+1];
++    strcpy( packagecpy, package );
++#endif
++
++    // Call the ON_DESTROY method, that stores a reference (increasing the
++    // refcnt) if necessary
++    HV* stash = gv_stashpv(package, TRUE);
++    GV* gv = gv_fetchmethod_autoload(stash, "ON_DESTROY", 0);
++    int retval = 0;
++    if( gv ) {
++        PUSHMARK(SP);
++        int count = call_sv((SV*)GvCV(gv), G_SCALAR|G_NOARGS);
++        SPAGAIN;
++        if (count != 1) {
++            // Restore sv_this
++            SvREFCNT_dec(sv_this);
++            sv_this = old_this;
++            croak( "Corrupt ON_DESTROY return value: Got %d value(s), expected 1\n", count );
++        }
++        retval = POPi;
++        PUTBACK;
++    }
++
++#ifdef PERLQTDEBUG
++    if( do_debug && retval && (do_debug & qtdb_gc) )
++        fprintf(stderr, "Increasing refcount in DESTROY for %s=%p (still has a parent)\n", packagecpy, o->ptr);
++    delete[] packagecpy;
++#endif
++
++    // Now clean up
++    SvREFCNT_dec(sv_this);
++    sv_this = old_this;
++}
++
+ XS(XS_AUTOLOAD) {
+     dXSARGS;
+     PERL_SET_CONTEXT(PL_curinterp);
+@@ -2045,95 +2148,12 @@ XS(XS_AUTOLOAD) {
+         else
+             XSRETURN(count);
+     }
+-    else if( !strcmp( methodname, "DESTROY" ) ) {
+-        smokeperl_object* o = sv_obj_info(sv_this);
+-
+-        // Check to see that o exists (has a smokeperl_object in sv_this), has
+-        // a valid pointer, and (is allocated or has an entry in the pointer
+-        // map).  If all of that's true, or we're in global destruction, we
+-        // don't really care what happens.
+-        if( PL_dirty ) {
+-            // This block will be repeated a lot to clean stuff up.
+-            if( withObject ) {
+-                // Restore sv_this
+-                SvREFCNT_dec(sv_this);
+-                sv_this = old_this;
+-            }
+-            XSRETURN_YES;
+-        }
+-        if( !(o && o->ptr && (o->allocated || getPointerObject(o->ptr))) ) {
+-            // This block will be repeated a lot to clean stuff up.
+-            if( withObject ) {
+-                // Restore sv_this
+-                SvREFCNT_dec(sv_this);
+-                sv_this = old_this;
+-            }
+-            XSRETURN_YES;
+-        }
+-
+-        // Check to see if a delete of this object has been tried before, by
+-        // seeing if the object's hash has the "has been hidden" key
+-        static const char* key = "has been hidden";
+-        U32 klen = 15;
+-        SV** svp = 0;
+-        if( SvROK(sv_this) && SvTYPE(SvRV(sv_this)) == SVt_PVHV ) {
+-            HV* hv = (HV*)SvRV(sv_this);
+-            svp = hv_fetch( hv, key, klen, 0);
+-        }
+-        if(svp) {
+-            // Found "has been hidden", so don't do anything, just clean up 
+-            if( withObject ) {
+-                // Restore sv_this
+-                SvREFCNT_dec(sv_this);
+-                sv_this = old_this;
+-            }
+-            XSRETURN_YES;
+-        }
+-
+-#ifdef PERLQTDEBUG
+-        // The following perl call seems to stomp on the package name, let's copy it
+-        char* packagecpy = new char[strlen(package)+1];
+-        strcpy( packagecpy, package );
+-#endif
+-
+-        // Call the ON_DESTROY method, that stores a reference (increasing the
+-        // refcnt) if necessary
+-        if( !stash )
+-            stash = gv_stashpv(package, TRUE);
+-        gv = gv_fetchmethod_autoload(stash, "ON_DESTROY", 0);
+-        int retval = 0;
+-        if( gv ) {
+-            PUSHMARK(SP);
+-            int count = call_sv((SV*)GvCV(gv), G_SCALAR|G_NOARGS);
+-            SPAGAIN;
+-            if (count != 1) {
+-                if( withObject ) {
+-                    // Restore sv_this
+-                    SvREFCNT_dec(sv_this);
+-                    sv_this = old_this;
+-                }
+-                croak( "Corrupt ON_DESTROY return value: Got %d value(s), expected 1\n", count );
+-            }
+-            retval = POPi;
+-            PUTBACK;
+-        }
+-
+-#ifdef PERLQTDEBUG
+-        if( do_debug && retval && (do_debug & qtdb_gc) )
+-            fprintf(stderr, "Increasing refcount in DESTROY for %s=%p (still has a parent)\n", packagecpy, o->ptr);
+-        delete[] packagecpy;
+-#endif
+-
+-        // Now clean up
+-        if( withObject ) {
+-            SvREFCNT_dec(sv_this);
+-            sv_this = old_this;
+-        }
+-    }
+     else {
+         // We're calling a c++ method
+ 
+         // Get the classId (eventually converting SUPER to the right Qt4 class)
++        if (super && strcmp( super, "SUPER" ) == 0)
++            package[strlen(package)-7] = 0;
+         SV* moduleIdRef = package_classId( package );
+         Smoke::ModuleIndex mi;
+ 
+diff --git a/qtcore/src/util.h b/qtcore/src/util.h
+index bd4bf31..430a8eb 100644
+--- a/qtcore/src/util.h
++++ b/qtcore/src/util.h
+@@ -98,6 +98,7 @@ XS(XS_qdatastream_readrawdata);
+ XS(XS_qvariant_value);
+ XS(XS_qvariant_from_value);
+ 
++XS(XS_DESTROY);
+ XS(XS_AUTOLOAD);
+ XS(XS_qt_metacall);
+ XS(XS_signal);
+diff --git a/qtcore/t/d_sigslot.t b/qtcore/t/d_sigslot.t
+index eea16c8..3d02f2e 100644
+--- a/qtcore/t/d_sigslot.t
++++ b/qtcore/t/d_sigslot.t
+@@ -30,7 +30,6 @@ sub NEW {
+     emit signal( 5, 4 );
+ 
+     # 3) Emit a signal, but missing an argument.  Should fail.
+-    $DB::single=1;
+     eval{ emit signalWithBadArg() };
+     like( $@, qr/Wrong number of arguments in signal call/, 'Missing arguments in signal' );
+ }
+diff --git a/qtcore/t/qabstractitemmodel.t b/qtcore/t/qabstractitemmodel.t
+index ae1174c..3e2baba 100644
+--- a/qtcore/t/qabstractitemmodel.t
++++ b/qtcore/t/qabstractitemmodel.t
+@@ -4,7 +4,6 @@ package TestModel;
+ 
+ use strict;
+ use warnings;
+-use blib;
+ use QtCore4;
+ use QtCore4::isa qw( Qt::AbstractItemModel );
+ 
+diff --git a/qtgui/examples/tools/customcompleter/TextEdit.pm b/qtgui/examples/tools/customcompleter/TextEdit.pm
+index 9b4e26f..3e82ae4 100644
+--- a/qtgui/examples/tools/customcompleter/TextEdit.pm
++++ b/qtgui/examples/tools/customcompleter/TextEdit.pm
+@@ -61,7 +61,6 @@ sub insertCompletion
+         return;
+     }
+     my $tc = textCursor();
+-    $DB::single=1;
+     my $extra = length($completion) - length(c->completionPrefix());
+     $tc->movePosition(Qt::TextCursor::Left());
+     $tc->movePosition(Qt::TextCursor::EndOfWord());
+diff --git a/qtgui/examples/tools/settingseditor/VariantDelegate.pm b/qtgui/examples/tools/settingseditor/VariantDelegate.pm
+index 5d91d3f..e450efb 100644
+--- a/qtgui/examples/tools/settingseditor/VariantDelegate.pm
++++ b/qtgui/examples/tools/settingseditor/VariantDelegate.pm
+@@ -197,7 +197,6 @@ sub setModelData
+     }
+ 
+     my $text = $lineEdit->text();
+-    $DB::single=1;
+     my $validator = $lineEdit->validator();
+     if ($validator) {
+         my $pos;
+SKIP diff --git a/qtgui/t/itemviewspuzzle.t b/qtgui/t/itemviewspuzzle.t
+SKIP index 4a6b623..ea1c07e 100644
+SKIP --- a/qtgui/t/itemviewspuzzle.t
+SKIP +++ b/qtgui/t/itemviewspuzzle.t
+SKIP @@ -85,8 +85,6 @@ sub initTestCase {
+SKIP      Qt::Test::qWaitForWindowShown( $window );
+SKIP      this->{window} = $window;
+SKIP      pass( 'Window shown' );
+SKIP -    $DB::single=1;
+SKIP -    1;
+SKIP  }
+SKIP  
+SKIP  package main;
+SKIP -- 
+SKIP 1.8.3.1
+SKIP 

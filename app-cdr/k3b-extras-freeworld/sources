@@ -1,0 +1,7 @@
+8cc39e889714510408f9f998d8e7501a  0244-Fixed-compilation-with-new-FFMPEG.patch
+cabdc57a1514994c6184942c60ca1996  0290-fix-for-newer-kde-4.7-FindFFMPEG.cmake.patch
+82d6667c7ef3b758a1b4693c6b2b465c  0312-Fix-K3B-to-build-with-recent-FFMPEG-versions.patch
+1cbab7a908311a02812add1a2473d6a5  0330-CMake-checks-for-FFmpeg-API-changes.patch
+994333484375d44649cf5dfadfb60ea1  0331-Introduce-a-macro-for-referencing-the-ffmpeg-codec.patch
+c86113af31a2032e57fd2f302b5f637a  k3b-2.0.2.tar.bz2
+46b75ce5afdf50e5b8794263448bf685  k3b-ffmpeg-review-113295-1.patch

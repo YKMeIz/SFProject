@@ -1,0 +1,17 @@
+diff --git a/data/org.gnome.gthumb.resize-images.gschema.xml.in b/data/org.gnome.gthumb.resize-images.gschema.xml.in
+index 3e437cb..1c4fb2c 100644
+--- a/data/org.gnome.gthumb.resize-images.gschema.xml.in
++++ b/data/org.gnome.gthumb.resize-images.gschema.xml.in
+@@ -20,10 +20,10 @@
+ 
+   <schema id="org.gnome.gthumb.resize-images" path="/org/gnome/gthumb/resize-images/">
+     <key name="width" type="i">
+-      <default>640</default>
++      <default>100</default>
+     </key>
+     <key name="height" type="i">
+-      <default>480</default>
++      <default>100</default>
+     </key>
+     <key name="unit" enum="org.gnome.gthumb.GthUnit">
+       <default>'percentage'</default>

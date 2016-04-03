@@ -1,0 +1,11 @@
+diff -up ./FusionIcon/interface_qt4/main.py.runpatch ./FusionIcon/interface_qt4/main.py
+--- ./FusionIcon/interface_qt4/main.py.runpatch	2007-12-21 22:04:39.000000000 +0100
++++ ./FusionIcon/interface_qt4/main.py	2007-12-21 22:14:14.000000000 +0100
+@@ -19,6 +19,7 @@
+ import sys, os, time
+ from PyQt4 import QtGui, QtCore
+ from FusionIcon.start import wms, apps, options, decorators, init
++from FusionIcon.execute import run
+ 
+ class Build(QtGui.QApplication):
+ 	def reload_wm(self):

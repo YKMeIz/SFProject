@@ -1,0 +1,33 @@
+diff -upr fusion-icon-5e2dc9-orig/FusionIcon/data.py fusion-icon-5e2dc9/FusionIcon/data.py
+--- fusion-icon-5e2dc9-orig/FusionIcon/data.py	2012-02-27 02:09:27.000000000 +0100
++++ fusion-icon-5e2dc9/FusionIcon/data.py	2012-05-16 00:55:39.000000000 +0200
+@@ -109,7 +109,7 @@ decorators = {
+ 
+ 	'gwd': 
+ 		('gtk-window-decorator', 'gtk-window-decorator --replace', 
+-		 'GTK Window Decorator', 'gnome'),
++		 'GTK Window Decorator', 'mate'),
+ 
+ 	'kwd':
+ 		('kde-window-decorator', 'kde-window-decorator --replace',
+diff -upr fusion-icon-5e2dc9-orig/FusionIcon/environment.py fusion-icon-5e2dc9/FusionIcon/environment.py
+--- fusion-icon-5e2dc9-orig/FusionIcon/environment.py	2008-03-16 23:58:07.000000000 +0100
++++ fusion-icon-5e2dc9/FusionIcon/environment.py	2012-05-16 01:04:43.000000000 +0200
+@@ -49,7 +49,7 @@ Xgl: True in Xgl'''
+ 
+ 		# Check gnome- and kde-specific vars, then try generic 'DESKTOP_SESSION'
+ 		if GDSID in os.environ:
+-			self.desktop = 'gnome'
++			self.desktop = 'mate'
+ 
+ 		elif 'KDE_FULL_SESSION' in os.environ: 
+ 			self.desktop = 'kde'
+@@ -58,7 +58,7 @@ Xgl: True in Xgl'''
+ 			self.desktop = os.environ.get('DESKTOP_SESSION', 'unknown')
+ 
+ 		self.failsafe = False
+-		if self.desktop == 'gnome' and GDSID in os.environ and os.environ[GDSID] == 'failsafe':
++		if self.desktop == 'mate' and GDSID in os.environ and os.environ[GDSID] == 'failsafe':
+ 			self.failsafe = True
+ 		
+ 		if self.failsafe:

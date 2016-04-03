@@ -1,0 +1,66 @@
+diff -aur celt-0.7.1.orig/configure.ac celt-0.7.1/configure.ac
+--- celt-0.7.1.orig/configure.ac	2010-01-17 00:53:33.000000000 +0100
++++ celt-0.7.1/configure.ac	2010-10-09 11:56:55.274895997 +0200
+@@ -9,7 +9,7 @@
+ CELT_MICRO_VERSION=1
+ CELT_EXTRA_VERSION=
+ CELT_VERSION=$CELT_MAJOR_VERSION.$CELT_MINOR_VERSION.$CELT_MICRO_VERSION$CELT_EXTRA_VERSION
+-LIBCELT_SUFFIX=0
++LIBCELT_SUFFIX=071
+ 
+ CELT_LT_CURRENT=0
+ CELT_LT_REVISION=0
+@@ -22,7 +22,7 @@
+ 
+ # For automake.
+ VERSION=$CELT_VERSION
+-PACKAGE=celt
++PACKAGE=celt071
+ 
+ AC_SUBST(CELT_VERSION)
+ 
+@@ -205,7 +205,7 @@
+ AC_SUBST(SIZE32)
+ 
+ AC_OUTPUT([Makefile libcelt/Makefile tests/Makefile 
+-           celt.pc tools/Makefile libcelt.spec ])
++           celt071.pc tools/Makefile libcelt.spec ])
+ 
+ AC_MSG_RESULT([
+ ------------------------------------------------------------------------
+
+diff -aur celt-0.7.1.orig/Makefile.am celt-0.7.1/Makefile.am
+--- celt-0.7.1.orig/Makefile.am	2009-05-30 04:17:20.000000000 +0200
++++ celt-0.7.1/Makefile.am	2010-10-09 11:59:35.220906583 +0200
+@@ -10,9 +10,9 @@
+ DIST_SUBDIRS = libcelt tests tools
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+-pkgconfig_DATA = celt.pc 
++pkgconfig_DATA = celt071.pc 
+ 
+-EXTRA_DIST = celt.pc.in Doxyfile Doxyfile.devel
++EXTRA_DIST = celt071.pc.in Doxyfile Doxyfile.devel
+ 
+ rpm: dist
+ 	rpmbuild -ta ${PACKAGE}-${VERSION}.tar.gz
+
+diff -aur celt-0.7.1.orig/tools/Makefile.am celt-0.7.1/tools/Makefile.am
+--- celt-0.7.1.orig/tools/Makefile.am	2010-01-16 02:49:24.000000000 +0100
++++ celt-0.7.1/tools/Makefile.am	2010-10-09 12:00:36.172979624 +0200
+@@ -12,10 +12,10 @@
+ include_HEADERS = 
+ noinst_HEADERS = wav_io.h
+ 
+-bin_PROGRAMS = celtenc celtdec
++bin_PROGRAMS = celtenc071 celtdec071
+ 
+-celtenc_SOURCES = celtenc.c wav_io.c skeleton.c
+-celtenc_LDADD = $(top_builddir)/libcelt/libcelt@LIBCELT_SUFFIX@.la $(OGG_LIBS)
++celtenc071_SOURCES = celtenc.c wav_io.c skeleton.c
++celtenc071_LDADD = $(top_builddir)/libcelt/libcelt@LIBCELT_SUFFIX@.la $(OGG_LIBS)
+ 
+-celtdec_SOURCES = celtdec.c wav_io.c
+-celtdec_LDADD = $(top_builddir)/libcelt/libcelt@LIBCELT_SUFFIX@.la $(OGG_LIBS)
++celtdec071_SOURCES = celtdec.c wav_io.c
++celtdec071_LDADD = $(top_builddir)/libcelt/libcelt@LIBCELT_SUFFIX@.la $(OGG_LIBS)

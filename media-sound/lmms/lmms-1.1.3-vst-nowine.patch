@@ -1,0 +1,27 @@
+From: Thomas Moschny <thomas.moschny@gmx.de>
+Subject: [PATCH] t/vst-nowine
+
+Build with vst support but without having wine.
+
+Signed-off-by: Thomas Moschny <thomas.moschny@gmx.de>
+
+---
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 63af96c..9871ac1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -321,6 +321,9 @@ IF(LMMS_BUILD_WIN32)
+ 	SET(LMMS_SUPPORT_VST TRUE)
+ 	SET(STATUS_VST "OK")
+ ENDIF(LMMS_BUILD_WIN32)
++IF(WANT_VST_NOWINE)
++	SET(LMMS_SUPPORT_VST TRUE)
++ENDIF(WANT_VST_NOWINE)
+ 
+ 
+ # check for libsamplerate
+-- 
+tg: (d14f451..) t/vst-nowine (depends on: stable-1.1)

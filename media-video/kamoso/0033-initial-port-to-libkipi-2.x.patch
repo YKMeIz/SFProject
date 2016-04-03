@@ -1,0 +1,171 @@
+From a0aec903b36b52bda1a9a5d2e875af1063747a86 Mon Sep 17 00:00:00 2001
+From: Rex Dieter <rdieter@math.unl.edu>
+Date: Fri, 21 Dec 2012 10:39:52 -0600
+Subject: [PATCH 33/35] initial port to libkipi-2.x
+
+Initial libkipi-2.x support courtesy of Sando Mani
+
+BUG: 307147
+---
+ src/kamoso.cpp                           |  5 ++++-
+ src/kamoso.h                             |  1 +
+ src/kipiaction.cpp                       |  4 ++--
+ src/pluginTester/fakekipiaction.cpp      |  4 ++--
+ src/pluginTester/pluginTester.cpp        |  4 +++-
+ src/plugins/CMakeLists.txt               |  2 +-
+ src/plugins/exportinterface.h            | 15 +++++++++++++++
+ src/plugins/youtube/kipiplugin_youtube.h |  5 ++---
+ 8 files changed, 30 insertions(+), 10 deletions(-)
+ create mode 100644 src/plugins/exportinterface.h
+
+diff --git a/src/kamoso.cpp b/src/kamoso.cpp
+index 6026bdd..24dd0f2 100644
+--- a/src/kamoso.cpp
++++ b/src/kamoso.cpp
+@@ -45,6 +45,7 @@
+     #include <solid/control/powermanager.h>
+ #endif
+ 
++#include <QItemSelection>
+ #include <QLayout>
+ #include <QPushButton>
+ #include <QToolButton>
+@@ -189,7 +190,9 @@ Kamoso::Kamoso(QWidget* parent)
+     connect(mTracker, SIGNAL(urlsChanged(KUrl::List)), SLOT(updateThumbnails(KUrl::List)));
+ 
+     QMetaObject::invokeMethod(this, "initialize");
+-    mPluginLoader = new KIPI::PluginLoader(QStringList(), new KIPIInterface(this), "");
++    mPluginLoader = new KIPI::PluginLoader();
++    mPluginLoader->setInterface(new KIPIInterface(this));
++    mPluginLoader->init();
+ }
+ 
+ KUrl::List Kamoso::selectedItems()
+diff --git a/src/kamoso.h b/src/kamoso.h
+index 1ef37f3..dcd8987 100644
+--- a/src/kamoso.h
++++ b/src/kamoso.h
+@@ -36,6 +36,7 @@ class WebcamWidget;
+ class WebcamRetriever;
+ class CountdownWidget;
+ class KDirOperator;
++class QItemSelection;
+ class QStackedLayout;
+ class QSplitter;
+ class QPushButton;
+diff --git a/src/kipiaction.cpp b/src/kipiaction.cpp
+index a0f8405..f7aaacb 100644
+--- a/src/kipiaction.cpp
++++ b/src/kipiaction.cpp
+@@ -19,7 +19,7 @@
+ 
+ #include "kipiaction.h"
+ #include <libkipi/plugin.h>
+-#include <libkipi/exportinterface.h>
++#include "plugins/exportinterface.h"
+ #include <QDebug>
+ #include "kamoso.h"
+ #include "kamosojobtracker.h"
+@@ -33,7 +33,7 @@ KipiAction::KipiAction(KIPI::PluginLoader::Info* pluginInfo, Kamoso* ui, QObject
+ void KipiAction::runJob()
+ {
+     KIPI::Plugin* p=pluginInfo->plugin();
+-    KIPI::ExportInterface* ep=dynamic_cast<KIPI::ExportInterface*>(p);
++    ExportInterface* ep=dynamic_cast<ExportInterface*>(p);
+ 
+     KJob* job=ep->exportFiles(i18n("Kamoso"));
+     mKamoso->tracker()->registerJob(job, mKamoso->selectedItems(), icon());
+diff --git a/src/pluginTester/fakekipiaction.cpp b/src/pluginTester/fakekipiaction.cpp
+index c86c605..8db307d 100644
+--- a/src/pluginTester/fakekipiaction.cpp
++++ b/src/pluginTester/fakekipiaction.cpp
+@@ -20,10 +20,10 @@
+ #include "fakekipiaction.h"
+ 
+ #include <libkipi/plugin.h>
+-#include <libkipi/exportinterface.h>
+ #include <KIO/JobUiDelegate>
+ #include <kjobtrackerinterface.h>
+ #include <KDebug>
++#include "../plugins/exportinterface.h"
+ 
+ FakeKipiAction::FakeKipiAction(KIPI::PluginLoader::Info* pluginInfo, QObject* parent)
+     : QAction(pluginInfo->icon(), pluginInfo->name(), parent), pluginInfo(pluginInfo)
+@@ -39,7 +39,7 @@ FakeKipiAction::~FakeKipiAction()
+ void FakeKipiAction::runJob()
+ {
+     KIPI::Plugin* p=pluginInfo->plugin();
+-    KIPI::ExportInterface* ep = dynamic_cast<KIPI::ExportInterface*>(p);
++    ExportInterface* ep = dynamic_cast<ExportInterface*>(p);
+ 
+     m_job = ep->exportFiles(i18n("Kamoso"));
+     KIO::getJobTracker()->registerJob(m_job);
+diff --git a/src/pluginTester/pluginTester.cpp b/src/pluginTester/pluginTester.cpp
+index 6609b39..2619eb8 100644
+--- a/src/pluginTester/pluginTester.cpp
++++ b/src/pluginTester/pluginTester.cpp
+@@ -41,7 +41,9 @@ PluginTester::PluginTester(QObject *parent) : QObject(parent)
+         kurlList.append(KUrl(args->arg(i)));
+     }
+ 
+-    m_pluginLoader = new KIPI::PluginLoader(QStringList(), new FakeKIPIInterface(kurlList), "");
++    m_pluginLoader = new KIPI::PluginLoader();
++    m_pluginLoader->setInterface(new FakeKIPIInterface(kurlList));
++    m_pluginLoader->init();
+ 
+     bool found = false;
+     Q_FOREACH(KIPI::PluginLoader::Info *pluginInfo, m_pluginLoader->pluginList()) {
+diff --git a/src/plugins/CMakeLists.txt b/src/plugins/CMakeLists.txt
+index 28bc10b..8755047 100644
+--- a/src/plugins/CMakeLists.txt
++++ b/src/plugins/CMakeLists.txt
+@@ -30,5 +30,5 @@ FIND_PACKAGE(Kipi REQUIRED)
+ # MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
+ # MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup.
+ 
+-include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/plugins/youtube)
++include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/plugins ${CMAKE_SOURCE_DIR}/src/plugins/youtube)
+ add_subdirectory(youtube)
+diff --git a/src/plugins/exportinterface.h b/src/plugins/exportinterface.h
+new file mode 100644
+index 0000000..f1556f9
+--- /dev/null
++++ b/src/plugins/exportinterface.h
+@@ -0,0 +1,15 @@
++#ifndef EXPORTINTERFACE_H
++#define EXPORTINTERFACE_H
++
++class KJob;
++
++class ExportInterface
++{
++public:
++
++    virtual ~ExportInterface() {}
++
++    virtual KJob* exportFiles(const QString& albumname)=0;
++};
++
++#endif // EXPORTINTERFACE_H
+diff --git a/src/plugins/youtube/kipiplugin_youtube.h b/src/plugins/youtube/kipiplugin_youtube.h
+index c274933..dcf3158 100644
+--- a/src/plugins/youtube/kipiplugin_youtube.h
++++ b/src/plugins/youtube/kipiplugin_youtube.h
+@@ -22,12 +22,11 @@
+ #include <kwallet.h>
+ #include <KIO/Job>
+ #include <libkipi/plugin.h>
+-#include <libkipi/exportinterface.h>
++#include <exportinterface.h>
+ 
+-class YoutubePlugin : public KIPI::Plugin, public KIPI::ExportInterface
++class YoutubePlugin : public KIPI::Plugin, public ExportInterface
+ {
+ 	Q_OBJECT
+-	Q_INTERFACES(KIPI::ExportInterface)
+ 	public:
+ 		YoutubePlugin(QObject* parent, const QVariantList& args);
+ // 		virtual QAction* thumbnailsAction(const QList<KUrl>& url);
+-- 
+1.8.0.2
+

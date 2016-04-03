@@ -1,0 +1,11 @@
+--- src/support.h.orig	2011-04-14 10:15:43.664518243 -0500
++++ src/support.h	2011-04-14 10:15:54.424101238 -0500
+@@ -20,7 +20,7 @@
+ #ifndef __IMAGINATION_SUPPORT_H
+ #define __IMAGINATION_SUPPORT_H
+ 
+-#define PLUGINS_INSTALLED 0
++#define PLUGINS_INSTALLED 1
+ 
+ #ifdef HAVE_CONFIG_H
+ #  include <config.h>

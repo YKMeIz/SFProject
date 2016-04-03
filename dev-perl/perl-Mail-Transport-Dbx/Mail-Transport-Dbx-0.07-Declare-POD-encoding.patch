@@ -1,0 +1,30 @@
+From 2b912791f76cf4ba5304a5ef072ba8c4605a46b2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Sat, 20 Jul 2013 19:28:02 +0200
+Subject: [PATCH] Declare POD encoding
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ Dbx.pm | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Dbx.pm b/Dbx.pm
+index 57d8e95..fd9fcc2 100644
+--- a/Dbx.pm
++++ b/Dbx.pm
+@@ -118,6 +118,8 @@ bootstrap Mail::Transport::Dbx $VERSION;
+ __END__
+ # Below is stub documentation for your module. You'd better edit it!
+ 
++=encoding iso-8859-1
++
+ =head1 NAME
+ 
+ Mail::Transport::Dbx - Parse Outlook Express mailboxes
+-- 
+1.8.1.4
+

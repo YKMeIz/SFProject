@@ -1,0 +1,46 @@
+From e984ceddace7e4e5eaf0b24b690222defb9e46db Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Tue, 10 Feb 2015 18:05:41 +0900
+Subject: [PATCH 6/7] build_substrate: fix possibly wrong memset usage
+
+cppcheck warns:
+[hacks/substrate.c:475]: (warning) The 2nd memset() argument '10001' doesn't fit into an 'unsigned char'.
+
+Well, the propotype of memset() says the second argument has type
+'int', however it is actually turned into unsigned char (man 3p memset)
+and puts the number to each *bytes*, so specifying '10001' is highly
+questionable.
+
+Looking at the other part:
+    195         if (ref_cgrid(f, px, py) < 10000)
+    196             found = 1;
+
+    410             if (f->cgrid[cy * f->width + cx] > 10000) {
+
+So perhaps the line 475 actually wanted to put integer number "10001"
+to each integer-array elements.
+---
+ hacks/substrate.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/hacks/substrate.c b/hacks/substrate.c
+index 52d031c..c63ceb9 100644
+--- a/hacks/substrate.c
++++ b/hacks/substrate.c
+@@ -472,7 +472,12 @@ static void build_substrate(struct field *f)
+ 
+     /* erase the crack grid */
+     f->cgrid = (int *) xrealloc(f->cgrid, sizeof(int) * f->height * f->width);
+-    memset(f->cgrid, 10001, f->height * f->width * sizeof(int));
++    {
++        int j;
++        int *p = f->cgrid;
++        for (j = 0; j < f->height * f->width; j++)
++            *p++ = 10001;
++    }
+ 
+     /* Not necessary now that make_crack ensures we have usable default
+      *  values in start_crack's timeout case 
+-- 
+2.1.0
+

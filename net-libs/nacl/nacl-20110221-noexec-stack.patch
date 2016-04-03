@@ -1,0 +1,360 @@
+diff --git a/crypto_onetimeauth/poly1305/amd64/auth.s b/crypto_onetimeauth/poly1305/amd64/auth.s
+index 5212a3e..c44d60f 100644
+--- a/crypto_onetimeauth/poly1305/amd64/auth.s
++++ b/crypto_onetimeauth/poly1305/amd64/auth.s
+@@ -2785,3 +2785,13 @@ add %r11,%rsp
+ xor %rax,%rax
+ xor %rdx,%rdx
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_onetimeauth/poly1305/amd64/constants.s b/crypto_onetimeauth/poly1305/amd64/constants.s
+index 1bfb0be..96d9763 100644
+--- a/crypto_onetimeauth/poly1305/amd64/constants.s
++++ b/crypto_onetimeauth/poly1305/amd64/constants.s
+@@ -83,3 +83,13 @@ crypto_onetimeauth_poly1305_amd64_hoffset3:
+ crypto_onetimeauth_poly1305_amd64_rounding:
+ .byte 0x7f
+ .byte 0x13
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_onetimeauth/poly1305/x86/auth.s b/crypto_onetimeauth/poly1305/x86/auth.s
+index acb8c51..daecfa1 100644
+--- a/crypto_onetimeauth/poly1305/x86/auth.s
++++ b/crypto_onetimeauth/poly1305/x86/auth.s
+@@ -2777,3 +2777,13 @@ movl 16(%esp),%ebp
+ add %eax,%esp
+ xor %eax,%eax
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_onetimeauth/poly1305/x86/constants.s b/crypto_onetimeauth/poly1305/x86/constants.s
+index ab2456c..84fe79f 100644
+--- a/crypto_onetimeauth/poly1305/x86/constants.s
++++ b/crypto_onetimeauth/poly1305/x86/constants.s
+@@ -83,3 +83,13 @@ crypto_onetimeauth_poly1305_x86_hoffset3:
+ crypto_onetimeauth_poly1305_x86_rounding:
+ .byte 0x7f
+ .byte 0x13
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/const.s b/crypto_scalarmult/curve25519/athlon/const.s
+index 9042c2f..2ee3e75 100644
+--- a/crypto_scalarmult/curve25519/athlon/const.s
++++ b/crypto_scalarmult/curve25519/athlon/const.s
+@@ -112,3 +112,13 @@ crypto_scalarmult_curve25519_athlon_out9offset:
+ crypto_scalarmult_curve25519_athlon_rounding:
+ 	.byte 0x7f
+ 	.byte 0x13
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/fromdouble.s b/crypto_scalarmult/curve25519/athlon/fromdouble.s
+index 221ca35..5ebbe1b 100644
+--- a/crypto_scalarmult/curve25519/athlon/fromdouble.s
++++ b/crypto_scalarmult/curve25519/athlon/fromdouble.s
+@@ -193,3 +193,13 @@ movl %edx,28(%ecx)
+ movl 0(%esp),%ebp
+ add %eax,%esp
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/init.s b/crypto_scalarmult/curve25519/athlon/init.s
+index edd3c58..bce33ae 100644
+--- a/crypto_scalarmult/curve25519/athlon/init.s
++++ b/crypto_scalarmult/curve25519/athlon/init.s
+@@ -11,3 +11,13 @@ sub %eax,%esp
+ fldcw crypto_scalarmult_curve25519_athlon_rounding
+ add %eax,%esp
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/mainloop.s b/crypto_scalarmult/curve25519/athlon/mainloop.s
+index 4741290..7f04515 100644
+--- a/crypto_scalarmult/curve25519/athlon/mainloop.s
++++ b/crypto_scalarmult/curve25519/athlon/mainloop.s
+@@ -3988,3 +3988,13 @@ movl 172(%ecx),%edi
+ movl 176(%ecx),%ebp
+ add %eax,%esp
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/mult.s b/crypto_scalarmult/curve25519/athlon/mult.s
+index 16f0e90..64c1644 100644
+--- a/crypto_scalarmult/curve25519/athlon/mult.s
++++ b/crypto_scalarmult/curve25519/athlon/mult.s
+@@ -408,3 +408,13 @@ fstpl 72(%ecx)
+ movl 0(%esp),%ebp
+ add %eax,%esp
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/square.s b/crypto_scalarmult/curve25519/athlon/square.s
+index 754def7..1524a1c 100644
+--- a/crypto_scalarmult/curve25519/athlon/square.s
++++ b/crypto_scalarmult/curve25519/athlon/square.s
+@@ -296,3 +296,13 @@ fstpl 64(%ecx)
+ fstpl 72(%ecx)
+ add %eax,%esp
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_scalarmult/curve25519/athlon/todouble.s b/crypto_scalarmult/curve25519/athlon/todouble.s
+index c37aa44..f43f115 100644
+--- a/crypto_scalarmult/curve25519/athlon/todouble.s
++++ b/crypto_scalarmult/curve25519/athlon/todouble.s
+@@ -142,3 +142,13 @@ faddp %st(0),%st(1)
+ fstpl 72(%ecx)
+ add %eax,%esp
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/aes128ctr/core2/afternm.s b/crypto_stream/aes128ctr/core2/afternm.s
+index c1ba79e..ab1ac5f 100644
+--- a/crypto_stream/aes128ctr/core2/afternm.s
++++ b/crypto_stream/aes128ctr/core2/afternm.s
+@@ -12306,3 +12306,13 @@ mov %rdi,%rax
+ mov %rsi,%rdx
+ xor %rax,%rax
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/aes128ctr/core2/beforenm.s b/crypto_stream/aes128ctr/core2/beforenm.s
+index 689ad8c..1626f51 100644
+--- a/crypto_stream/aes128ctr/core2/beforenm.s
++++ b/crypto_stream/aes128ctr/core2/beforenm.s
+@@ -13692,3 +13692,13 @@ mov %rdi,%rax
+ mov %rsi,%rdx
+ xor %rax,%rax
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/aes128ctr/core2/xor_afternm.s b/crypto_stream/aes128ctr/core2/xor_afternm.s
+index 022691a..2985674 100644
+--- a/crypto_stream/aes128ctr/core2/xor_afternm.s
++++ b/crypto_stream/aes128ctr/core2/xor_afternm.s
+@@ -12405,3 +12405,13 @@ mov %rdi,%rax
+ mov %rsi,%rdx
+ xor %rax,%rax
+ ret
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/salsa20/amd64_xmm6/stream.s b/crypto_stream/salsa20/amd64_xmm6/stream.s
+index 82a897f..5da3bc6 100644
+--- a/crypto_stream/salsa20/amd64_xmm6/stream.s
++++ b/crypto_stream/salsa20/amd64_xmm6/stream.s
+@@ -4821,3 +4821,13 @@ add  $64,%rsi
+ 
+ # qhasm: goto bytesbetween1and255
+ jmp ._bytesbetween1and255
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/salsa20/x86_xmm5/stream.s b/crypto_stream/salsa20/x86_xmm5/stream.s
+index 9e32ea4..da9229c 100644
+--- a/crypto_stream/salsa20/x86_xmm5/stream.s
++++ b/crypto_stream/salsa20/x86_xmm5/stream.s
+@@ -5076,3 +5076,13 @@ add  $64,%esi
+ 
+ # qhasm: goto bytesbetween1and255
+ jmp ._bytesbetween1and255
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/salsa2012/amd64_xmm6/stream.s b/crypto_stream/salsa2012/amd64_xmm6/stream.s
+index 0e26dc9..bb5395a 100644
+--- a/crypto_stream/salsa2012/amd64_xmm6/stream.s
++++ b/crypto_stream/salsa2012/amd64_xmm6/stream.s
+@@ -4821,3 +4821,13 @@ add  $64,%rsi
+ 
+ # qhasm: goto bytesbetween1and255
+ jmp ._bytesbetween1and255
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/salsa2012/x86_xmm5/stream.s b/crypto_stream/salsa2012/x86_xmm5/stream.s
+index c511b0d..c838a7b 100644
+--- a/crypto_stream/salsa2012/x86_xmm5/stream.s
++++ b/crypto_stream/salsa2012/x86_xmm5/stream.s
+@@ -5076,3 +5076,13 @@ add  $64,%esi
+ 
+ # qhasm: goto bytesbetween1and255
+ jmp ._bytesbetween1and255
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/salsa208/amd64_xmm6/stream.s b/crypto_stream/salsa208/amd64_xmm6/stream.s
+index f27411f..90d70a9 100644
+--- a/crypto_stream/salsa208/amd64_xmm6/stream.s
++++ b/crypto_stream/salsa208/amd64_xmm6/stream.s
+@@ -4821,3 +4821,13 @@ add  $64,%rsi
+ 
+ # qhasm: goto bytesbetween1and255
+ jmp ._bytesbetween1and255
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
+diff --git a/crypto_stream/salsa208/x86_xmm5/stream.s b/crypto_stream/salsa208/x86_xmm5/stream.s
+index 065253a..4a02437 100644
+--- a/crypto_stream/salsa208/x86_xmm5/stream.s
++++ b/crypto_stream/salsa208/x86_xmm5/stream.s
+@@ -5076,3 +5076,13 @@ add  $64,%esi
+ 
+ # qhasm: goto bytesbetween1and255
+ jmp ._bytesbetween1and255
++
++%ifidn __OUTPUT_FORMAT__,elf
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf32
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif
++%ifidn __OUTPUT_FORMAT__,elf64
++section .note.GNU-stack noalloc noexec nowrite progbits
++%endif

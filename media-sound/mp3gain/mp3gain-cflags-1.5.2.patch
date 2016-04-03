@@ -1,0 +1,11 @@
+--- Makefile~	2010-08-04 22:55:39.000000000 +0200
++++ Makefile	2011-10-04 17:05:06.364205963 +0200
+@@ -6,7 +6,7 @@
+ 
+ CC?= gcc
+ 
+-CFLAGS+= -Wall -DHAVE_MEMCPY
++CFLAGS+= ${RPM_OPT_FLAGS} -DHAVE_MEMCPY
+ 
+ # all known MS Windows OS define the ComSpec environment variable
+ ifdef ComSpec

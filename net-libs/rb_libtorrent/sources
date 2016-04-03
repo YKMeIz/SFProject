@@ -1,0 +1,6 @@
+6895a4d355e6c4a91f35efe746a7511e  libtorrent-rasterbar-0.16.16.tar.gz
+7e0a4caccb0ebbcb89ca504a99595f16  rb_libtorrent-0.16.10-boost_noncopyable.patch
+0ab38f7da4770a80cd2dfdb06ebbc50b  rb_libtorrent-0.16.16-boost_mt.patch
+e4224ccaecb14d942c71d31bef20d78c  rb_libtorrent-COPYING.Boost
+cbd91efd7d890d0be7c09690bafdc899  rb_libtorrent-COPYING.zlib
+49f0e189b4e9a2d68235e18b9c8e92f9  rb_libtorrent-README-renames.Fedora

@@ -1,0 +1,9 @@
+2015-Jan-20 Mamoru TASAKA <mtasaka@fedoraproject.org>
+
+cairo-dock was on Fedora, however due to some legal concern
+it was removed from Fedora on 2009. This time with assistance
+from the upstream developer I removed the potential legal
+concern part from cairo-dock tarball, which was accepted
+by Red Hat legal authority (see:
+https://bugzilla.redhat.com/show_bug.cgi?id=1178911#c8
+)

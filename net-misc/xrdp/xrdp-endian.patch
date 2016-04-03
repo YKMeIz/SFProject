@@ -1,0 +1,17 @@
+diff -up xrdp-HEAD-a9cfc23/common/arch.h.endian xrdp-HEAD-a9cfc23/common/arch.h
+--- xrdp-HEAD-a9cfc23/common/arch.h.endian	2010-11-04 16:52:27.000000000 +0100
++++ xrdp-HEAD-a9cfc23/common/arch.h	2013-01-29 12:31:13.000000000 +0100
+@@ -24,10 +24,12 @@
+ #if !defined(ARCH_H)
+ #define ARCH_H
+ 
++#include <endian.h>
++
+ #if !(defined(L_ENDIAN) || defined(B_ENDIAN))
+ /* check endianess */
+ #if defined(__sparc__) || defined(__PPC__) || defined(__ppc__) || \
+-    defined(__hppa__)
++    defined(__hppa__) || (BYTE_ORDER == BIG_ENDIAN)
+ #define B_ENDIAN
+ #else
+ #define L_ENDIAN

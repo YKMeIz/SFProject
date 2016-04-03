@@ -1,0 +1,12 @@
+diff -ur xpvm/src/const.h xpvm-lhh/src/const.h
+--- xpvm/src/const.h	1998-04-09 17:12:20.000000000 -0400
++++ xpvm-lhh/src/const.h	2004-03-31 10:53:52.061161603 -0500
+@@ -31,7 +31,7 @@
+ 
+ /* Define Default Location of XPVM Main Directory */
+ 
+-#define XPVM_DEFAULT_DIR	"pvm3/xpvm"
++#define XPVM_DEFAULT_DIR	"/usr/share/pvm3/xpvm"
+ 
+ 
+ /* Define Default Location of Hostfile */

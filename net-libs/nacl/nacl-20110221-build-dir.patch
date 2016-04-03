@@ -1,0 +1,12 @@
+diff -up nacl-20110221/do.orig2 nacl-20110221/do
+--- nacl-20110221/do.orig2	2011-02-21 02:49:34.000000000 +0100
++++ nacl-20110221/do	2012-07-02 12:12:30.625713153 +0200
+@@ -6,7 +6,7 @@
+ 
+ version=`cat version`
+ project=nacl
+-shorthostname=`hostname | sed 's/\..*//' | tr -cd '[a-z][A-Z][0-9]'`
++shorthostname=fedora
+ 
+ top="`pwd`/build/$shorthostname"
+ bin="$top/bin"

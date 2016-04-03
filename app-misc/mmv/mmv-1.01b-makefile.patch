@@ -1,0 +1,31 @@
+--- mmv-1.01b.orig/Makefile	1994-11-04 19:24:55.000000000 -0500
++++ mmv-1.01b/Makefile	2005-08-23 21:52:47.000000000 -0400
+@@ -1,16 +1,16 @@
+ # Possible defines in CONF:
+ #	IS_MSDOS IS_SYSV IS_V7 IS_BSD HAS_DIRENT HAS_RENAME MV_DIR
+ 
+-CC		=gcc -traditional
++CC		=gcc
+ LD		=$(CC)
+ CONF		=-DIS_SYSV -DHAS_DIRENT -DHAS_RENAME
+-CFLAGS		=-O2 -m486 $(CONF)
+-LDFLAGS		=-s -N
++CFLAGS		=-O2 $(CONF)
++LDFLAGS		=$(LDCONF)
+ 
+ #IBIN		=$(LOCAL)$(ARCH)/bin
+ #IMAN		=$(LOCAL)$(ANY)/man
+ IBIN=$(DESTDIR)/usr/bin/
+-IMAN=$(DESTDIR)/usr/man/
++IMAN=$(DESTDIR)/usr/share/man/
+ 
+ mmv:		mmv.o
+ 
+@@ -20,5 +20,5 @@
+ install:	$(DEST)$(IBIN)/mmv
+ install:	$(DEST)$(IMAN)/man1/mmv.1
+ 
+-$(DEST)$(IBIN)/mmv:		mmv;	cp $? $@
+-$(DEST)$(IMAN)/man1/mmv.1:	mmv.1;	cp $? $@
++$(DEST)$(IBIN)/mmv:		mmv;	install -D -p $? $@
++$(DEST)$(IMAN)/man1/mmv.1:	mmv.1;	install -D -p -m 0644 $? $@

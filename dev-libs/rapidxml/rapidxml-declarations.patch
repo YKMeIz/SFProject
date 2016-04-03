@@ -1,0 +1,20 @@
+diff -ru rapidxml-1.13-with-tests/rapidxml_print.hpp rapidxml-1.13-with-tests-2/rapidxml_print.hpp
+--- rapidxml-1.13-with-tests/rapidxml_print.hpp	2009-05-15 22:49:20.000000000 +0200
++++ rapidxml-1.13-with-tests-2/rapidxml_print.hpp	2013-02-02 19:51:56.233026000 +0100
+@@ -102,6 +102,16 @@
+         ///////////////////////////////////////////////////////////////////////////
+         // Internal printing operations
+     
++        template<class OutIt, class Ch> inline OutIt print_children(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_attributes(OutIt, const xml_node<Ch> *, int);
++        template<class OutIt, class Ch> inline OutIt print_data_node(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_cdata_node(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_element_node(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_declaration_node(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_comment_node(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_doctype_node(OutIt, const xml_node<Ch> *, int, int);
++        template<class OutIt, class Ch> inline OutIt print_pi_node(OutIt, const xml_node<Ch> *, int, int);
++    
+         // Print node
+         template<class OutIt, class Ch>
+         inline OutIt print_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)

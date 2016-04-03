@@ -1,0 +1,3 @@
+0e7d105a57839cdab2b0bf5e3612442f  dpkg_1.16.15.tar.xz
+f2ebce2b3c421adb2be9f8e724eb3568  dpkg-fix-logrotate.patch
+6d5ad478d9f80da4ecbdba7337defbd3  dpkg-perl-libexecdir.patch

@@ -1,0 +1,526 @@
+* Mon Sep  5 2011 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-41
+- Build with $RPM_LD_FLAGS, add them to Make.config.
+- Ship various macros in -devel to ease plugin packaging.
+
+* Thu Jul  7 2011 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-40
+- Tweak init script to behave better with systemd at shutdown.
+
+* Fri Feb 18 2011 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-39
+- Fix writing next wakeup time from shutdown script.
+
+* Wed Feb 16 2011 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-38
+- Drop build time support for lirc < 0.8.6 default socket location.
+- Resurrect channel+epg patch.
+- Use %{_initddir} instead of the deprecated %{_initrddir}.
+- Set RTC wakeup for next timer also when shutting down from outside of VDR.
+- Add tmpfiles.d config on F-15+ (#656717).
+
+* Tue Feb  8 2011 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-37
+- Backport V4L2 patch from VDR 1.7.x to fix build with recent kernel headers.
+
+* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6.0-36
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Mon Nov 22 2010 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-35
+- Add vdr user to the audio group for direct sound device access with some
+  plugin configurations.
+
+* Mon Oct 18 2010 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-34
+- Add vdr user to the cdrom (for optical drives) and dialout (for serial port
+  remote controls) groups.
+- Drop no longer needed pam_console configuration.
+- Make vdr-i18n-to-gettext more likely to work out of the box.
+- Update MainMenuHooks patch to 1.0.1.
+- Update VDR_PLUGIN_ORDER in sysconfig.
+- Various minor vdr.pc improvements.
+
+* Thu Jul  8 2010 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-33
+- Include COPYING in -docs.
+
+* Tue Apr 27 2010 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-32
+- Use rtcwake to set wakeup time, simplify shutdown.
+- Drop no longer needed DVB header workaround (#483644).
+- Move pre-1.6.0 changelog entries to CHANGES.package.old.
+
+* Sun Mar  7 2010 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-31
+- Drop data migration from %post (was for upgrades from < 1.6.0-15).
+
+* Sun Feb 21 2010 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-30
+- Do sudoers config with sudoers.d (sudo >= 1.7.2p2-3).
+
+* Sun Nov 22 2009 Ville-Pekka Vainio <vpivaini AT cs.helsinki.fi> - 1.6.0-29
+- Set LIRC_DEVICE to /var/run/lirc/lircd for lirc 0.8.6 and add patch to
+  change the sky plugin and vdr.1 man page accordingly (#538604).
+
+* Wed Oct 28 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-28
+- Update URLs to point to tvdr.de.
+
+* Sun Aug  9 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-27
+- Make -docs noarch also when built on EL > 5.
+
+* Sun Jul 26 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-26
+- Provide ISA qualified vdr(abi).  Plugins should depend on (versioned)
+  vdr(abi)%{?_isa} instead of just vdr(abi).
+- Borrow build patch for recent (broken? #483644) DVB headers from openSUSE.
+- Apply epgsearch timer integration patch.
+- Use %global instead of %define.
+
+* Mon Jun 22 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-25
+- Make -docs noarch when built on Fedora > 9.
+
+* Mon Jun 15 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-24
+- Update hlcutter patch to 0.2.2, drop no longer needed gcc 4.4 workaround.
+- Resurrect Finnish translation for hlcutter.
+
+* Tue Jun  9 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-23
+- Apply gcc 4.4 build fix from openSUSE and upstream, hlcutter still needs work.
+- Drop no longer needed DVB header workaround.
+
+* Tue May 26 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-22
+- Quiet usermod, avoid possible extra -v inserted to /etc/sysconfig/vdr on
+  upgrades from earlier releases that used to default to /srv/vdr for video.
+- Add jumpplay patch 1.0 and a Finnish translation for it.
+- Update liemikuutio patch to 1.27.
+
+* Sat Apr 18 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-21
+- Use videodir from /etc/sysconfig/vdr if set in vdr-moveto.sh.
+
+* Tue Apr 14 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-20
+- Add ugly workarounds to "fix" build with gcc 4.4 and current DVB headers.
+- Use useradd -N instead of -n in scriptlets (#495731).
+- Include Rolf Ahrenberg's sys_nice and ionice patches.
+- Update liemikuutio patch to 1.25.
+
+* Sat Feb 28 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-19
+- Update liemikuutio patch to 1.24 to fix some issues with gcc 4.4.
+- Apply Rolf Ahrenberg's patch to include audio and subtitles shortcut
+  buttons in DVB setup menu.
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.6.0-18
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Sat Jan 31 2009 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-17
+- Do not create the video group, require udev >= 136-1 which creates it.
+- Replace ttxtsubs patch with one from new ttxtsubs upstream.
+- Update to re-released liemikuutio 1.21 patch.
+
+* Mon Dec 29 2008 Ville-Pekka Vainio <vpivaini AT cs.helsinki.fi> - 1.6.0-16
+- Disable kernel DVB API check to fix build, upstream VDR 1.6.0 expects DVB
+  API v3 but current Rawhide kernels have v5.
+
+* Sun Nov 23 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-15
+- Reorganize dir structure for better Fedora guidelines compliance (#443706):
+  /var/lib/vdr/* -> /var/lib/vdr/data, /srv/video -> /var/lib/vdr/video.
+- Drop audiodir and ownership of /srv/audio, examples still point to it.
+
+* Sat Nov 22 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-8
+- Fix setting wakeup time via rtc0 when hardware clock is localtime.
+- Drop remote plugin examples from udev rules, they're in vdr-remote now.
+
+* Tue Oct 28 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-7
+- Fix setting wakeup time via /proc/acpi/alarm when hardware clock is UTC.
+
+* Thu Sep 25 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-6
+- README.package updates.
+- Specfile micro-cleanups.
+
+* Sun Sep  7 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-5
+- Work around Fedora buildsys not coping with "%patch -F" (infrastructure
+  ticket #817).
+
+* Sun Sep  7 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-4
+- Apply upstream 1.6.0-2 maintenance patch.
+- Update shutdown/wakeup functionality for F-9+ ACPI wakeup.
+- Install halt.local script (vdr-halt.local.sh) instead of embedding it
+  in README-package.  It still needs to be inserted to (or installed/symlinked
+  as) /sbin/halt.local.
+- Convert remaining docs to UTF-8.
+- Set expected fuzz factor when applying patches.
+
+* Sat May 10 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-3
+- Update liemikuutio patch to 1.21.
+- Change timercmd patch to the one shipped with epgsearch 0.9.24.
+- Include vdr-i18n-to-gettext in -devel.
+- Own (%ghost) videodir/.update.
+
+* Sun Apr 13 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-2
+- Apply upstream 1.6.0-1 maintenance patch.
+- Update timer info patch to 0.5 (fixes the "±" sign).
+
+* Mon Apr  7 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-1
+- Apply "unofficial" timercmd patch from HoochVDR.
+- Apply Luca Olivetti's DXR3 subtitle compatibility patch.
+- Decrease default wakeup delay before a timed recording to 10 minutes.
+- Don't reload DVB drivers by default on unexpected exits in runvdr.
+- Use "kill -HUP" in init script's restart action only on a running service.
+- Update and apply timer-info patch.
+
+* Sun Apr  6 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-0.4
+- Obsolete vdr-subtitles.
+
+* Fri Apr  4 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-0.3
+- Update liemikuutio patch to 1.20.
+- Move various (partially) upstreamable changes to patches instead of
+  inlining them in the specfile.
+- Drop unused logdir.
+- Move pre-2008 changelog entries to CHANGES.package.old.
+
+* Sat Mar 29 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-0.2
+- Add --with docs build option for building a -docs subpackage.
+- Refresh liemikuutio and ttxtsubs patches.
+
+* Sun Mar 23 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.6.0-0.1
+- 1.6.0 final; still quite a bit to do with the package.
+- Adapt sync early and epgsearch (partially) patches.
+- Fix dependencies of the sky plugin.
+- Move bunch of inline sed'ing to separate patches.
+- Use kill -HUP in init script's restart action.
+- Don't include bundled plugin sysconfig snippets in main package.
+
+* Tue Mar 18 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.5.18-0.1
+- First cut at packaging 1.5.18.
+- Plugin licenses clarified to be GPLv2+.
+
+* Sun Mar 16 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-11
+- Kill runvdr before vdr in init script's "stop" action in order to prevent
+  it from restarting vdr in case something goes wrong when shutting down.
+- Direct debug messages from sync early patch to to syslog instead of stderr.
+- Make time to wake up before a timer configurable.
+- Enable shutdown script by default.
+
+* Wed Feb 20 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-10
+- Rebuild.
+
+* Sun Feb 17 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-9
+- Don't run "restart" for init script's "reload" action per the LSB spec.
+- runvdr cleanups, handle PLUGIN_ENABLED values case insensitively.
+
+* Thu Feb 14 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-8
+- Patch to fix build with GCC 4.3's cleaned up C++ headers.
+
+* Sat Jan 12 2008 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-7
+- Include Udo Richter's hard link cutter patch v0.2.0 (see README-HLCUTTER).
+- Add some plugins to the default plugin order list in sysconfig.
+- Minor runvdr cleanups.
+
+* Wed Oct 17 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-6
+- Add patch to start playback from recordings menu with the play button.
+
+* Fri Oct 12 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-5
+- Fix init script not to start a new vdr if it's already running (#247089).
+- Update subtitles+ttxtsubs patch to Rolf's latest revision.
+
+* Mon Aug  6 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-4
+- License: GPL+ for skincurses and sky plugins.
+
+* Wed Aug  1 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-3
+- Sync user/group handling with current packaging guideline draft.
+- Include vdr-moveto.sh, a script for organizing recordings.
+- Refresh patches, include GPL version info in License tag.
+- Move pre-2007 %changelog entries to CHANGES.package.old.
+- Make sure all package scriptlets exit with zero status.
+- Add LSB comment block to init script.
+
+* Mon Jun 11 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-2
+- Apply Reinhard Nißl's "sync early" patch for smoother channel changes.
+
+* Sat May 12 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.7-1
+- 1.4.7.
+
+* Tue May  1 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.6-3
+- Upstream 1.4.6-1, refresh other patches.
+
+* Mon Apr 23 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.6-2
+- Relocate themes to /var/lib/vdr/themes (#216355).
+- Tighten up some directory permissions.
+
+* Sun Mar  4 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.6-1
+- 1.4.6.
+
+* Sat Feb 24 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.5-4
+- Upstream 1.4.5-2.
+
+* Sun Jan 28 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.5-3
+- Upstream 1.4.5-1, refresh other patches.
+- Fix xineliboutput plugin name in sysconfig's VDR_PLUGIN_ORDER.
+- Delay a bit in the init script's stop function for clean shutdown.
+- Update CDDA_TRANSPORT workaround status in commands.conf abcde example.
+- Improve /sbin/halt.local explanation in README.package.
+- Minor specfile cleanups.
+
+* Sun Jan  7 2007 Ville Skyttä <ville.skytta@iki.fi> - 1.4.5-2
+- 1.4.5, Darren Salt's 1.4.4-1.ds.
+- Make it possible to disable installed plugins in plugin sysconfig snippet.
+- Add shutdown script, document ACPI wakeup usage in README.package.
+- Shut down earlier by default for better experience with the -s option.
+- Include INSTALL in docs, it contains useful post-install info.
+- Improve remote control examples in udev rules snippet.
+- Honor $TMPDIR when running with core dumps enabled.
+- Add read only root/temporary state config.
+- Add ttxtsubs to default plugin order list.
+- Include log dir for plugins.
+
+* Sat Nov  4 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.4-1
+- 1.4.4.
+- Apply epgsearch and timer info patches.
+- Mark console.perms snippet noreplace again.
+
+* Sun Oct 15 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.3-3
+- Apply upstream 1.4.3-1 maintenance patch.
+- Sync with 1.4.3-1.ds, update liemikuutio patch to 1.13.
+- Drop no longer needed README.plugins.d, README.package is enough (#190343).
+
+* Fri Oct 06 2006 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> 1.4.3-2
+- rebuilt for unwind info generation, broken in gcc-4.1.1-21
+
+* Sat Sep 23 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.3-1
+- 1.4.3, 1.4.2-1.ds, liemikuutio 1.12.
+
+* Sun Sep  3 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.2-2
+- 1.4.2-1, liemikuutio 1.10.
+
+* Sun Aug 27 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.2-1
+- 1.4.2, syscall and maintenance patches applied upstream.
+
+* Mon Aug 21 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-11
+- Set device permissions in both console.perms and udev (#202132).
+- Implement restart and DVB module reload functionality roughly like
+  upstream runvdr does it.
+
+* Fri Aug 18 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-10
+- Fix build with recent kernel headers where _syscallX are no longer visible.
+- Drop ia64 patch (superseded by the above) and the thread poison patch.
+
+* Fri Aug 11 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-9
+- Set device permissions using console.perms instead of udev rules
+  to work around new pam trumping udev config (#202132).
+
+* Sun Aug  6 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-8
+- Apply upstream 1.4.1-3 maintenance patch.
+
+* Sun Jul 23 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-7
+- Apply upstream 1.4.1-2 maintenance patch.
+- Use VFAT compatible recording names by default.
+
+* Sun Jul 16 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-6
+- Don't use %bcond_with to appease buildsys.
+
+* Sat Jul 15 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-5
+- Update liemikuutio patch to 1.8.
+- Patch dumpability to work with PR_SET_DUMPABLE changes in recent kernels,
+  add corresponding warning to sysconfig snippet comment.
+
+* Sat Jul  1 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-4
+- Update liemikuutio patch to 1.7.
+- Conditionally build the skincurses and sky plugins; disabled by default,
+  rebuild with "--with plugins" to enable.
+- Make symlinks relative.
+
+* Fri Jun 23 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-3
+- Move headers to %{_includedir}.
+- Add README.package to docs, describing some aspects of the package (#1063).
+- Add LIBDIR to Make.config to ease local plugin builds (#1063).
+- Update VDR_PLUGIN_ORDER in sysconfig snippet, loading potential output
+  plugins before others.  See commentary in the file for details.
+- Add example how to affect OSD time/date formats to sysconfig snippet.
+
+* Sun Jun 18 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-2
+- 1.4.1-1 + 1.4.1-1.ds.
+- Drop glibc-kernheaders dependency from -devel too.
+- Make -devel multilib friendly, add pkgconfig file.
+
+* Sun Jun 11 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.1-1
+- 1.4.1, liemikuutio 1.6.
+
+* Mon May 29 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.0-5
+- Address some review notes in #190343 comment 2:
+- Add example udev rule for predictable remote control device naming.
+- Drop glibc-kernheaders build dependency.
+- Specfile cleanups.
+
+* Sun May 28 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.0-4
+- Apply upstream 1.4.0-2 maintenance patch.
+
+* Sun May 14 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.0-3
+- Apply upstream 1.4.0-1 maintenance patch.
+- Drop unneeded version check from %check.
+
+* Mon May  1 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.0-2
+- Sync with 1.4.0-1.ds.
+
+* Sun Apr 30 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.4.0-1
+- 1.4.0 + 1.3.48-1.ds, re-enable reload patch.
+
+* Sun Apr 23 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.48-1
+- 1.3.48, no need to rebuild plugins, woo-hoo!
+
+* Mon Apr 17 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.47-1
+- 1.3.47 + the usual patchwork.
+- Trim pre-RLO %changelog entries.
+- Add vdr(abi) and vdr-devel(api) versioned Provides for plugin versioning
+  and --version and --apiversion to vdr-config, see HISTORY.
+- Use sed instead of perl for edits during the build.
+- Temporarily disable reload/SIGUSR1 patch.
+
+* Sun Apr  9 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.46-1
+- 1.3.46 + the usual patchwork.
+
+* Sun Mar 26 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.45-1
+- 1.3.45 + 1.3.44-2.ds + Rofa's mute fix.
+
+* Thu Mar 09 2006 Andreas Bierfert <andreas.bierfert[AT]lowlatency.de>
+- switch to new release field
+
+* Sun Mar  5 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.44-0.lvn.2
+- Sync with 1.3.44-1.ds, apply Rolf Ahrenberg's readline fix.
+
+* Wed Mar  1 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.44-0.lvn.1
+- 1.3.44, include Marko Mäkelä's suspend patch.
+- Move runvdr to %{_sbindir} and make it option-compatible with the
+  upstream one.  If VDR_INIT is non-empty in the environment, automatic
+  command line building is enabled.  The init script still does that.
+  Also makes the init script and runvdr easier to adapt to alternative
+  init systems such as initng (#781).
+
+* Tue Feb 28 2006 Andreas Bierfert <andreas.bierfert[AT]lowlatency.de>
+- add dist
+
+* Tue Feb 21 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.43-0.lvn.2
+- Sync with 1.3.43-1.ds.
+
+* Sun Feb 19 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.43-0.lvn.1
+- 1.3.43 + 1.3.42-2.ds + Rolf Ahrenberg's audiotracks patch.
+- Drop Reinhard Nißl's dvbplayer patch at least for now.
+
+* Sun Feb  5 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.42-0.lvn.1
+- 1.3.42; dumpable, menu-in-replay and constness patches applied upstream.
+- Make udev rules work as expected with later udev versions.
+
+* Sun Jan 29 2006 Ville Skyttä <ville.skytta@iki.fi>
+- 1.3.41; Finnish, EPG null title and LIRC reconnect patches
+  applied/obsoleted upstream.
+- Revert back to Udo Richter's more general purpose "menu in replay" patch.
+
+* Sat Jan 28 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.40-0.lvn.3
+- Patch LIRC support to try to reconnect if lircd connection is lost.
+- Update liemikuutio patch to 1.2.
+
+* Mon Jan 23 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.40-0.lvn.2
+- Replace EPG null title crash fix with upstream one.
+
+* Sun Jan 22 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.40-0.lvn.1
+- 1.3.40, key macro and SVDRP CLRE crash patches applied upstream.
+- Replace menu tweak patch with one from Luca Olivetti.
+
+* Wed Jan 18 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.39-0.lvn.3
+- Fix sysconfig stupidity introduced in 0.lvn.2, _only_ DAEMON_COREFILE_LIMIT
+  was taken into account :P
+
+* Mon Jan 16 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.39-0.lvn.2
+- Apply upstream key macro and SVDRP CLRE crash patches.
+- Source sysconfig snippet again in init script (so that eg.
+  DAEMON_COREFILE_LIMIT etc works as expected).
+
+* Sun Jan 15 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.39-0.lvn.1
+- 1.3.39 + the usual patch shuffling, kudos to Rolf Ahrenberg and Udo
+  Richter.
+
+* Wed Jan 11 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.38-0.lvn.4
+- Apply upstream menu fix patch.
+- Add some comments to sysconfig file.
+
+* Tue Jan 10 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.38-0.lvn.3
+- Sync with 1.3.38-2.ds.
+
+* Mon Jan  9 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.38-0.lvn.2
+- Sync with 1.3.38-1.ds.
+- Remove references to the removed ca.conf from the manpage.
+
+* Sun Jan  8 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.38-0.lvn.1
+- 1.3.38, su/capabilities stuff, low disk space crash, CAN-2005-0071,
+  audio pids and timed recording deletion patches applied upstream.
+- Patch to allow core dumps and startup script simplifications with the
+  newly introduced set[ug]id functionality.
+- Patch to fix gettid usage (includes).
+- enAIO patchset replaced by liemikuutio 1.0.
+- Updated Finnish translations.
+
+* Wed Jan  4 2006 Ville Skyttä <ville.skytta@iki.fi> - 1.3.37-0.lvn.3
+- Fix syntax error in sysconfig file (#714, Scott Tsai).
+- Change built-in default of epg.data location to %{cachedir}, drop it
+  from the sysconfig file and update docs.
+
+* Sat Dec 10 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.37-0.lvn.2
+- Apply "low disk space" message crash from Andreas Brachold.
+- Apply upstream fix for 2nd audio pid and live DD on encrypted channels.
+- Add (commented out) sysconfig and console.perms.d samples for setting and
+  retaining VDR-friendly CD/DVD drive permissions.
+- Sync with 1.3.37-1.ds.
+
+* Mon Nov 28 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.37-0.lvn.1
+- 1.3.37.
+
+* Sat Nov 12 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.36-0.lvn.2
+- Default config improvements.
+- Sync with 1.3.36-1.ds.
+
+* Sun Nov  6 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.36-0.lvn.1
+- 1.3.36, recording end crash fix applied upstream.
+- Don't load LIRC unconditionally, pass --lirc by default in sysconfig/vdr.
+
+* Tue Nov  1 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.35-0.lvn.1
+- 1.3.35 + Joachim Wilke's recording end crash fix; Finnish, daemon and
+  infloop patches applied upstream.
+
+* Sun Oct 16 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.34-0.lvn.2
+- Update enAIO patch to 2.7.
+- Apply daemon and menu infinite loop patches from Enrico Scholz.
+
+* Fri Oct  7 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.34-0.lvn.1
+- 1.3.34 + 1.3.34-1.ds + Rolf Ahrenberg's Finnish i18n fixes.
+
+* Sun Sep 25 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.33-0.lvn.1
+- 1.3.33.
+- Sync with 1.3.32-1.ds.
+- Apply enAIO patch.
+
+* Fri Sep 16 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.32-0.lvn.2
+- Fix init script on multilib archs (#596, Jussi Lehtola).
+
+* Sun Sep 11 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.32-0.lvn.1
+- 1.3.32, bunch of patches applied upstream.
+- Drop main package dependency from -devel.
+
+* Sun Aug 28 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.31-0.lvn.1
+- 1.3.31 + upstream warnings fix + Reinhard Nißl's patch bomb.
+- Ship plugin creator script in -devel.
+
+* Mon Aug 22 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.30-0.lvn.2
+- Don't use stuff from the su/capabilities patch by default, it causes
+  problems with getting core dumps if plugins crash.
+- Simplify things by splitting stuff from init script to separate launcher.
+- Sync with 1.3.30-1.ds, fix a warning in the svdrp grab patch.
+- Add audio CD ripping example to commands.conf.
+
+* Sun Aug 21 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.30-0.lvn.1
+- 1.3.30, PPC/unaligned patch no longer needed.
+- Tune default plugin load order, add muggle.
+- Minor init script improvements.
+
+* Wed Aug 17 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.29-0.lvn.2
+- Sync with Darren Salt's 1.3.29-1.ds.
+- Drop dvbplayer patch; no longer needed for recent recordings.
+- Patch/hack (from reiserfsprogs) to fix PPC build (asm/unaligned.h).
+- Start up earlier/shut down later by default at boot/shutdown.
+- Add vardir for storing non-cache, non-video data; and audiodir for
+  audio plugins.
+
+* Mon Aug 15 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.29-0.lvn.1
+- 1.3.29, Finnish patch applied upstream.
+
+* Sat Aug 13 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.28-1.lvn.2
+- Apply Rolf Ahrenberg's newest Finnish patch.
+- Drop historical conflict with an old vdr-dxr3 snapshot.
+
+* Thu Aug 11 2005 Ville Skyttä <ville.skytta@iki.fi> - 1.3.28-1.lvn.1
+- Truncate config files in more portable manner during build.

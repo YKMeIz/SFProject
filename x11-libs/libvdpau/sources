@@ -1,0 +1,4 @@
+6d43b4dabc934780d789f3454642a48d  0001-mesa_dri2-Add-missing-include-of-config.h-to-define-.patch
+f1a9b523620af611ab312475dced7e10  0002-util.h-Make-getenv_wrapper-static-inline.patch
+86a8bea096dbb5d5548bf3af0bdc0386  0003-Fix-doc-error-on-displayable-surface-types.patch
+d1a5380dd339d92a3446647bf73ba7ac  libvdpau-1.1.1.tar.bz2

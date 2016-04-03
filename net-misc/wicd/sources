@@ -1,0 +1,12 @@
+744b3c12fe901ed435351e884dc8cb1d  770_769.diff
+dccce04cac1c1a48cd5095d5a1275e74  org.wicd.daemon.service
+26ffb8428dabb12ac3ce1db98f8f03c1  wicd-1.7.0-remove-WHEREAREMYFILES.patch
+aaeab5e13fdfe2b0f025971f44dbec84  wicd-1.7.1-DaemonClosing.patch
+6ee68f70dd7fc6a945b14ac654aa7e53  wicd-1.7.1-dbus-failure.patch
+f39d9b79f398411024bd3d1574be15ef  wicd-1.7.2.4-curses_bz894646.patch
+2456648d73a20548f8a6ea701f8047e2  wicd-1.7.2.4-dbus-policy.patch
+011758c58ce1296df2882bcb8bc82761  wicd-1.7.2.4-prof_name.patch
+93304df9d3631c36a557db6f94d82c68  wicd-1.7.2.4-sanitize.patch
+c2435ddfdef0b9898852d72a85a45f0f  wicd-1.7.2.4.tar.gz
+7ae59a0a431bf7abd0e80595cd195639  wicd-1.7.2.4-translate-args.patch
+417c15a6cb63767872ab1f823d4e1869  wicd-1.7.2.4-unicode.patch

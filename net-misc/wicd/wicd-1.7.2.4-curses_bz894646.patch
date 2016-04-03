@@ -1,0 +1,46 @@
+diff --git a/curses/curses_misc.py b/curses/curses_misc.py
+index a779fa3..99a7db9 100644
+--- a/curses/curses_misc.py
++++ b/curses/curses_misc.py
+@@ -314,9 +314,9 @@ class ComboBox(urwid.WidgetWrap):
+                     #Send key to underlying widget:
+                     self._w.keypress(dim, k)
+ 
+-        #def get_size(self):
+-
+-    def __init__(self,label='',list=[],attrs=('body','editnfc'),focus_attr='focus',use_enter=True,focus=0,callback=None,user_args=None):
++    def __init__(self, label='', list=[], attrs=('body','editnfc'),
++                 focus_attr='focus', use_enter=True, focus=0, callback=None,
++                 user_args=None):
+         """
+         label     : bit of text that preceeds the combobox.  If it is "", then 
+                     ignore it
+@@ -349,7 +349,7 @@ class ComboBox(urwid.WidgetWrap):
+         # We need this to pick our keypresses
+         self.use_enter = use_enter
+ 
+-        self.focus = focus
++        self._focus = focus
+ 
+         self.callback = callback
+         self.user_args = user_args
+@@ -358,6 +358,19 @@ class ComboBox(urwid.WidgetWrap):
+         self.parent = None
+         self.ui = None
+         self.row = None
++
++    @property
++    def focus(self):
++        return self._focus
++
++    @focus.setter
++    def focus(self, index):
++        self._focus = index
++
++    @focus.deleter
++    def focus(self):
++        del self._focus
++
+     def set_list(self,list):
+         self.list = list
+ 

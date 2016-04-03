@@ -1,0 +1,14 @@
+b47fde291a7ff0d6edc9151f3af2ce2d  dotzshrc
+98c085da4fee043f2a715f5530fc1b5f  zlogin.rhs
+dcf0a7daf3a3ca2df4c8f5b67686298c  zlogout.rhs
+a5e93cd6880da04a63fc4fcaaa03987f  zprofile.rhs
+d8a95bd5b2adae0f6e497a1a5212b223  zsh-4.3.6-8bit-prompts.patch
+11552e60465eb5895243af6acde75731  zsh-5.2-comp-dnf.patch
+e928fc47e21e8d6fed9008b397d4f2f7  zsh-5.2-oom-fatal-error.patch
+afe96fde08b70e23c1cab1ca7a68fb34  zsh-5.2.tar.xz
+0220f95cc0bceefdc13ebf994716ad9d  zsh-5.2-vcs_info.patch
+e9e2fecad82d804af4d377fef6d6c9dc  zshenv.rhs
+496dcf7d01bd6389ccaf289a45ea5698  zshprompt.pl
+1be521bc4a9380e9e4dc65dae727fe28  zshrc.rhs
+c4dc40dfc7e1a53a5d4fc2750ebe042b  zsh-serial.patch
+65d60300a4cec34d606a3762e5b4f54c  zsh-test-C02-dev_fd-mock.patch

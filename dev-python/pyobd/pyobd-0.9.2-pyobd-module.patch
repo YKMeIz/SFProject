@@ -1,0 +1,32 @@
+diff -up pyobd-0.9.2/pyobd.orig pyobd-0.9.2/pyobd
+--- pyobd-0.9.2/pyobd.orig	2010-06-20 16:47:06.000000000 +0200
++++ pyobd-0.9.2/pyobd	2012-07-18 12:19:44.287953089 +0200
+@@ -27,7 +27,7 @@
+ #wxversion.select("2.6")
+ import wx
+     
+-import obd_io #OBD2 funcs
++import pyobd.obd_io as obd_io #OBD2 funcs
+ import os #os.environ
+ 
+ import threading
+@@ -38,8 +38,8 @@ import time
+ import ConfigParser #safe application configuration
+ import webbrowser #open browser from python
+ 
+-from obd2_codes import pcodes
+-from obd2_codes import ptest
++from pyobd.obd2_codes import pcodes
++from pyobd.obd2_codes import ptest
+ 
+ from wx.lib.mixins.listctrl import ListCtrlAutoWidthMixin
+ 
+@@ -104,7 +104,7 @@ class TestEvent(wx.PyEvent):
+        self.data = data
+        
+ #defines notification event for debug tracewindow
+-from debugEvent import *
++from pyobd.debugEvent import *
+        
+ class MyApp(wx.App):
+     # A listctrl which auto-resizes the column boxes to fill

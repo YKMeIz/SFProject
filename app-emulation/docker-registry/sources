@@ -1,0 +1,4 @@
+ec1e5dc5ae9bbea8cecd4d763c84bf74  0.9.1.tar.gz
+e3fca22ccd6a1c865d5cb74603cdd7b8  docker-registry.service
+52ec77cb5252fcc3860442476d7bb0e0  docker-registry.sysconfig
+943798e70e49452514bdbee996fffc74  docker-registry.sysvinit

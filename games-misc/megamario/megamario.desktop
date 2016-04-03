@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Mega Mario
+Comment=Well known platform game clone
+Exec=megamario
+Icon=megamario.png
+Terminal=false
+StartupNotify=false
+Type=Application
+Categories=Game;ActionGame;

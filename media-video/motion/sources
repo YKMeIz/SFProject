@@ -1,0 +1,5 @@
+657105e15a012b61d7ec1b684f393581  motion-0001-emit-asm-emms-only-on-x86-and-amd64-arches.patch
+9a941597016988750c18548edacaabe0  motion-0002-there-is-no-bin-service-in-Fedora-use-systemctl.patch
+a11826f948e0d99120b32123679d5fc5  motion-3.3.0.tar.gz
+a7fd12a48612be88b7b1c869b0cff44d  motion.service
+f0d29d85c8e0ef372ed8cc52b35fc086  motion.tmpfiles

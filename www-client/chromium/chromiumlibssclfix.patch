@@ -1,0 +1,12 @@
+diff -up out/Release/chrome-wrapper.chromiumlibssclfix out/Release/chrome-wrapper
+--- out/Release/chrome-wrapper.chromiumlibssclfix	2014-09-14 16:38:46.438832990 -0400
++++ out/Release/chrome-wrapper	2014-09-14 16:39:55.257052806 -0400
+@@ -160,6 +160,8 @@ while [ "$#" -gt 0 ]; do
+ done
+ set -- "${ARGS[@]}" "$@"
+ 
++source /opt/rh/chromiumlibs/enable
++
+ if [ -f /opt/chromium/PepperFlash/libpepflashplayer.so ]; then
+ exec $CMD_PREFIX "$HERE/chrome" --ppapi-flash-path=/opt/chromium/PepperFlash/libpepflashplayer.so "$@"
+ else

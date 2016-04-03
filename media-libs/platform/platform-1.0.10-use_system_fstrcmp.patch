@@ -1,0 +1,56 @@
+diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
+--- ./CMakeLists.txt.orig	2015-07-28 16:49:11.904184486 +0200
++++ ./CMakeLists.txt	2015-07-28 16:59:04.401116692 +0200
+@@ -6,6 +6,9 @@ enable_language(CXX)
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
+ 
+ find_package(Threads REQUIRED)
++find_package(PkgConfig)
++pkg_check_modules(FSTRCMP REQUIRED fstrcmp)
++
+ include(UseMultiArch.cmake)
+ include(CheckAtomic.cmake)
+ 
+@@ -15,6 +18,11 @@ set(platform_VERSION_MAJOR 1)
+ set(platform_VERSION_MINOR 0)
+ set(platform_VERSION_PATCH 10)
+ 
++set(CFLAGS ${FSTRCMP_CFLAGS} ${FSTRCMP_CFLAGS_OTHERS})
++add_definitions(${CFLAGS})
++set(LIBS ${FSTRCMP_CFLAGS} ${FSTRCMP_LIBRARIES})
++link_libraries(${LIBS})
++
+ set(CMAKE_POSITION_INDEPENDENT_CODE on)
+ 
+ if(WIN32)
+@@ -34,8 +42,7 @@ if(NOT ${CORE_SYSTEM_NAME} STREQUAL "")
+   endif()
+ endif()
+ 
+-set(SOURCES src/util/fstrcmp.c
+-            src/util/StringUtils.cpp)
++set(SOURCES src/util/StringUtils.cpp)
+ 
+ add_library(platform ${SOURCES} ${PLAT_SOURCES})
+ target_link_libraries(platform ${platform_LIBRARIES})
+diff -up ./src/util/StringUtils.cpp.orig ./src/util/StringUtils.cpp
+--- ./src/util/StringUtils.cpp.orig	2015-06-30 10:54:58.000000000 +0200
++++ ./src/util/StringUtils.cpp	2015-07-28 17:00:34.518672710 +0200
+@@ -30,7 +30,7 @@
+ 
+ 
+ #include "StringUtils.h"
+-#include "fstrcmp.h"
++#include <fstrcmp.h>
+ #include <locale>
+ 
+ #include <assert.h>
+@@ -1095,7 +1095,7 @@ std::string StringUtils::CreateUUID()
+ 
+ double StringUtils::CompareFuzzy(const std::string &left, const std::string &right)
+ {
+-  return (0.5 + fstrcmp(left.c_str(), right.c_str(), 0.0) * (left.length() + right.length())) / 2.0;
++  return (0.5 + fstrcmp(left.c_str(), right.c_str()) * (left.length() + right.length())) / 2.0;
+ }
+ 
+ int StringUtils::FindBestMatch(const std::string &str, const vector<string> &strings, double &matchscore)

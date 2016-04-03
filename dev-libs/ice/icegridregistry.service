@@ -1,0 +1,14 @@
+[Unit]
+Description=Deployment and monitoring server for ZeroC ICE (master node)
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/icegridregistry.pid
+User=iceuser
+Group=iceuser
+ExecStart=/usr/bin/icegridregistry --Ice.Config=/etc/icegridregistry.conf
+
+[Install]
+WantedBy=multi-user.target

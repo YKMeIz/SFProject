@@ -1,0 +1,6 @@
+e97ed3e76187d599f39f1d3b7b8b5187  clementine-1.2.3.tar.gz
+0b20750ee428a85fc5c12fbe0d5d3e15  clementine-desktop.patch
+fec3bfb6c5a8c92ee43f700ecaf10ea9  clementine-do-not-use-system-sha2.patch
+7fe8077d114b0c250102221d26307d00  clementine-moodbar_flags.patch
+848f40c9b809e29f37caaf44642f7ae9  clementine-mygpo.patch
+f46601c548129f393f112a40ff4872ee  clementine-udisks-headers.patch

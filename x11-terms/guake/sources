@@ -1,0 +1,5 @@
+1a0d8c17f784988af8cc73f1cd0e10b4  0001-Fix-notification.patch
+cbad9823906570f1cf6dfc8eb9b97be8  0001-Fix-regex-to-include-the-port-number-when-there-is-o.patch
+0bbc669a3d76ff8d703f45923948420a  0001-Include-bpython-and-ipython-as-interpreters.patch
+9f6fb5d7c8321b2b9707483cb7aa3ed2  0001-Let-allow-the-signal.SIGTERM-to-fail.patch
+532adada29b8f0bb79dc15904aa6b70c  guake-0.4.4.tar.gz

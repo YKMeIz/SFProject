@@ -1,0 +1,28 @@
+From a1011efd4be1d960e2a145f15ad8e7aa92b31fea Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <petr.pisar@atlas.cz>
+Date: Tue, 15 May 2012 20:31:22 +0200
+Subject: [PATCH] Skip warning
+
+NOAA started to warn about redirect to new URL
+<http://www.aviationweather.gov/adds/metars/>. This patch skips the warning.
+We need to move to the new URL soon.
+---
+ Src/weather.pl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Src/weather.pl b/Src/weather.pl
+index 5ceeccd..c556950 100755
+--- a/Src/weather.pl
++++ b/Src/weather.pl
+@@ -40,7 +40,7 @@ if($mode eq "http")
+ 		$line=<DATA>;
+     }
+     $i=0;
+-    while($i!=12 && !eof(DATA))
++    while($i!=21 && !eof(DATA))
+     {
+ 		$line=<DATA>;
+ 		$i++;
+-- 
+1.7.3.4
+

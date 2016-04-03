@@ -1,0 +1,178 @@
+--- mmv-1.01b.orig/mmv.c.orig	2006-02-13 19:07:32.000000000 -0500
++++ mmv-1.01b.orig/mmv.c	2006-02-13 19:11:34.000000000 -0500
+@@ -439,7 +439,9 @@
+ static int badreps = 0, paterr = 0, direrr, failed = 0, gotsig = 0, repbad;
+ static FILE *outfile;
+ 
++#ifdef IS_MSDOS
+ static char IDF[] = "$$mmvdid.";
++#endif
+ static char TEMP[] = "$$mmvtmp.";
+ static char TOOLONG[] = "(too long)";
+ static char EMPTY[] = "(empty)";
+@@ -457,12 +459,12 @@
+ char fullrep[MAXPATH + 1];
+ static char *(start[MAXWILD]);
+ static int len[MAXWILD];
+-static char hasdot[MAXWILD];
+ static REP mistake;
+ #define MISTAKE (&mistake)
+ 
+ #ifdef IS_MSDOS
+ 
++static char hasdot[MAXWILD];
+ static int olddevflag, curdisk, maxdisk;
+ static struct {
+ 	char ph_banner[30];
+@@ -627,7 +629,7 @@
+ 		}
+ 
+ endargs:
+-	if (op == DFLT)
++	if (op == DFLT) {
+ 		if (strcmp(cmdname, MOVENAME) == 0)
+ 			op = XMOVE;
+ 		else if (strcmp(cmdname, COPYNAME) == 0)
+@@ -638,6 +640,8 @@
+ 			op = HARDLINK;
+ 		else
+ 			op = DFLTOP;
++	}
++	
+ 	if (
+ 		op & DIRMOVE &&
+ #ifdef IS_MSDOS
+@@ -784,7 +788,7 @@
+ static int parsepat()
+ {
+ 	char *p, *lastname, c;
+-	int totwilds, instage, x, havedot;
++	int totwilds, instage, x;
+ 	static char TRAILESC[] = "%s -> %s : trailing %c is superfluous.\n";
+ 
+ 	lastname = from;
+@@ -1047,7 +1051,7 @@
+ 	DIRINFO *di;
+ 	HANDLE *h, *hto;
+ 	int prelen, litlen, nfils, i, k, flags, try;
+-	FILEINFO **pf, *fdel;
++	FILEINFO **pf, *fdel = NULL;
+ 	char *nto, *firstesc;
+ 	REP *p;
+ 	int wantdirs, ret = 1, laststage = (stage + 1 == nstages);
+@@ -1177,11 +1181,12 @@
+ 	if (*p == '.' || (!matchall && ffrom->fi_attrib & (FA_HIDDEN | FA_SYSTEM)))
+ 		return(strcmp(pat, p) == 0);
+ #else
+-	if (*p == '.')
++	if (*p == '.') {
+ 		if (p[1] == '\0' || (p[1] == '.' && p[2] == '\0'))
+ 			return(strcmp(pat, p) == 0);
+ 		else if (!matchall && *pat != '.')
+ 			return(0);
++	}
+ #endif
+ 	return(-1);
+ }
+@@ -1317,7 +1322,7 @@
+ {
+ 	char tpath[MAXPATH + 1];
+ 	char *pathend;
+-	FILEINFO *fdel;
++	FILEINFO *fdel = NULL;
+ 	int hlen, tlen;
+ 
+ 	if (op & DIRMOVE) {
+@@ -1410,7 +1415,9 @@
+ static int badname(s)
+ 	char *s;
+ {
++#ifdef IS_MSDOS
+ 	char *ext;
++#endif
+ 
+ 	return (
+ #ifdef IS_MSDOS
+@@ -1720,20 +1727,19 @@
+ 	struct stat dstat;
+ 	DIRID d;
+ 	DEVID v;
+-	DIRINFO **newdirs, *di;
+-	int nfils;
+-	FILEINFO **fils;
++	DIRINFO *di = NULL;
+ 	char *myp, *lastslash = NULL;
+ 	int sticky;
+ 	HANDLE *h;
+ 
+-	if (hsearch(p, which, &h))
++	if (hsearch(p, which, &h)) {
+ 		if (h->h_di == NULL) {
+ 			direrr = h->h_err;
+ 			return(NULL);
+ 		}
+ 		else
+ 			return(h);
++	}
+ 
+ 	if (*p == '\0')
+ 		myp = ".";
+@@ -1904,7 +1910,10 @@
+ 	char *pat, *s, **start1;
+ 	int *len1;
+ {
+-	char c, *olds;
++	char c;
++#ifdef IS_MSDOS
++	char *olds;
++#endif
+ 
+ 	*start1 = 0;
+ 	for(;;)
+@@ -2381,9 +2390,9 @@
+ static void doreps()
+ {
+ 	char *fstart;
+-	int k, printaliased = 0, alias;
++	int k, printaliased = 0, alias = 0;
+ 	REP *first, *p;
+-	long aliaslen;
++	long aliaslen = 0l;
+ 
+ #ifdef IS_MSDOS
+ 	ctrlbrk(breakrep);
+@@ -2401,11 +2410,12 @@
+ 			}
+ 			strcpy(fullrep, p->r_hto->h_name);
+ 			strcat(fullrep, p->r_nto);
+-			if (!noex && (p->r_flags & R_ISCYCLE))
++			if (!noex && (p->r_flags & R_ISCYCLE)) {
+ 				if (op & APPEND)
+ 					aliaslen = appendalias(first, p, &printaliased);
+ 				else
+ 					alias = movealias(first, p, &printaliased);
++			}
+ 			strcpy(pathbuf, p->r_hfrom->h_name);
+ 			fstart = pathbuf + strlen(pathbuf);
+ 			if ((p->r_flags & R_ISALIASED) && !(op & APPEND))
+@@ -2464,7 +2474,7 @@
+ 	REP *first, *p;
+ 	int *pprintaliased;
+ {
+-	long ret;
++	long ret = 0l;
+ 
+ #ifdef IS_MSDOS
+ 	int fd;
+@@ -2631,9 +2641,10 @@
+ 	FILEINFO *ff;
+ 	off_t len;
+ {
+-	char buf[BUFSIZE], c;
++	char buf[BUFSIZE];
+ 	int f, t, k, mode, perm;
+ #ifdef IS_MSDOS
++        char c;
+ 	struct ftime tim;
+ #else
+ #ifdef IS_SYSV

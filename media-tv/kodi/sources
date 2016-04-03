@@ -1,0 +1,6 @@
+b9503aef75c366e3ed565a7abe635625  kodi-14.0-dvddemux-ffmpeg.patch
+be4e0b7447d13bba19894edf3ecbab28  kodi-16.0-dcadec.patch
+9db98c62e08b3a51bfcbab031b8af327  kodi-16.0-patched.tar.xz
+38c6c6d43f5d5ca84c8fa0eb557e394d  kodi-16.0-versioning.patch
+2f113fbd0dcb3f0a86fc7ff46443d1be  kodi-generate-tarball-xz.sh
+c745536795b842d2d72d686ca9b546e1  xbmc-13.0-dvdread.patch

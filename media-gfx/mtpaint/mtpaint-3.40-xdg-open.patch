@@ -1,0 +1,13 @@
+diff --git a/src/spawn.c b/src/spawn.c
+index cef46b3..82fb753 100644
+--- a/src/spawn.c
++++ b/src/spawn.c
+@@ -757,7 +757,7 @@ int run_def_action(int action, char *sname, char *dname, int delay)
+ 
+ #else /* Linux */
+ 
+-#define HANDBOOK_BROWSER "firefox"
++#define HANDBOOK_BROWSER "xdg-open"
+ #define HANDBOOK_LOCATION "/usr/doc/mtpaint/index.html"
+ #define HANDBOOK_LOCATION2 "/usr/share/doc/mtpaint/index.html"
+ 

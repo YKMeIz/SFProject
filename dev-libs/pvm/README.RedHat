@@ -1,0 +1,18 @@
+To configure this release of PVM to work you need to do
+one or more of the following:
+
+- set the PVM_ROOT variable in the user's startup files (usually 
+  .bashrc). Note: rsh won't go through the files used at login,
+  so e.g. .profile and .bash_profile don't work). This
+  also needs to be set on the remote systems in some way.
+
+- set the PVM_ROOT on a system-wide basis, e.g. in /etc/bashrc.
+  Same restrictions as above: login files are not used.
+
+
+
+
+
+
+
+

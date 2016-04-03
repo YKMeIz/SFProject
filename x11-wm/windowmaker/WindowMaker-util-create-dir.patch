@@ -1,0 +1,31 @@
+From 416f5986856040881f4fef59c1170833f049e37f Mon Sep 17 00:00:00 2001
+From: David Maciejak <david.maciejak@gmail.com>
+Date: Fri, 19 Sep 2014 11:47:36 +0700
+Subject: [PATCH] util: create custom GNUSTEP dir if needed
+
+This patch is creating the missing custom GNUSTEP dir.
+Patch found on vinelinux.org as WindowMaker-0.95.6-GSDIR.patch.
+---
+ util/wmaker.inst.in |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/util/wmaker.inst.in b/util/wmaker.inst.in
+index 632c112..ad2a9a8 100644
+--- a/util/wmaker.inst.in
++++ b/util/wmaker.inst.in
+@@ -111,8 +111,12 @@ if test "x$GNUSTEP_USER_ROOT" = "x"; then
+ else
+ 	GSDIR="$GNUSTEP_USER_ROOT"
+ 	if [ ! -d "$GSDIR" ]; then
++		# in this case, and in this case only, mkdir needs -p option
++		mkdir -p $GSDIR || {
+ 		echo "Directory specified in GNUSTEP_USER_ROOT environment variable does not exist"
+ 		exit 1
++		}
++		chmod +rwx $GSDIR || exit 1
+ 	fi
+ 	cd "$GSDIR"
+ 	cd ..
+-- 
+1.7.6.6.GIT
+

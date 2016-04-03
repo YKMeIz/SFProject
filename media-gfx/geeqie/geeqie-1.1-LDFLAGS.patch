@@ -1,0 +1,12 @@
+diff -Nurb --strip-trailing-cr geeqie-1.1-orig/src/Makefile.in geeqie-1.1/src/Makefile.in
+--- geeqie-1.1-orig/src/Makefile.in	2012-08-12 22:14:07.000000000 +0200
++++ geeqie-1.1/src/Makefile.in	2012-08-14 09:40:29.599433629 +0200
+@@ -233,7 +233,7 @@
+ JPEG_LIBS = @JPEG_LIBS@
+ LCMS_CFLAGS = @LCMS_CFLAGS@
+ LCMS_LIBS = @LCMS_LIBS@
+-LDFLAGS = @LDFLAGS@
++LDFLAGS = @LDFLAGS@ -Wl,--as-needed
+ LIBCHAMPLAIN_CFLAGS = @LIBCHAMPLAIN_CFLAGS@
+ LIBCHAMPLAIN_GTK_CFLAGS = @LIBCHAMPLAIN_GTK_CFLAGS@
+ LIBCHAMPLAIN_GTK_LIBS = @LIBCHAMPLAIN_GTK_LIBS@

@@ -1,0 +1,12 @@
+eb62b14747a33e569b0662ac06608b0b  10-nvidia-driver.conf
+4a861c27f8c3c669e7d05d472ba2554e  60-nvidia-uvm.rules
+a9cba824b76f7af71b207114ddebef9d  99-nvidia-ignoreabi.conf
+4a743d9c4a7ca1dc6a609bc9ee5ba755  99-nvidia-modules.conf
+63392ce010c291311b23c2bffdf45a9b  alternate-install-present
+e08ec7adb48f808f467d6054b4e2569f  blacklist-nouveau.conf
+f08a703c04658bec0106746a0b1e27ad  nvidia-driver-352.79-armv7hl.tar.xz
+2cdf62b7a0fa1bc9f9136a2d56c738d9  nvidia-driver-352.79-i386.tar.xz
+5e0232b747a4f3a6d16ce7a68b0e36ab  nvidia-driver-352.79-x86_64.tar.xz
+f81c4277eaa560569fe10e46b492194a  nvidia-generate-tarballs.sh
+29d0fe7536c20b7e4dece3172bbe530c  nvidia-uvm.conf
+adf010b94bb0fbf16242623f076a2944  xorg.conf.nvidia

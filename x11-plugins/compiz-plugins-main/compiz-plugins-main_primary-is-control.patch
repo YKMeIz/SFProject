@@ -1,0 +1,104 @@
+diff -upr compiz-plugins-main-0.8.8-orig/metadata/colorfilter.xml.in compiz-plugins-main-0.8.8/metadata/colorfilter.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/colorfilter.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/colorfilter.xml.in	2013-02-10 22:06:55.504403562 +0100
+@@ -23,7 +23,7 @@
+       <option name="switch_filter_key" type="key">
+         <_short>Switch filter</_short>
+         <_long>Select filter to use from filters list : either apply all filters or only one specific filter (triggering this action switches filters one by one and eventually comes back to the "all filters" mode).</_long>
+-        <default>&lt;Control&gt;&lt;Super&gt;s</default>
++        <default>&lt;Primary&gt;&lt;Super&gt;s</default>
+       </option>
+     </display>
+     <screen>
+diff -upr compiz-plugins-main-0.8.8-orig/metadata/staticswitcher.xml.in compiz-plugins-main-0.8.8/metadata/staticswitcher.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/staticswitcher.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/staticswitcher.xml.in	2013-02-10 22:17:34.668767370 +0100
+@@ -1,3 +1,4 @@
++<?xml version="1.0"?>
+ <compiz>
+     <plugin name="staticswitcher" useBcop="true">
+ 	<_short>Static Application Switcher</_short>
+@@ -39,7 +40,7 @@
+ 		<option name="next_all_key" type="key">
+ 		    <_short>Next window (All windows)</_short>
+ 		    <_long>Popup switcher if not visible and select next window out of all windows</_long>
+-		    <default>&lt;Control&gt;&lt;Alt&gt;Tab</default>
++		    <default>&lt;Primary&gt;&lt;Alt&gt;Tab</default>
+ 		</option>
+ 		<option name="prev_all_button" type="button">
+ 		    <_short>Prev window (All windows)</_short>
+@@ -48,7 +49,7 @@
+ 		<option name="prev_all_key" type="key">
+ 		    <_short>Prev window (All windows)</_short>
+ 		    <_long>Popup switcher if not visible and select previous window out of all windows</_long>
+-		    <default>&lt;Shift&gt;&lt;Control&gt;&lt;Alt&gt;Tab</default>
++		    <default>&lt;Shift&gt;&lt;Primary&gt;&lt;Alt&gt;Tab</default>
+ 		</option>
+ 		<option name="next_group_button" type="button">
+ 		    <_short>Next window (Group)</_short>
+diff -upr compiz-plugins-main-0.8.8-orig/metadata/wall.xml.in compiz-plugins-main-0.8.8/metadata/wall.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/wall.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/wall.xml.in	2013-02-10 22:04:55.455235946 +0100
+@@ -201,7 +201,7 @@
+ 					<option name="left_key" type="key">
+ 						<_short>Move Left</_short>
+ 						<_long>Move along the wall to the left</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;Left</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;Left</default>
+ 					</option>
+ 					<option name="left_button" type="button">
+ 						<_short>Move Left</_short>
+@@ -210,7 +210,7 @@
+ 					<option name="right_key" type="key">
+ 						<_short>Move Right</_short>
+ 						<_long>Move along the wall to the right</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;Right</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;Right</default>
+ 					</option>
+ 					<option name="right_button" type="button">
+ 						<_short>Move Right</_short>
+@@ -219,7 +219,7 @@
+ 					<option name="up_key" type="key">
+ 						<_short>Move Up</_short>
+ 						<_long>Move along the wall up</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;Up</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;Up</default>
+ 					</option>
+ 					<option name="up_button" type="button">
+ 						<_short>Move Up</_short>
+@@ -228,7 +228,7 @@
+ 					<option name="down_key" type="key">
+ 						<_short>Move Down</_short>
+ 						<_long>Move along the wall down</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;Down</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;Down</default>
+ 					</option>
+ 					<option name="down_button" type="button">
+ 						<_short>Move Down</_short>
+@@ -256,22 +256,22 @@
+ 					<option name="left_window_key" type="key">
+ 						<_short>Move Left With Window</_short>
+ 						<_long>Move with window along the wall to the left</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;&lt;Shift&gt;Left</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;&lt;Shift&gt;Left</default>
+ 					</option>
+ 					<option name="right_window_key" type="key">
+ 						<_short>Move Right With Window</_short>
+ 						<_long>Move with window along the wall to the right</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;&lt;Shift&gt;Right</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;&lt;Shift&gt;Right</default>
+ 					</option>
+ 					<option name="up_window_key" type="key">
+ 						<_short>Move Up With Window</_short>
+ 						<_long>Move with window along the wall up</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;&lt;Shift&gt;Up</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;&lt;Shift&gt;Up</default>
+ 					</option>
+ 					<option name="down_window_key" type="key">
+ 						<_short>Move Down With Window</_short>
+ 						<_long>Move with window along the wall down</_long>
+-						<default>&lt;Control&gt;&lt;Alt&gt;&lt;Shift&gt;Down</default>
++						<default>&lt;Primary&gt;&lt;Alt&gt;&lt;Shift&gt;Down</default>
+ 					</option>
+ 				</subgroup>
+ 				<subgroup>

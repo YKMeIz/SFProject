@@ -1,0 +1,28 @@
+--- libzeitgeist-0.3.18/tests/test-datasource.c.env	2012-04-05 19:05:20.000000000 +0900
++++ libzeitgeist-0.3.18/tests/test-datasource.c	2014-06-09 22:27:26.000000000 +0900
+@@ -48,7 +48,10 @@ setup (Fixture *fix, gconstpointer data)
+ static void
+ teardown (Fixture *fix, gconstpointer data)
+ {
+-  g_setenv ("XDG_DATA_DIRS", old_xdg_data_dirs, TRUE);  
++  if (old_xdg_data_dirs)
++    g_setenv ("XDG_DATA_DIRS", old_xdg_data_dirs, TRUE);  
++  else
++    g_unsetenv("XDG_DATA_DIRS");
+ }
+ 
+ static void
+--- libzeitgeist-0.3.18/tests/test-event.c.env	2012-04-05 19:05:20.000000000 +0900
++++ libzeitgeist-0.3.18/tests/test-event.c	2014-06-09 22:25:37.000000000 +0900
+@@ -47,7 +47,10 @@ setup (Fixture *fix, gconstpointer data)
+ static void
+ teardown (Fixture *fix, gconstpointer data)
+ {
+-  g_setenv ("XDG_DATA_DIRS", old_xdg_data_dirs, TRUE);  
++  if (old_xdg_data_dirs)
++    g_setenv ("XDG_DATA_DIRS", old_xdg_data_dirs, TRUE);  
++  else
++    g_unsetenv("XDG_DATA_DIRS");
+ }
+ 
+ static void

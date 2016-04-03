@@ -1,0 +1,33 @@
+diff -Nrbu gnome-translate-0.99/src/gt-language-view.c gnome-translate-0.99-OK/src/gt-language-view.c
+--- gnome-translate-0.99/src/gt-language-view.c	2005-01-28 15:32:05.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-language-view.c	2006-08-14 19:59:09.000000000 +0400
+@@ -109,13 +109,13 @@
+   gt_language_view_set_conf_selected_tag(source_view, from);
+   g_free(from);
+ 
+-  gtk_tree_view_set_model(dest_view, (GtkTreeModel *) dest_store);
++  to = gt_language_view_get_conf_selected_tag(dest_view);
++  gtk_tree_view_set_model(dest_view, GTK_TREE_MODEL(dest_store));
+   if (dest_store)
+     g_object_unref(dest_store);
+ 
+   gtk_tree_view_set_search_column(dest_view, COLUMN_NAME);
+ 
+-  to = gt_language_view_get_conf_selected_tag(dest_view);
+   gt_language_view_select(dest_view, to);
+   g_free(to);
+ }
+@@ -220,12 +220,12 @@
+   gt_g_object_slist_free(pairs);
+   g_hash_table_destroy(dest_stores);
+ 
++  selected_tag = gt_language_view_get_conf_selected_tag(view);
+   gtk_tree_view_set_model(view, GTK_TREE_MODEL(source_store));
+   g_object_unref(source_store);
+ 
+   gtk_tree_view_set_search_column(view, COLUMN_NAME);
+ 
+-  selected_tag = gt_language_view_get_conf_selected_tag(view);
+   gt_language_view_select(view, selected_tag);
+   g_free(selected_tag);
+ }

@@ -1,0 +1,6 @@
+a2fd0ea42ad96157b898cf37e47e7c10  caja-dropbox_disable-creation-of-dropbox-script-binary.patch
+d77d8d63ff0b4fba6c3a23f965637729  caja-dropbox_fix_autoconf-automake_deprecations.patch
+7abc828a4fb8a0976c9bc0629ce23282  caja-dropbox_fix-pygtk-in-configure.patch
+1d68524920a46c09f38f1a694d9362b3  caja-dropbox_nautilus_to_caja.patch
+0cad574402d96f452472c8fd48391203  dropbox
+ab4ca49eb24498d14edad2c29aac530b  nautilus-dropbox-1.6.0.tar.bz2

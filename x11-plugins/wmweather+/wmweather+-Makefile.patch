@@ -1,0 +1,22 @@
+--- Makefile.in.orig	2010-03-27 15:18:52.000000000 -0500
++++ Makefile.in     	2010-03-27 15:16:07.000000000 -0500
+@@ -202,7 +202,7 @@ 
+         subst.h sunzenith.c sunzenith.h warnings.c warnings.h wmweather+.c \
+         wmweather+.h characters.xpm wmweather_master.xpm
+ 
+-wmweather__LDADD = wmgeneral/libwmgeneral.a wmgeneral/libwmgeneral-x11.a b0rken/libb0rken.a @XLIBS@
++wmweather__LDADD = wmgeneral/libwmgeneral.a wmgeneral/libwmgeneral-x11.a b0rken/libb0rken.a @XLIBS@ -lm
+ man_MANS = wmweather+.1
+ EXTRA_DIST = HINTS bootstrap example.conf $(man_MANS)
+ all: config.h
+--- Makefile.am.orig	2010-03-27 15:14:08.000000000 -0500
++++ Makefile.am     	2010-03-27 15:13:48.000000000 -0500
+@@ -11,7 +11,7 @@ 
+         metar.c metar.h moon.c moon.h mrf.c mrf.h radar.c radar.h subst.c \
+         subst.h sunzenith.c sunzenith.h warnings.c warnings.h wmweather+.c \
+         wmweather+.h characters.xpm wmweather_master.xpm
+-wmweather__LDADD = wmgeneral/libwmgeneral.a wmgeneral/libwmgeneral-x11.a b0rken/libb0rken.a @XLIBS@
++wmweather__LDADD = wmgeneral/libwmgeneral.a wmgeneral/libwmgeneral-x11.a b0rken/libb0rken.a @XLIBS@ -lm
+ 
+ man_MANS = wmweather+.1
+ EXTRA_DIST = HINTS bootstrap example.conf $(man_MANS)

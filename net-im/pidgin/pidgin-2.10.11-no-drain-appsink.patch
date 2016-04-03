@@ -1,0 +1,61 @@
+
+# HG changeset patch
+# User Jakub Adam <jakub.adam@ktknet.cz>
+# Date 1444301416 -7200
+# Node ID cbc4db14444c91f4f4b03aa1b228c2d51dacea6b
+# Parent  902b1fd334bd4d41ffd217fa4e6864629b7d3edc
+Don't require appsink be drained in appsink_readable
+
+When appsink_readable was entered, it kept invoking the read callback
+as long as there were some unread data available. This may have led to
+infinite loop when the application decided it wasn't convenient to read
+the whole input buffer just now.
+
+This change removes the while loop and if some data are left in the
+buffer, appsink_readable returns TRUE in order to be scheduled again.
+Control returns to the main loop and another events get a chance to
+be processed.
+
+diff --git a/libpurple/mediamanager.c b/libpurple/mediamanager.c
+--- a/libpurple/mediamanager.c
++++ b/libpurple/mediamanager.c
+@@ -948,6 +948,7 @@
+ 	gpointer cb_data;
+ 	guint *cb_token_ptr = &info->readable_cb_token;
+ 	guint cb_token = *cb_token_ptr;
++	gboolean run_again = FALSE;
+ 
+ 	g_mutex_lock (&manager->priv->appdata_mutex);
+ 	if (cb_token == 0 || cb_token != *cb_token_ptr) {
+@@ -955,8 +956,8 @@
+ 		g_mutex_unlock (&manager->priv->appdata_mutex);
+ 		return FALSE;
+ 	}
+-	/* We need to signal readable until there are no more samples */
+-	while (info->callbacks.readable &&
++
++	if (info->callbacks.readable &&
+ 		(info->num_samples > 0 || info->current_sample != NULL)) {
+ 		readable_cb = info->callbacks.readable;
+ 		media = g_weak_ref_get (&info->media_ref);
+@@ -978,9 +979,17 @@
+ 			return FALSE;
+ 		}
+ 	}
+-	info->readable_cb_token = 0;
++
++	/* Do we still have samples? Schedule appsink_readable again. We break here
++	 * so that other events get a chance to be processed too. */
++	if (info->num_samples > 0 || info->current_sample != NULL) {
++		run_again = TRUE;
++	} else {
++		info->readable_cb_token = 0;
++	}
++
+ 	g_mutex_unlock (&manager->priv->appdata_mutex);
+-	return FALSE;
++	return run_again;
+ }
+ 
+ static void
+

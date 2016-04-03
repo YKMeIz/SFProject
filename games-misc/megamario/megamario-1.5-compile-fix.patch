@@ -1,0 +1,12 @@
+diff -up megamario-1.5/src/unixutils.h~ megamario-1.5/src/unixutils.h
+--- megamario-1.5/src/unixutils.h~	2008-07-24 17:01:34.000000000 +0200
++++ megamario-1.5/src/unixutils.h	2008-07-24 17:01:34.000000000 +0200
+@@ -1,4 +1,8 @@
+ #ifdef __unix__
++
++/* for PATH_MAX */
++#include <sys/param.h>
++
+ #ifdef __cplusplus
+ extern "C"
+ {

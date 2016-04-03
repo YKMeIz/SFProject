@@ -1,0 +1,14 @@
+diff -upr fusion-icon-5e2dc9-orig/FusionIcon/data.py fusion-icon-5e2dc9/FusionIcon/data.py
+--- fusion-icon-5e2dc9-orig/FusionIcon/data.py	2012-02-27 02:09:27.000000000 +0100
++++ fusion-icon-5e2dc9/FusionIcon/data.py	2012-03-06 23:07:25.000000000 +0100
+@@ -61,6 +61,10 @@ apps = {
+ 
+ wms = {
+ 	'metacity':
++		('marco', ['marco', '--replace'],
++		 'Marco', 'mate', None, None,),
++
++	'metacity':
+ 		('metacity', ['metacity', '--replace'],
+ 		 'Metacity', 'gnome', None, None,),
+ 

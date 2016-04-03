@@ -1,0 +1,18 @@
+diff -upr nautilus-dropbox-1.6.0-orig/configure nautilus-dropbox-1.6.0/configure
+--- nautilus-dropbox-1.6.0-orig/configure	2013-07-21 12:14:02.458699000 +0200
++++ nautilus-dropbox-1.6.0/configure	2013-07-21 12:26:35.337592289 +0200
+@@ -10801,11 +10801,11 @@ $as_echo_n "checking for pygtk... " >&6;
+ 
+ cat <<EOF | python
+ try:
+- import gtk
++ import sys
+ except:
+- exit(1)
++ sys.exit(1)
+ else:
+- exit(0)
++ sys.exit(0)
+ EOF
+ 
+ if test $? -ne 0; then

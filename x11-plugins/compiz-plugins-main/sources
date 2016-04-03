@@ -1,0 +1,9 @@
+337655a2c56266ac216c7dba5c4f0a05  compiz-plugins-main-0.8.8.tar.bz2
+933178a03c670d3cc6dc54abf47e4b1a  compiz-plugins-main-aarch64.patch
+bfc52c1c4a6ba58d04c23be67cbe4a6b  compiz-plugins-main_automake-1.13.patch
+939fb653bbf4e37ea13a646cab54cd69  compiz-plugins-main_expo_reflection_is_unphysical.patch
+72a5a66ce9953c1beedeab445ae3a807  compiz-plugins-main_fix_edges.patch
+4216378968ffa3a106635b2ca0351cf5  compiz-plugins-main_incorrect-fsf-address_fix.patch
+5c70109e575fcc92dffc75102dfb2388  compiz-plugins-main_new-mate.patch
+03226fb419b3af1f4db7b7f61a237e61  compiz-plugins-main_primary-is-control.patch
+3dd3cb606f0f2d352aeb3bd1e9c931b9  compiz-plugins-main_remove_gconf_usage.patch

@@ -1,0 +1,13 @@
+5e0cee20c3b5c360e9b12d083beb3471  git-1.7-el5-emacs-support.patch
+4f12a989062e406bfd4e7b3f5d167cb9  git-1.8-gitweb-home-link.patch
+c64012d491e24c7d65cd389f75383d91  git-2.7.4.tar.gz
+4b4883b92b5e94babc95662bbe146b7d  git.conf.httpd
+d3b443ae79613f69e8e9c9cbd819de70  git-cvsimport-Ignore-cvsps-2.2b1-Branches-output.patch
+969d080ee927262cb3d11144e615c9e0  git-gui.desktop
+8cb6a341e1add5c622488ff44093bbe6  git-htmldocs-2.7.4.tar.gz
+9b2f4ed585eea80fe7b2e18368f789aa  git-init.el
+58020dc13a5801c49f7986fef7027535  git-manpages-2.7.4.tar.gz
+74ed80627db830f3fd69c5ba8e42442b  git@.service
+4165b9ef75ddccf430f6030b4cef9c90  git.socket
+4222a66afbf7b071ebb735aa72c6658b  gitweb.conf.in
+a54f3ed886b554f60381a4bd67d487f9  git.xinetd.in

@@ -1,0 +1,12 @@
+diff -up paprefs-0.9.10/src/paprefs.cc.module-combine-sink paprefs-0.9.10/src/paprefs.cc
+--- paprefs-0.9.10/src/paprefs.cc.module-combine-sink	2014-03-01 12:57:44.304726964 +0100
++++ paprefs-0.9.10/src/paprefs.cc	2014-03-01 12:58:29.016893961 +0100
+@@ -388,7 +388,7 @@ void MainWindow::writeToGConfCombine() {
+     gconf->change_set_commit(changeSet, true);
+ 
+     if (combineCheckButton->get_active()) {
+-        changeSet.set(PA_GCONF_PATH_MODULES"/combine/name0", Glib::ustring("module-combine"));
++        changeSet.set(PA_GCONF_PATH_MODULES"/combine/name0", Glib::ustring("module-combine-sink"));
+         changeSet.set(PA_GCONF_PATH_MODULES"/combine/args0", Glib::ustring(""));
+ 
+         changeSet.set(PA_GCONF_PATH_MODULES"/combine/enabled", true);

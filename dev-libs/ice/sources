@@ -1,0 +1,16 @@
+dd15e44c5c97db45de3b7b168cbe9698  glacier2router.conf
+3a22e68bb599bc4c1107b5483d38da08  glacier2router.service
+acd0a330d519628c98bd071bb45e993e  ice-3.4.2-no-mono.patch
+b3542037087b203db2e8dd4b8b4850e7  ice-3.5.0-arm.patch
+5183c0877de19a8fe9e82e3e0702d5c9  ice-3.5.0-libdb4.patch
+2f867f4ef4b8b37f58d04618d4fa39e1  ice-3.5.1-dont-build-demo-test.patch
+f00c59983cc904bca977133c0a9b3e80  Ice-3.5.1.tar.gz
+cd6dab2923e3eff2311eba270f0bdf15  ice-3.5b-s390.patch
+0586639e7b42f390c3e11397ead1c371  IceGridAdmin.desktop
+25e428e72cdd0d5fc563ee4a53881a6a  icegridnode.conf
+ec05713435127a93879b172b982af75c  icegridnode.service
+6e2ffde82db321948db8e1ccdc65180f  icegridregistry.conf
+efa9adfbba89a85275046dfbbe8be3bc  icegridregistry.service
+9846a44b0541efc80376cd6dbeba4c83  ice.ini
+5e1e1befd5cbd5262ec47770f591bd14  ice.pth
+22971868fb22141af9e7d02f4637fe83  Ice-README.Fedora

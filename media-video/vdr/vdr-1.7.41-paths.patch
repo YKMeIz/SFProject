@@ -1,0 +1,84 @@
+diff -up vdr-1.7.41/epg2html~ vdr-1.7.41/epg2html
+--- vdr-1.7.41/epg2html~	2013-03-04 15:02:20.000000000 +0200
++++ vdr-1.7.41/epg2html	2013-03-16 19:08:17.467701640 +0200
+@@ -2,12 +2,12 @@
+ 
+ # A simple EPG to HTML converter
+ #
+-# Converts the EPG data written by 'vdr' into the file /video/epg.data
++# Converts the EPG data written by 'vdr' into the file __CACHEDIR__/epg.data
+ # into a simple HTML programme listing, consisting of one file per channel
+ # plus an 'index.htm' file. All output files are written into the current
+ # directory.
+ #
+-# Usage: epg2html < /video/epg.data
++# Usage: epg2html < __CACHEDIR__/epg.data
+ #
+ # See the main source file 'vdr.c' for copyright information and
+ # how to reach the author.
+diff -up vdr-1.7.41/newplugin~ vdr-1.7.41/newplugin
+--- vdr-1.7.41/newplugin~	2013-01-12 15:46:00.000000000 +0200
++++ vdr-1.7.41/newplugin	2013-03-16 19:08:18.140713300 +0200
+@@ -24,7 +24,7 @@ $PLUGIN_VERSION = "0.0.1";
+ $PLUGIN_DESCRIPTION = "Enter description for '$PLUGIN_NAME' plugin";
+ $PLUGIN_MAINENTRY = $PLUGIN_CLASS;
+ 
+-$PLUGINS_SRC = "PLUGINS/src";
++$PLUGINS_SRC = ".";
+ 
+ $README = qq
+ {This is a "plugin" for the Video Disk Recorder (VDR).
+diff -up vdr-1.7.41/vdr.1~ vdr-1.7.41/vdr.1
+--- vdr-1.7.41/vdr.1~	2013-03-15 12:44:54.000000000 +0200
++++ vdr-1.7.41/vdr.1	2013-03-16 19:08:16.621686914 +0200
+@@ -51,7 +51,7 @@ Save cache files in \fIdir\fR
+ .TP
+ .BI \-c\  dir ,\ \-\-config= dir
+ Read config files from directory \fIdir\fR
+-(default is to read them from the video directory).
++(default is to read them from __CONFIGDIR__).
+ .TP
+ .B \-d, \-\-daemon
+ Run in daemon mode (implies \-\-no\-kbd).
+@@ -130,7 +130,7 @@ If logging should be done to LOG_LOCAL\f
+ LOG_USER, add '.n' to LEVEL, as in 3.7 (n=0..7).
+ .TP
+ .BI \-L\  dir ,\ \-\-lib= dir
+-Search for plugins in directory \fIdir\fR (default is ./PLUGINS/lib).
++Search for plugins in directory \fIdir\fR (default is __PLUGINDIR__).
+ There can be several \fB\-L\fR options with different \fIdir\fR values.
+ Each of them will apply to the \fB\-P\fR options following it.
+ .TP
+@@ -205,7 +205,7 @@ For backwards compatibility (same as \-\
+ .TP
+ .BI \-v\  dir ,\ \-\-video= dir
+ Use \fIdir\fR as video directory.
+-The default is \fI/video\fR.
++The default is \fI__VIDEODIR__\fR.
+ .TP
+ .B \-V, \-\-version
+ Print version information and exit.
+diff -up vdr-1.7.41/vdr.5~ vdr-1.7.41/vdr.5
+--- vdr-1.7.41/vdr.5~	2013-03-11 15:17:12.000000000 +0200
++++ vdr-1.7.41/vdr.5	2013-03-16 19:08:18.908726601 +0200
+@@ -711,7 +711,7 @@ The file \fIsetup.conf\fR contains the b
+ Each line contains one option in the format "Name = Value".
+ See the MANUAL file for a description of the available options.
+ .SS THEMES
+-The files \fIthemes/<skin>\-<theme>.theme\fR in the config directory contain the
++The files \fI__VARDIR__/themes/<skin>\-<theme>.theme\fR contain the
+ color theme definitions for the various skins. In the actual file names \fI<skin>\fR
+ will be replaced by the name if the skin this theme belongs to, and \fI<theme>\fR
+ will be the name of this theme.
+diff -up vdr-1.7.41/vdr.c~ vdr-1.7.41/vdr.c
+--- vdr-1.7.41/vdr.c~	2013-03-15 12:44:54.000000000 +0200
++++ vdr-1.7.41/vdr.c	2013-03-16 19:08:15.861673670 +0200
+@@ -673,7 +673,7 @@ int main(int argc, char *argv[])
+   if (!ResourceDirectory)
+      ResourceDirectory = DEFAULTRESDIR;
+   cPlugin::SetResourceDirectory(ResourceDirectory);
+-  cThemes::SetThemesDirectory(AddDirectory(ConfigDirectory, "themes"));
++  cThemes::SetThemesDirectory("__VARDIR__/themes");
+ 
+   // Configuration data:
+ 

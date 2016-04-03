@@ -1,0 +1,9 @@
+c9547c037ba0146176d3de9377d78107  chntpw-080526-correct-test-for-failing-open-syscall.patch
+a49070b53ebd43d337c288c922389eb3  chntpw-110511-detect-failure-to-write-key.patch
+d4e401059359566841197894cecc7e5e  chntpw-110511-get_abs_path.patch
+99d95c3883be7635b358b8ca5971f24e  chntpw-110511-port-to-gcrypt-debian.patch
+9b3d6547f6a5f1a3d0539bb9842132ad  chntpw-110511-reged-no-deref-null.patch
+c6ee37b33701e24d12d7c501382d5a5c  chntpw-110511-robustness.patch
+d3dc398cb30951ad34aad100436b308e  chntpw-chntpw.8
+28928836c3bd3013246838dca97ff111  chntpw-README.Dist
+a3fb358d1adec589cd6bc8dedf68896c  chntpw-source-110511.zip

@@ -1,0 +1,742 @@
+diff -Nrbu gnome-translate-0.99/configure.ac gnome-translate-0.99-OK/configure.ac
+--- gnome-translate-0.99/configure.ac	2005-01-28 15:33:16.000000000 +0300
++++ gnome-translate-0.99-OK/configure.ac	2010-01-18 16:50:22.000000000 +0300
+@@ -40,7 +40,7 @@
+ ### mandatory libraries and programs
+ 
+ AM_PATH_GTK_2_0(2.4.0,, [AC_MSG_ERROR([unable to find the GTK+ library])])
+-PKG_CHECK_MODULES(GNOME, [gthread-2.0 gconf-2.0 >= 2.4.0 libgnomeui-2.0 gnome-vfs-2.0 libglade-2.0 eel-2.0 >= 2.6.0 libxml-2.0],, [AC_MSG_ERROR([unable to find the GNOME libraries])])
++PKG_CHECK_MODULES(GNOME, [gthread-2.0 gconf-2.0 >= 2.4.0 libgnomeui-2.0 gnome-vfs-2.0 libglade-2.0 libxml-2.0],, [AC_MSG_ERROR([unable to find the GNOME libraries])])
+ PKG_CHECK_MODULES(LIBTRANSLATE, [libtranslate],, [AC_MSG_ERROR([unable to find libtranslate])])
+ 
+ AM_GCONF_SOURCE_2
+diff -Nrbu gnome-translate-0.99/src/gt-app.c gnome-translate-0.99-OK/src/gt-app.c
+--- gnome-translate-0.99/src/gt-app.c	2005-01-28 15:31:53.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-app.c	2010-01-18 16:50:22.000000000 +0300
+@@ -22,7 +22,6 @@
+ #include <sys/stat.h>
+ #include <gnome.h>
+ #include <libgnomevfs/gnome-vfs.h>
+-#include <eel/eel-alert-dialog.h>
+ #include <translate.h>
+ #include "egg-editable-toolbar.h"
+ #include "egg-toolbar-editor.h"
+@@ -782,7 +781,7 @@
+ 								GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+ 								GTK_STOCK_SAVE, GTK_RESPONSE_OK,
+ 								NULL);
+-  eel_add_weak_pointer(&app.save_as_dialog);
++  g_object_add_weak_pointer(G_OBJECT(app.save_as_dialog), &app.save_as_dialog);
+ 
+   gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(app.save_as_dialog), FALSE);
+   gt_conf_link(app.save_as_dialog, GT_CONF_SAVE_TRANSLATED_TEXT_AS_FOLDER,
+@@ -1012,7 +1011,8 @@
+ 					       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+ 					       GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+ 					       NULL);
+-  eel_add_weak_pointer(&app.insert_from_file_dialog);
++
++  g_object_add_weak_pointer(G_OBJECT(app.insert_from_file_dialog), &app.insert_from_file_dialog);
+ 
+   gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(app.insert_from_file_dialog), FALSE);
+   gt_conf_link(app.insert_from_file_dialog, GT_CONF_INSERT_FROM_FILE_FOLDER,
+@@ -1035,7 +1035,7 @@
+ 		      "dialog", &app.edit_toolbars_dialog,
+ 		      NULL);
+ 
+-  eel_add_weak_pointer(&app.edit_toolbars_dialog);
++  g_object_add_weak_pointer(G_OBJECT(app.edit_toolbars_dialog), &app.edit_toolbars_dialog);
+   g_object_weak_ref(G_OBJECT(app.edit_toolbars_dialog), gt_app_edit_toolbars_weak_notify_cb, NULL);
+ 
+   gt_app_edit_toolbars_create_editor();
+@@ -1054,7 +1054,7 @@
+     gtk_widget_destroy(app.edit_toolbars_editor);
+ 
+   app.edit_toolbars_editor = egg_toolbar_editor_new(ui_manager, toolbars_model);
+-  eel_add_weak_pointer(&app.edit_toolbars_editor);
++  g_object_add_weak_pointer(G_OBJECT(app.edit_toolbars_editor), &app.edit_toolbars_editor);
+ 
+   gtk_container_set_border_width(GTK_CONTAINER(app.edit_toolbars_editor), 5);
+   gtk_box_set_spacing(GTK_BOX(app.edit_toolbars_editor), 6);
+@@ -1117,7 +1117,7 @@
+   if (logo)
+     g_object_unref(logo);
+ 
+-  eel_add_weak_pointer(&app.about_dialog);
++  g_object_add_weak_pointer(G_OBJECT(app.about_dialog), &app.about_dialog);
+   
+   gtk_window_set_transient_for(GTK_WINDOW(app.about_dialog), gt_app_window);
+   gtk_widget_show(app.about_dialog);
+@@ -1163,13 +1163,12 @@
+ 	  secondary = g_strdup_printf(_("The file \"%s\" already exists. If you choose yes, its contents will be lost."), displayable_uri);
+ 	  g_free(displayable_uri);
+ 	  
+-	  confirmation_dialog = eel_alert_dialog_new(GTK_WINDOW(dialog),
++	  confirmation_dialog = gtk_message_dialog_new(GTK_WINDOW(dialog),
+ 						     GTK_DIALOG_DESTROY_WITH_PARENT,
+ 						     GTK_MESSAGE_WARNING,
+ 						     GTK_BUTTONS_YES_NO,
+ 						     _("Overwrite file?"),
+-						     secondary,
+-						     NULL);
++	  						 secondary);	  
+ 	  g_free(secondary);
+ 
+ 	  gtk_dialog_set_default_response(GTK_DIALOG(confirmation_dialog), GTK_RESPONSE_NO); /* safe default */
+@@ -1207,7 +1206,7 @@
+   GtkWidget *button;
+ 
+   app.leave_fullscreen_popup = gtk_window_new(GTK_WINDOW_POPUP);
+-  eel_add_weak_pointer(&app.leave_fullscreen_popup);
++  g_object_add_weak_pointer(G_OBJECT(app.leave_fullscreen_popup), &app.leave_fullscreen_popup);
+ 
+   button = gtk_button_new_from_stock(GT_STOCK_LEAVE_FULLSCREEN);
+   gtk_container_add(GTK_CONTAINER(app.leave_fullscreen_popup), button);
+diff -Nrbu gnome-translate-0.99/src/gt-conf.c gnome-translate-0.99-OK/src/gt-conf.c
+--- gnome-translate-0.99/src/gt-conf.c	2005-01-28 17:01:00.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-conf.c	2010-01-18 16:50:22.000000000 +0300
+@@ -19,7 +19,6 @@
+ #include "config.h"
+ #include <stdarg.h>
+ #include <glib/gi18n.h>
+-#include <eel/eel.h>
+ #include "gt-conf.h"
+ #include "gt-util.h"
+ 
+@@ -30,6 +29,8 @@
+ 
+ #define OBJECT_PSPEC_KEY		"gt-conf-object-pspec"
+ 
++static GConfClient *global_client = NULL;
++
+ static void gt_conf_link_file_chooser_h (GtkFileChooser *chooser,
+ 					 gpointer user_data);
+ static void gt_conf_link_file_chooser_notify_cb (GConfClient *client,
+@@ -77,8 +78,10 @@
+ void
+ gt_conf_init (void)
+ {
++  if (global_client == NULL)
++    global_client = gconf_client_get_default();
+   /* monitor our namespace */
+-  eel_gconf_monitor_add(GT_CONF_NAMESPACE);
++  gconf_client_add_dir(global_client, GT_CONF_NAMESPACE, GCONF_CLIENT_PRELOAD_NONE, NULL);
+ }
+ 
+ void
+@@ -101,7 +104,7 @@
+ 	{
+ 	  char *uri;
+ 
+-	  uri = eel_gconf_get_string(key);
++	  uri = gconf_client_get_string(global_client, key, NULL);
+ 	  if (uri)
+ 	    {
+ 	      gtk_file_chooser_set_current_folder_uri(object, uri);
+@@ -124,8 +127,8 @@
+ 	  g_object_set_data_full(object, WINDOW_HEIGHT_KEY, height_key, g_free);
+ 
+ 	  gtk_window_set_default_size(GTK_WINDOW(object),
+-				      eel_gconf_get_integer(width_key),
+-				      eel_gconf_get_integer(height_key));
++				      gconf_client_get_int(global_client, width_key, NULL),
++				      gconf_client_get_int(global_client, height_key, NULL));
+ 
+ 	  signal_name = g_strdup("configure-event");
+ 	  signal_handler = G_CALLBACK(gt_conf_link_window_h);
+@@ -141,7 +144,7 @@
+ 
+ 	  g_object_set_data_full(object, RADIO_ACTION_ENUM_TYPE, g_strdup(g_type_name(enum_type)), g_free);
+ 
+-	  value = eel_gconf_get_value(key);
++	  value = gconf_client_get(global_client, key, NULL);
+ 	  if (value)
+ 	    {
+ 	      gt_conf_link_radio_action_set(object, value);
+@@ -154,7 +157,7 @@
+ 	}
+       else if (GTK_IS_TOGGLE_ACTION(object))
+ 	{
+-	  gtk_toggle_action_set_active(object, eel_gconf_get_boolean(key));
++	  gtk_toggle_action_set_active(object, gconf_client_get_bool(global_client, key, NULL));
+ 	  
+ 	  signal_name = g_strdup("toggled");
+ 	  signal_handler = G_CALLBACK(gt_conf_link_toggle_action_h);
+@@ -174,7 +177,7 @@
+ 
+ 	  g_object_set_data(object, OBJECT_PSPEC_KEY, pspec);
+ 
+-	  value = eel_gconf_get_value(key);
++	  value = gconf_client_get(global_client, key, NULL);
+ 	  if (value)
+ 	    {
+ 	      gt_conf_link_object_set(object, value);
+@@ -207,7 +210,7 @@
+   char *uri;
+ 
+   uri = gtk_file_chooser_get_current_folder_uri(chooser);
+-  eel_gconf_set_string(key, uri);
++  gconf_client_set_string(global_client, key, uri, NULL);
+   g_free(uri);
+ }
+ 
+@@ -239,8 +242,8 @@
+   const char *width_key = g_object_get_data(G_OBJECT(widget), WINDOW_WIDTH_KEY);
+   const char *height_key = g_object_get_data(G_OBJECT(widget), WINDOW_HEIGHT_KEY);
+ 
+-  eel_gconf_set_integer(width_key, event->width);
+-  eel_gconf_set_integer(height_key, event->height);
++  gconf_client_set_int(global_client, width_key, event->width, NULL);
++  gconf_client_set_int(global_client, height_key, event->height, NULL);
+ 
+   return FALSE;
+ }
+@@ -262,8 +265,8 @@
+ 
+   g_signal_handlers_block_matched(window, G_SIGNAL_MATCH_FUNC, 0, 0, NULL, gt_conf_link_window_h, NULL);
+   gtk_window_resize(window,
+-		    eel_gconf_get_integer(width_key),
+-		    eel_gconf_get_integer(height_key));
++		    gconf_client_get_int(global_client, width_key, NULL),
++		    gconf_client_get_int(global_client, height_key, NULL));
+   g_signal_handlers_unblock_matched(window, G_SIGNAL_MATCH_FUNC, 0, 0, NULL, gt_conf_link_window_h, NULL);
+ 
+   GDK_THREADS_LEAVE();
+@@ -337,7 +340,7 @@
+   enum_value = g_enum_get_value(enum_class, current_value);
+   g_return_if_fail(enum_value != NULL);
+ 
+-  eel_gconf_set_string(key, enum_value->value_nick);
++  gconf_client_set_string(global_client, key, enum_value->value_nick, NULL);
+ 
+   g_type_class_unref(enum_class);
+ }
+@@ -367,7 +370,7 @@
+ {
+   const char *key = user_data;
+ 
+-  eel_gconf_set_boolean(key, gtk_toggle_action_get_active(action));
++  gconf_client_set_bool(global_client, key, gtk_toggle_action_get_active(action), NULL);
+ }
+ 
+ static void
+@@ -421,9 +424,9 @@
+   g_object_get_property(object, g_param_spec_get_name(pspec), &value);
+ 
+   if (G_PARAM_SPEC_VALUE_TYPE(pspec) == G_TYPE_BOOLEAN)
+-    eel_gconf_set_boolean(key, g_value_get_boolean(&value));
++    gconf_client_set_bool(global_client, key, g_value_get_boolean(&value), NULL);
+   else if (G_PARAM_SPEC_VALUE_TYPE(pspec) == G_TYPE_INT)
+-    eel_gconf_set_integer(key, g_value_get_int(&value));
++    gconf_client_set_int(global_client, key, g_value_get_int(&value), NULL);
+   else
+     g_return_if_reached();
+ 
+@@ -461,7 +464,7 @@
+   g_return_if_fail(key != NULL);
+   g_return_if_fail(callback != NULL);
+ 
+-  notification_id = eel_gconf_notification_add(key, callback, user_data);
++  notification_id = gconf_client_notify_add(global_client, key, callback, user_data, NULL, NULL);
+   g_object_weak_ref(G_OBJECT(object), gt_conf_notification_add_weak_notify_cb, GUINT_TO_POINTER(notification_id));
+ }
+ 
+@@ -469,7 +472,7 @@
+ gt_conf_notification_add_weak_notify_cb (gpointer data, GObject *former_object)
+ {
+   unsigned int notification_id = GPOINTER_TO_UINT(data);
+-  eel_gconf_notification_remove(notification_id);
++  gconf_client_notify_remove(global_client, notification_id);
+ }
+ 
+ GSList *
+@@ -479,7 +482,7 @@
+   GSList *conf_services;
+   GSList *services = NULL;
+ 
+-  conf_services = eel_gconf_get_string_list(GT_CONF_SERVICES);
++  conf_services = gconf_client_get_list(global_client, GT_CONF_SERVICES, GCONF_VALUE_STRING, NULL);
+ 
+   GT_LIST_FOREACH(l, conf_services)
+     {
+@@ -518,7 +521,8 @@
+       g_free(name);
+     }
+ 
+-  eel_g_slist_free_deep(conf_services);
++  g_slist_foreach(conf_services, (GFunc) g_free, NULL);
++  g_slist_free(conf_services);
+ 
+   return services;
+ }
+@@ -538,8 +542,9 @@
+       conf_services = g_slist_append(conf_services, entry);
+     }
+ 
+-  eel_gconf_set_string_list(GT_CONF_SERVICES, conf_services);
+-  eel_g_slist_free_deep(conf_services);
++  gconf_client_set_list(global_client, GT_CONF_SERVICES, GCONF_VALUE_STRING, (GSList *) conf_services, NULL);
++  g_slist_foreach(conf_services, (GFunc) g_free, NULL);
++  g_slist_free(conf_services);
+ }
+ 
+ GTConfService *
+@@ -568,7 +573,8 @@
+ void
+ gt_conf_services_free (GSList *services)
+ {
+-  eel_g_slist_free_deep_custom(services, (GFunc) gt_conf_service_free, NULL);
++  g_slist_foreach(services, (GFunc) gt_conf_service_free, NULL);
++  g_slist_free(services);
+ }
+ 
+ const GTConfService *
+diff -Nrbu gnome-translate-0.99/src/gt-conf.h gnome-translate-0.99-OK/src/gt-conf.h
+--- gnome-translate-0.99/src/gt-conf.h	2005-01-28 15:31:59.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-conf.h	2010-01-18 16:50:22.000000000 +0300
+@@ -20,8 +20,8 @@
+ #define _GT_CONF_H
+ 
+ #include <stdarg.h>
+-#include <eel/eel.h>
+ #include <translate.h>
++#include <gconf/gconf-client.h>
+ 
+ #define GT_CONF_NAMESPACE			"/apps/gnome-translate"
+ #define GT_CONF_WINDOW				GT_CONF_NAMESPACE "/window"
+diff -Nrbu gnome-translate-0.99/src/gt-language-detection.c gnome-translate-0.99-OK/src/gt-language-detection.c
+--- gnome-translate-0.99/src/gt-language-detection.c	2005-01-28 15:32:01.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-language-detection.c	2010-01-18 16:50:22.000000000 +0300
+@@ -22,6 +22,7 @@
+ #include <glib/gi18n.h>
+ #include <translate.h>
+ #include <aspell.h>
++#include <gconf/gconf-client.h>
+ #include "gt-language-detection.h"
+ #include "gt-app.h"
+ #include "gt-util.h"
+@@ -57,6 +58,8 @@
+ static GTLanguageDetectionResultFunc result_func = NULL;
+ static gpointer result_user_data;
+ 
++static gboolean autodetect_language;
++
+ static void gt_language_detection_notify_pairs_h (GObject *object,
+ 						  GParamSpec *pspec,
+ 						  gpointer user_data);
+@@ -88,17 +91,24 @@
+ void
+ gt_language_detection_init (GTLanguageDetectionResultFunc func, gpointer user_data)
+ {
++  GConfClient *client;
++
+   g_return_if_fail(result_func == NULL);
+   g_return_if_fail(func != NULL);
+ 
+   result_func = func;
+   result_user_data = user_data;
+ 
+-  if (eel_gconf_get_boolean(GT_CONF_AUTODETECT_LANGUAGE))
++  client = gconf_client_get_default ();
++
++  autodetect_language = gconf_client_get_bool(client, GT_CONF_AUTODETECT_LANGUAGE, NULL);
++
++  if (autodetect_language)
+     gt_language_detection_enable();
+ 
+-  eel_gconf_notification_add(GT_CONF_AUTODETECT_LANGUAGE, gt_language_detection_autodetect_language_notify_cb, NULL);
++  gconf_client_notify_add(client, GT_CONF_AUTODETECT_LANGUAGE, gt_language_detection_autodetect_language_notify_cb, NULL, NULL, NULL);
+   g_signal_connect(gt_shell_get_translate_session(gt_shell), "notify::pairs", G_CALLBACK(gt_language_detection_notify_pairs_h), NULL);
++  g_object_unref (client);
+ }
+ 
+ static void
+@@ -106,7 +116,7 @@
+ 				      GParamSpec *pspec,
+ 				      gpointer user_data)
+ {
+-  if (eel_gconf_get_boolean(GT_CONF_AUTODETECT_LANGUAGE))
++  if (autodetect_language)
+     gt_language_detection_create_spellers();
+ }
+ 
+@@ -175,7 +185,8 @@
+ 
+   G_LOCK(self);
+ 
+-  eel_g_slist_free_deep_custom(spellers, (GFunc) gt_language_detection_speller_unref, NULL);
++  g_slist_foreach(spellers, (GFunc) gt_language_detection_speller_unref, NULL);
++  g_slist_free(spellers);
+   spellers = new_spellers;
+ 
+   if (g_slist_length(spellers) >= 2)
+@@ -208,7 +219,8 @@
+ 
+   G_LOCK(self);
+ 
+-  if (gconf_value_get_bool(value))
++  autodetect_language = gconf_value_get_bool(value);
++  if (autodetect_language)
+     gt_language_detection_enable();
+   else
+     gt_language_detection_disable();
+@@ -234,7 +246,8 @@
+     {
+       g_async_queue_push(detect_queue, gt_language_detection_request_new(REQUEST_DISABLE));
+       detect_queue = NULL;	/* unreffed by thread */
+-      eel_g_slist_free_deep_custom(spellers, (GFunc) gt_language_detection_speller_unref, NULL);
++      g_slist_foreach(spellers, (GFunc) gt_language_detection_speller_unref, NULL);
++      g_slist_free(spellers);
+       spellers = NULL;
+     }
+ }
+@@ -310,8 +323,10 @@
+ {
+   g_return_if_fail(request != NULL);
+ 
+-  eel_g_slist_free_deep_custom(request->spellers, (GFunc) gt_language_detection_speller_unref, NULL);
+-  eel_g_slist_free_deep(request->words);
++  g_slist_foreach(request->spellers, (GFunc) gt_language_detection_speller_unref, NULL);
++  g_slist_free(request->spellers);
++  g_slist_foreach(request->words, (GFunc) g_free, NULL);
++  g_slist_free(request->words);
+   g_free(request);
+ }
+ 
+diff -Nrbu gnome-translate-0.99/src/gt-language-view.c gnome-translate-0.99-OK/src/gt-language-view.c
+--- gnome-translate-0.99/src/gt-language-view.c	2005-01-28 15:32:05.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-language-view.c	2010-01-18 16:50:22.000000000 +0300
+@@ -18,8 +18,8 @@
+ 
+ #include <string.h>
+ #include <gtk/gtk.h>
+-#include <eel/eel.h>
+ #include <translate.h>
++#include <gconf/gconf-client.h>
+ #include "gt-util.h"
+ #include "gt-shell.h"
+ #include "gt-language-view.h"
+@@ -234,29 +234,39 @@
+ gt_language_view_get_conf_selected_tag (GtkTreeView *view)
+ {
+   const char *conf_key;
++  GConfClient *client;
++  char *result;
+ 
+   g_return_val_if_fail(GTK_IS_TREE_VIEW(view), NULL);
+ 
+   conf_key = g_object_get_data(G_OBJECT(view), CONF_KEY);
+   g_return_val_if_fail(conf_key != NULL, NULL);
+ 
+-  return eel_gconf_get_string(conf_key);
++  client = gconf_client_get_default();
++  result = gconf_client_get_string(client, conf_key, NULL);
++  g_object_unref(client);
++
++  return result;
+ }
+ 
+ void
+ gt_language_view_set_conf_selected_tag (GtkTreeView *view, const char *tag)
+ {
+   const char *conf_key;
++  GConfClient *client;
+ 
+   g_return_if_fail(GTK_IS_TREE_VIEW(view));
+ 
+   conf_key = g_object_get_data(G_OBJECT(view), CONF_KEY);
+   g_return_if_fail(conf_key != NULL);
+ 
++  client = gconf_client_get_default();
+   if (tag)
+-    eel_gconf_set_string(conf_key, tag);
++    gconf_client_set_string(client, conf_key, tag, NULL);
+   else
+-    eel_gconf_unset(conf_key);
++    gconf_client_unset(client, conf_key, NULL);
++
++  g_object_unref(client);
+ }
+ 
+ char *
+diff -Nrbu gnome-translate-0.99/src/gt-main.c gnome-translate-0.99-OK/src/gt-main.c
+--- gnome-translate-0.99/src/gt-main.c	2005-01-28 15:32:09.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-main.c	2010-01-18 16:50:22.000000000 +0300
+@@ -77,7 +77,8 @@
+ 
+   icon_list = gt_window_icon_list_new("gnome-translate");
+   gtk_window_set_default_icon_list(icon_list);
+-  eel_g_object_list_free(icon_list);
++  g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
++  g_list_free (icon_list);
+ 
+   gt_stock_init();
+ 
+diff -Nrbu gnome-translate-0.99/src/gt-preferences.c gnome-translate-0.99-OK/src/gt-preferences.c
+--- gnome-translate-0.99/src/gt-preferences.c	2005-01-28 15:32:11.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-preferences.c	2010-01-18 16:50:22.000000000 +0300
+@@ -83,7 +83,7 @@
+ 		      NULL);
+ #undef W
+ 
+-  eel_add_weak_pointer(&preferences.dialog);
++  g_object_add_weak_pointer(G_OBJECT(preferences.dialog), &preferences.dialog);
+ 
+   if (parent)
+     gtk_window_set_transient_for(GTK_WINDOW(preferences.dialog), parent);
+diff -Nrbu gnome-translate-0.99/src/gt-shell.c gnome-translate-0.99-OK/src/gt-shell.c
+--- gnome-translate-0.99/src/gt-shell.c	2005-01-28 15:32:15.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-shell.c	2010-01-18 16:50:22.000000000 +0300
+@@ -16,7 +16,7 @@
+  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+  */
+ 
+-#include <eel/eel.h>
++#include <gconf/gconf-client.h>
+ #include "gt-shell.h"
+ #include "gt-conf.h"
+ #include "gt-util.h"
+@@ -36,6 +36,7 @@
+ struct _GTShellPrivate
+ {
+   TranslateSession	*translate_session;
++  GConfClient		*client;
+ };
+ 
+ GTShell *gt_shell = NULL;
+@@ -91,21 +92,22 @@
+ {
+   g_return_if_fail(gt_shell == NULL);
+   gt_shell = shell;
+-  eel_add_weak_pointer(&gt_shell);
++  g_object_add_weak_pointer(G_OBJECT(gt_shell), &gt_shell);
+ 
+   shell->priv = G_TYPE_INSTANCE_GET_PRIVATE(shell, GT_TYPE_SHELL, GTShellPrivate);
+   shell->priv->translate_session = translate_session_new(NULL);
++  shell->priv->client = gconf_client_get_default();
+ 
+   gt_shell_set_proxy(shell);
+   gt_shell_set_services(shell);
+ 
+-  eel_gconf_notification_add(GT_CONF_SERVICES, gt_shell_services_notify_cb, shell);
++  gconf_client_notify_add(shell->priv->client, GT_CONF_SERVICES, gt_shell_services_notify_cb, shell, NULL, NULL);
+ 
+-  eel_gconf_monitor_add(CONF_HTTP_PROXY_NAMESPACE);
+-  eel_gconf_notification_add(CONF_HTTP_PROXY_NAMESPACE, gt_shell_proxy_notify_cb, shell);
++  gconf_client_add_dir(shell->priv->client, CONF_HTTP_PROXY_NAMESPACE, GCONF_CLIENT_PRELOAD_NONE, NULL);
++  gconf_client_notify_add(shell->priv->client, CONF_HTTP_PROXY_NAMESPACE, gt_shell_proxy_notify_cb, shell, NULL, NULL);
+ 
+-  eel_gconf_monitor_add(CONF_PROXY_NAMESPACE);
+-  eel_gconf_notification_add(CONF_PROXY_NAMESPACE, gt_shell_proxy_notify_cb, shell);
++  gconf_client_add_dir(shell->priv->client, CONF_PROXY_NAMESPACE, GCONF_CLIENT_PRELOAD_NONE, NULL);
++  gconf_client_notify_add(shell->priv->client, CONF_PROXY_NAMESPACE, gt_shell_proxy_notify_cb, shell, NULL, NULL);
+ }
+ 
+ TranslateSession *
+@@ -146,21 +148,21 @@
+ 
+   g_return_if_fail(GT_IS_SHELL(shell));
+ 
+-  mode = eel_gconf_get_string(CONF_PROXY_MODE);
++  mode = gconf_client_get_string(shell->priv->client, CONF_PROXY_MODE, NULL);
+   if (mode)
+     {
+       if (! strcmp(mode, "manual"))
+ 	{
+ 	  char *socks_host;
+ 
+-	  socks_host = eel_gconf_get_string(CONF_PROXY_SOCKS_HOST);
++	  socks_host = gconf_client_get_string(shell->priv->client, CONF_PROXY_SOCKS_HOST, NULL);
+ 	  if (socks_host)
+ 	    {
+ 	      if (*socks_host)
+ 		{
+ 		  int socks_port;
+ 
+-		  socks_port = eel_gconf_get_integer(CONF_PROXY_SOCKS_PORT);
++		  socks_port = gconf_client_get_int(shell->priv->client, CONF_PROXY_SOCKS_PORT, NULL);
+ 		  if (socks_port <= 0 || socks_port > 65535)
+ 		    socks_port = 1080;
+ 
+@@ -176,13 +178,13 @@
+   
+   if (! uri)
+     {
+-      if (eel_gconf_get_boolean(CONF_HTTP_PROXY_USE_HTTP_PROXY))
++      if (gconf_client_get_bool(shell->priv->client, CONF_HTTP_PROXY_USE_HTTP_PROXY, NULL))
+ 	{
+ 	  char *host;
+ 
+ 	  /* FIXME: also honour /system/http_proxy/ignore_hosts */
+ 
+-	  host = eel_gconf_get_string(CONF_HTTP_PROXY_HOST);
++	  host = gconf_client_get_string(shell->priv->client, CONF_HTTP_PROXY_HOST, NULL);
+ 	  if (host)
+ 	    {
+ 	      if (*host)
+@@ -192,17 +194,17 @@
+ 	      
+ 		  string = g_string_new("http://");
+ 		  
+-		  port = eel_gconf_get_integer(CONF_HTTP_PROXY_PORT);
++		  port = gconf_client_get_int(shell->priv->client, CONF_HTTP_PROXY_PORT, NULL);
+ 		  if (port <= 0 || port > 65535)
+ 		    port = 8080; /* default as recommended by http-method.c of GnomeVFS */
+ 		  
+-		  if (eel_gconf_get_boolean(CONF_HTTP_PROXY_USE_AUTHENTICATION))
++		  if (gconf_client_get_bool(shell->priv->client, CONF_HTTP_PROXY_USE_AUTHENTICATION, NULL))
+ 		    {
+ 		      char *authentication_user;
+ 		      char *authentication_password;
+ 		      
+-		      authentication_user = eel_gconf_get_string(CONF_HTTP_PROXY_AUTHENTICATION_USER);
+-		      authentication_password = eel_gconf_get_string(CONF_HTTP_PROXY_AUTHENTICATION_PASSWORD);
++		      authentication_user = gconf_client_get_string(shell->priv->client, CONF_HTTP_PROXY_AUTHENTICATION_USER, NULL);
++		      authentication_password = gconf_client_get_string(shell->priv->client, CONF_HTTP_PROXY_AUTHENTICATION_PASSWORD, NULL);
+ 		      
+ 		      if (authentication_user && authentication_password
+ 			  && *authentication_user && *authentication_password)
+diff -Nrbu gnome-translate-0.99/src/gt-twp.c gnome-translate-0.99-OK/src/gt-twp.c
+--- gnome-translate-0.99/src/gt-twp.c	2005-01-28 15:32:23.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-twp.c	2010-01-18 16:50:22.000000000 +0300
+@@ -18,7 +18,6 @@
+ 
+ #include "config.h"
+ #include <gnome.h>
+-#include <eel/eel.h>
+ #include <translate.h>
+ #include "gt-util.h"
+ #include "gt-conf.h"
+@@ -83,6 +82,7 @@
+   GtkListStore *store;
+   GConfValue *location_history;
+   GList *icon_list;
++  GConfClient *client;
+   
+   if (twp.dialog)
+     {
+@@ -112,11 +112,12 @@
+   gtk_dialog_add_button(GTK_DIALOG(twp.dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+   gtk_dialog_add_button(GTK_DIALOG(twp.dialog), GT_STOCK_TRANSLATE, GTK_RESPONSE_OK);
+   
+-  eel_add_weak_pointer(&twp.dialog);
++  g_object_add_weak_pointer(G_OBJECT(twp.dialog), &twp.dialog);  
+ 
+   icon_list = gt_window_icon_list_new("gnome-translate-web-page");
+   gtk_window_set_icon_list(GTK_WINDOW(twp.dialog), icon_list);
+-  eel_g_object_list_free(icon_list);
++  g_list_foreach(icon_list, (GFunc) g_object_unref, NULL);
++  g_list_free(icon_list);
+ 
+   store = gtk_list_store_new(1, G_TYPE_STRING);
+ 
+@@ -126,13 +127,15 @@
+   gtk_entry_set_completion(GTK_ENTRY(twp.location_entry), completion);
+   g_object_unref(completion);
+ 
+-  location_history = eel_gconf_get_value(GT_CONF_TWP_LOCATION_HISTORY);
++  client = gconf_client_get_default();
++  location_history = gconf_client_get(client, GT_CONF_TWP_LOCATION_HISTORY, NULL);
+   if (location_history)
+     {
+       gt_twp_set_location_history(store, location_history);
+       gconf_value_free(location_history);
+     }
+   
++  g_object_unref(client);  
+   g_object_unref(store);
+ 
+   if (url)
+@@ -234,14 +237,16 @@
+ gt_twp_add_location_to_history (void)
+ {
+   const char *url;
++  GConfClient *client;
+ 
++  client = gconf_client_get_default();
+   url = gtk_entry_get_text(GTK_ENTRY(twp.location_entry));
+   if (*url)
+     {
+       GSList *location_history;
+       GSList *elem;
+ 
+-      location_history = eel_gconf_get_string_list(GT_CONF_TWP_LOCATION_HISTORY);
++      location_history = gconf_client_get_list(client, GT_CONF_TWP_LOCATION_HISTORY, GCONF_VALUE_STRING, NULL);
+       elem = gt_g_utf8_slist_find(location_history, url);
+ 
+       if (elem)
+@@ -259,12 +264,14 @@
+ 	  elem = g_slist_nth(location_history, MAX_HISTORY - 1);
+ 	  g_return_if_fail(elem != NULL);
+ 	  
+-	  eel_g_slist_free_deep(elem->next);
++	  g_slist_foreach(elem->next, (GFunc) g_free, NULL);
++	  g_slist_free(elem->next);
+ 	  elem->next = NULL;
+ 	}
+       
+-      eel_gconf_set_string_list(GT_CONF_TWP_LOCATION_HISTORY, location_history);
+-      eel_g_slist_free_deep(location_history);
++      gconf_client_set_list(client, GT_CONF_TWP_LOCATION_HISTORY, GCONF_VALUE_STRING, (GSList *) location_history, NULL);
++      g_slist_foreach(location_history, (GFunc) g_free, NULL);
++      g_slist_free(location_history);
+     }
+ }
+ 
+diff -Nrbu gnome-translate-0.99/src/gt-util.c gnome-translate-0.99-OK/src/gt-util.c
+--- gnome-translate-0.99/src/gt-util.c	2005-01-28 15:32:27.000000000 +0300
++++ gnome-translate-0.99-OK/src/gt-util.c	2010-01-18 16:50:22.000000000 +0300
+@@ -23,8 +23,6 @@
+ #include <stdarg.h>
+ #include <gnome.h>
+ #include <glade/glade.h>
+-#include <eel/eel-alert-dialog.h>
+-#include <eel/eel.h>
+ #include <translate.h>
+ #include "gt-util.h"
+ 
+@@ -48,13 +46,12 @@
+ {
+   GtkWidget *dialog;
+ 
+-  dialog = eel_alert_dialog_new(parent,
++  dialog = gtk_message_dialog_new(parent,
+ 				GTK_DIALOG_DESTROY_WITH_PARENT,
+ 				GTK_MESSAGE_ERROR,
+ 				GTK_BUTTONS_OK,
+ 				primary,
+-				secondary,
+-				NULL);
++				secondary);
+ 
+   if (blocking)
+     {
+@@ -276,7 +273,8 @@
+ void
+ gt_g_object_slist_free (GSList *list)
+ {
+-  eel_g_slist_free_deep_custom(list, (GFunc) g_object_unref, NULL);
++  g_slist_foreach(list, (GFunc) g_object_unref, NULL);
++  g_slist_free(list);
+ }
+ 
+ void
+@@ -351,7 +349,7 @@
+       else
+ 	g_critical(_("invalid signal specification \"%s\""), signal_spec);
+ 
+-      eel_add_weak_pointer(&handler->instance);
++	  g_object_add_weak_pointer(G_OBJECT(handler->instance), &handler->instance);
+       g_object_weak_ref(object, gt_g_object_connect_weak_notify_cb, handler);
+ 
+       signal_spec = va_arg(args, const char *);
+@@ -369,7 +367,8 @@
+   if (handler->instance)
+     {
+       g_signal_handler_disconnect(handler->instance, handler->id);
+-      eel_remove_weak_pointer(&handler->instance);
++      g_object_remove_weak_pointer(G_OBJECT(handler->instance), &handler->instance);
++      handler->instance = NULL;
+     }
+   g_free(handler);
+ }

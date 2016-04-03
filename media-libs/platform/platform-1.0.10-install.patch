@@ -1,0 +1,10 @@
+diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
+--- ./CMakeLists.txt.orig	2015-06-30 10:54:58.000000000 +0200
++++ ./CMakeLists.txt	2015-07-19 04:50:20.913080130 +0200
+@@ -89,5 +89,5 @@ ENDIF(NOT WIN32)
+ configure_file (platform-config.cmake.in
+                 platform-config.cmake @ONLY)
+ install(FILES ${CMAKE_BINARY_DIR}/platform-config.cmake
+-        DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/platform)
++        DESTINATION ${LIB_INSTALL_DIR}/cmake/${CMAKE_PROJECT_NAME})
+ 

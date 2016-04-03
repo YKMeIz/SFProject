@@ -1,0 +1,39 @@
+From 92b60776a1f0aa98d7d2e6b266a42dd0b258cbbc Mon Sep 17 00:00:00 2001
+From: Rex Dieter <rdieter@math.unl.edu>
+Date: Fri, 21 Dec 2012 10:48:58 -0600
+Subject: [PATCH 34/35] add license header
+
+---
+ src/plugins/exportinterface.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/src/plugins/exportinterface.h b/src/plugins/exportinterface.h
+index f1556f9..989cd44 100644
+--- a/src/plugins/exportinterface.h
++++ b/src/plugins/exportinterface.h
+@@ -1,3 +1,22 @@
++/************************************************************************************
++ * Copyright (C) 2012 by Rex Dieter <rdieter@fedoraproject.org>                     *
++ * Copyright (C) 2012 by Sando Mani <manisandro@gmail.com>                          *
++ *                                                                                  *
++ * This program is free software; you can redistribute it and/or                    *
++ * modify it under the terms of the GNU General Public License                      *
++ * as published by the Free Software Foundation; either version 2                   *
++ * of the License, or (at your option) any later version.                           *
++ *                                                                                  *
++ * This program is distributed in the hope that it will be useful,                  *
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                    *
++ * GNU General Public License for more details.                                     *
++ *                                                                                  *
++ * You should have received a copy of the GNU General Public License                *
++ * along with this program; if not, write to the Free Software                      *
++ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA   *
++ ************************************************************************************/
++
+ #ifndef EXPORTINTERFACE_H
+ #define EXPORTINTERFACE_H
+ 
+-- 
+1.8.0.2
+

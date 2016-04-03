@@ -1,0 +1,16 @@
+[Unit]
+Description=Video Disk Recorder
+Documentation=man:vdr(1)
+Documentation=file:///usr/share/doc/vdr/INSTALL
+# This can be removed if no plugins bind to IP other than 0.0.0.0 or 127.0.0.1
+After=network.target
+
+[Service]
+ExecStartPre=/usr/lib/vdr/bin/vdr-check-setup
+ExecStart=/usr/sbin/runvdr
+ExecStop=-/usr/lib/vdr/bin/vdr-set-wakeup
+Restart=on-failure
+RestartPreventExitStatus=2
+
+[Install]
+WantedBy=multi-user.target

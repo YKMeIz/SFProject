@@ -1,0 +1,12 @@
+diff -up libltc-968a1d67779783860bea0bf5b9e38c39c0b3925c/Doxyfile.in.multilib libltc-968a1d67779783860bea0bf5b9e38c39c0b3925c/Doxyfile.in
+--- libltc-968a1d67779783860bea0bf5b9e38c39c0b3925c/Doxyfile.in.multilib	2013-09-06 12:55:12.000000000 +0200
++++ libltc-968a1d67779783860bea0bf5b9e38c39c0b3925c/Doxyfile.in	2013-10-26 11:37:27.816165119 +0200
+@@ -939,7 +939,7 @@ HTML_COLORSTYLE_GAMMA  = 80
+ # page will contain the date and time when the page was generated. Setting
+ # this to NO can help when comparing the output of multiple runs.
+ 
+-HTML_TIMESTAMP         = YES
++HTML_TIMESTAMP         = NO
+ 
+ # If the HTML_DYNAMIC_SECTIONS tag is set to YES then the generated HTML
+ # documentation will contain sections that can be hidden and shown after the

@@ -1,0 +1,6 @@
+6bad7a02a91cc8fc9c4c48f83e91c08c  ccsm-0.8.4.tar.bz2
+ec4d1df86bcf0b9672b0ea726ec221b6  ccsm_no-icons-and-text-in-main-screen.patch
+afc731af362913175610e33e50b8811a  ccsm_primary-is-control.patch
+ace974352289def5aa6afdd249d96eb6  ccsm_removeshebangs.patch
+2b99489bd3f3bb95869bece5de54c80f  ccsm_widget_dialog.patch
+5e3f74848b8678223163b33ed9bf3199  ccsm_widgets_filter.patch

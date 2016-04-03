@@ -1,0 +1,5 @@
+bffc484fc37fff6b8547b976dfcc5537  libcompizconfig-0.8.8.tar.bz2
+6d0e7bb34b3d6ee00a5d8f08fd2b568a  libcompizconfig_default_backend_for_mate-session.patch
+b61301d68ac70f4036164ebbcbd1f833  libcompizconfig_fix-intltoolize-ftbfs.patch
+f49ace1b63c82d8b00ef3a960ff38bd6  libcompizconfig_new_mate.patch
+af66092fbaf4fb233aa5d8619140f64b  libcompizconfig_primary-is-control.patch

@@ -1,0 +1,16 @@
+7a80e66bc6430a356cd667e7aaad5a5d  99-mythbackend.rules
+02344c177f7d6ff272bde5ea70b5e4a7  ChangeLog
+d4bb9b34db0f79b9a4a670a0ae7791d3  mythbackend.init
+54fb58b68e72967e56f76441cd1c9d18  mythbackend.service
+667d320b4e15958625e366435e33595d  mythbackend.sysconfig
+58f170f0cf60684b1047fec736b9089d  mythfrontend.desktop
+be3ab99952c2a3a135a7c4af90b08f15  mythfrontend.png
+3d44e1ab79c5affe8605b3df28f16348  mythtv-0.26.0-types_h.patch
+c158d039a35823741e136799ede7957d  mythtv-0.27.4.tar.gz
+5a54287b9a3a4ba14aecafa50c47ab21  mythtv-0.27-fixes.patch
+f664191742171f42665d0a7e19037fed  mythtv-0.27-libcec2.patch
+0e3d5ff0b69526a79838ab1d3cc0a078  mythtv.logrotate.sysd
+89e28b292442fbfd9e57e781391ebbaa  mythtv.logrotate.sysv
+05e3a74fd86b6d0b04d7c4c4ef6f9a2c  mythtv-setup.desktop
+be3ab99952c2a3a135a7c4af90b08f15  mythtv-setup.png
+63a47cb243650786ce558025ab09f61e  PACKAGE-LICENSING

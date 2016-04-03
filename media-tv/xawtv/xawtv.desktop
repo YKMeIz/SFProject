@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=X11 program for watching TV
+Icon=xawtv
+Exec=xawtv
+Name=XawTV Television Viewer
+Terminal=false
+Type=Application
+Categories=AudioVideo;

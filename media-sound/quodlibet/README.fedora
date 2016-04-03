@@ -1,0 +1,8 @@
+There are a number of plugins packaged with the Fedora Extras Quod
+Libet package that are not a part of the upstream Quod Libet release.
+Some of them may have dependencies that are not available in Fedora
+Core or Extras.  Some plugins may have bugs that prevent them from
+working at all.  The plugins have been included to make the task of
+getting all of the plugins downloaded and installed easier for the end
+user.
+

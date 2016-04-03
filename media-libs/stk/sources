@@ -1,0 +1,6 @@
+6507bbd1c898823610b894f0655d4e51  README.fedora
+db459f9e7f2d72fe2b9b67c1aa26bc6b  stk-4.5.0-cflags-lib.patch
+8962cf6bfe9fec73ca6fe15a44747953  stk-4.5.0-header.patch
+05fa07d4619b96aa888931e9970e1373  stk-4.5.0-projects.patch
+881be37ff59413d53dbb2e7526407407  stk-4.5.0-sharedlib.patch
+e09915a13d5fe41d6a0f5a2cfee3abb9  stk-4.5.0.stripped.tar.gz

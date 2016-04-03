@@ -1,0 +1,153 @@
+From d4627fb5f3a571212457df22e2ab861b890fc992 Mon Sep 17 00:00:00 2001
+From: Chris Burel <chrisburel@gmail.com>
+Date: Fri, 23 Aug 2013 14:56:37 -0700
+Subject: [PATCH 2/2] Fixes for perl 5.18
+
+I'm not really sure how this was working before, but perl 5.18 really wasn't
+happy.  The way these functions work is really tricky, because the marshallers
+expect to be able to set the scalar ref's returned from them.  My previous fix
+didn't allow the refs to be set correctly.
+---
+ qtcore/lib/QtCore4.pm | 90 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 58 insertions(+), 32 deletions(-)
+
+diff --git a/qtcore/lib/QtCore4.pm b/qtcore/lib/QtCore4.pm
+index 0459dd8..1a5e454 100644
+--- a/qtcore/lib/QtCore4.pm
++++ b/qtcore/lib/QtCore4.pm
+@@ -1649,6 +1649,8 @@ package Qt;
+ use strict;
+ use warnings;
+ 
++use Scalar::Util;
++
+ # Called in the DESTROY method for all QObjects to see if they still have a
+ # parent, and avoid deleting them if they do.
+ sub Qt::Object::ON_DESTROY {
+@@ -1808,67 +1810,91 @@ Qt::_internal::installSub(' Qt::Variant::value', sub {
+ });
+ 
+ sub String {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::String';
++        }
++        return bless \shift, 'Qt::String';
+     }
+-    return bless \$val, 'Qt::String';
++    return bless '', 'Qt::String';
+ }
+ 
+ sub CString {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::CString';
++        }
++        return bless \shift, 'Qt::CString';
+     }
+-    return bless \$val, 'Qt::CString';
++    return bless '', 'Qt::CString';
+ }
+ 
+ sub Int {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::Int';
++        }
++        return bless \shift, 'Qt::Int';
+     }
+-    return bless \$val, 'Qt::Int';
++    return bless '', 'Qt::Int';
+ }
+ 
+ sub Uint {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::Uint';
++        }
++        return bless \shift, 'Qt::Uint';
+     }
+-    return bless \$val, 'Qt::Uint';
++    return bless '', 'Qt::Uint';
+ }
+ 
+ sub Bool {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::Bool';
++        }
++        return bless \shift, 'Qt::Bool';
+     }
+-    return bless \$val, 'Qt::Bool';
++    return bless '', 'Qt::Bool';
+ }
+ 
+ sub Short {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::Short';
++        }
++        return bless \shift, 'Qt::Short';
+     }
+-    return bless \$val, 'Qt::Short';
++    return bless '', 'Qt::Short';
+ }
+ 
+ sub Ushort {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::Ushort';
++        }
++        return bless \shift, 'Qt::Ushort';
+     }
+-    return bless \$val, 'Qt::Ushort';
++    return bless '', 'Qt::Ushort';
+ }
+ 
+ sub Uchar {
+-    my ($val) = @_;
+-    if ( !$val ) {
+-        $val = '';
++    if ( scalar @_ ) {
++        if ( Scalar::Util::readonly( $_[0] ) ) {
++            my $val = shift;
++            return bless \$val, 'Qt::Uchar';
++        }
++        return bless \shift, 'Qt::Uchar';
+     }
+-    return bless \$val, 'Qt::Uchar';
++    return bless '', 'Qt::Uchar';
+ }
+ 
+ 1;
+-- 
+1.8.3.1
+

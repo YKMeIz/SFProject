@@ -1,0 +1,38 @@
+From: Adam Goode <agoode@fedoraproject.org>
+Date: Thu, 19 Apr 2012 23:34:36 +0400
+Subject: [PATCH] Enable auto-generate menus in the Setup Form config generator
+
+
+diff --git a/fvwm/ConfigFvwmSetup b/fvwm/ConfigFvwmSetup
+index 30d6326..e8226f7 100644
+--- a/fvwm/ConfigFvwmSetup
++++ b/fvwm/ConfigFvwmSetup
+@@ -90,7 +90,6 @@ AddToFunc SessionInitFunction
+ DestroyMenu MenuFvwmRoot
+ AddToMenu MenuFvwmRoot  "$[gt.Root Menu]"             Title
+ +                       "&1. XTerm"             Exec exec xterm
+-+                       "&2. Rxvt"              Exec exec rxvt
+ +                       ""              Nop
+ +                       "&R. $[gt.Remote Logins]"     Popup MenuFvwmLogins
+ +                       ""              Nop
+@@ -106,19 +105,7 @@ AddToMenu MenuFvwmRoot  "$[gt.Root Menu]"             Title
+ +                       "&X. $[gt.Exit Fvwm]" Popup MenuFvwmQuitVerify
+ 
+ DestroyMenu MenuFvwmUtilities
+-AddToMenu MenuFvwmUtilities     "$[gt.Utilities]" Title
+-+                       "&T. Top"       Exec exec xterm -T Top -n Top -e top
+-+                       "&C. Calculator" Exec exec xcalc
+-+                       "&M. Xman"      Exec exec xman
+-+                       "&G. Xmag"      Exec exec xmag
+-+                       "&R. Editres"   Exec exec editres
+-+                       ""              Nop
+-+                       "&E. XEmacs"    Exec exec xemacs
+-+                       "&A. Xmh Mail"  FuncFvwmMailXmh xmh "-font fixed"
+-+                       ""              Nop
+-+                       "&L. XLock"     Exec exec xlock -mode random
+-+                       ""              Nop
+-+                       "&D. $[gt.Reset X defaults]" Exec xrdb -load $HOME/.Xdefaults
++PipeRead "fvwm-xdg-menu -f -m MenuFvwmUtilities /etc/xdg/menus/applications.menu"
+ 
+ DestroyMenu MenuFvwmConfig
+ AddToMenu MenuFvwmConfig "$[gt.Fvwm Config Ops]" Title

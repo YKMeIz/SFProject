@@ -1,0 +1,41 @@
+From e11199d9cf45efcd52505da90c5430646de4ea26 Mon Sep 17 00:00:00 2001
+From: David Maciejak <david.maciejak@gmail.com>
+Date: Tue, 30 Sep 2014 15:51:31 +0800
+Subject: [PATCH] wmaker: fix arbitrary shell command injection
+
+Workspace background pref can be tricked to run arbitrary cmds.
+---
+ src/defaults.c |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/src/defaults.c b/src/defaults.c
+index 6ca7f3f..105114b 100644
+--- a/src/defaults.c
++++ b/src/defaults.c
+@@ -3097,13 +3097,17 @@ static int setWorkspaceBack(WScreen * scr, WDefaultEntry * entry, void *tdata, v
+ 		len = strlen(text) + 40;
+ 		command = wmalloc(len);
+ 		dither = wPreferences.no_dithering ? "-m" : "-d";
+-		if (wPreferences.smooth_workspace_back)
+-			snprintf(command, len, "wmsetbg %s -S -p '%s' &", dither, text);
+-		else
+-			snprintf(command, len, "wmsetbg %s -p '%s' &", dither, text);
++		if (!strstr(text, "\'") && !strstr(text, "\\")) {
++			command = wmalloc(len);
++			if (wPreferences.smooth_workspace_back)
++				snprintf(command, len, "wmsetbg %s -S -p '%s' &", dither, text);
++			else
++				snprintf(command, len, "wmsetbg %s -p '%s' &", dither, text);
++			ExecuteShellCommand(scr, command);
++			wfree(command);
++		} else
++			wwarning(_("Invalid arguments for background \"%s\""), text);
+ 		wfree(text);
+-		ExecuteShellCommand(scr, command);
+-		wfree(command);
+ 	}
+ 	WMReleasePropList(value);
+ 
+-- 
+1.7.6.6.GIT
+

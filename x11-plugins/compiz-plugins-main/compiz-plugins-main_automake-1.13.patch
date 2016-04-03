@@ -1,0 +1,300 @@
+diff -upr compiz-plugins-main-0.8.8-orig/src/animation/Makefile.am compiz-plugins-main-0.8.8/src/animation/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/animation/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/animation/Makefile.am	2013-04-24 19:23:54.246390364 +0200
+@@ -17,7 +17,7 @@ libanimation_la_SOURCES = animation.c \
+ 			  wave.c \
+ 			  zoomside.c
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include             \
+ 	@COMPIZ_CFLAGS@                     \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/colorfilter/Makefile.am compiz-plugins-main-0.8.8/src/colorfilter/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/colorfilter/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/colorfilter/Makefile.am	2013-04-24 19:27:26.570476957 +0200
+@@ -13,7 +13,7 @@ BUILT_SOURCES = $(nodist_libcolorfilter_
+ 
+ BUILT_SOURCES = $(nodist_libcolorfilter_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include		\
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'       \
+diff -upr compiz-plugins-main-0.8.8-orig/src/expo/Makefile.am compiz-plugins-main-0.8.8/src/expo/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/expo/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/expo/Makefile.am	2013-04-24 19:24:44.574884967 +0200
+@@ -8,7 +8,7 @@ dist_libexpo_la_SOURCES = expo.c
+ 
+ BUILT_SOURCES = $(nodist_libexpo_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/ezoom/Makefile.am compiz-plugins-main-0.8.8/src/ezoom/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/ezoom/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/ezoom/Makefile.am	2013-04-24 19:22:16.354428323 +0200
+@@ -8,7 +8,7 @@ dist_libezoom_la_SOURCES = ezoom.c
+ 
+ BUILT_SOURCES = $(nodist_libezoom_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(datadir)"'          \
+diff -upr compiz-plugins-main-0.8.8-orig/src/jpeg/Makefile.am compiz-plugins-main-0.8.8/src/jpeg/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/jpeg/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/jpeg/Makefile.am	2013-04-24 19:23:37.772228465 +0200
+@@ -10,7 +10,7 @@ endif
+ 
+ BUILT_SOURCES = $(nodist_libimgjpeg_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/kdecompat/Makefile.am compiz-plugins-main-0.8.8/src/kdecompat/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/kdecompat/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/kdecompat/Makefile.am	2013-04-24 19:21:23.403907942 +0200
+@@ -8,7 +8,7 @@ dist_libkdecompat_la_SOURCES = kdecompat
+ 
+ BUILT_SOURCES = $(nodist_libkdecompat_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/mag/Makefile.am compiz-plugins-main-0.8.8/src/mag/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/mag/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/mag/Makefile.am	2013-04-24 19:21:58.755255365 +0200
+@@ -8,7 +8,7 @@ dist_libmag_la_SOURCES = mag.c
+ 
+ BUILT_SOURCES = $(nodist_libmag_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/mousepoll/Makefile.am compiz-plugins-main-0.8.8/src/mousepoll/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/mousepoll/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/mousepoll/Makefile.am	2013-04-24 19:24:10.096546132 +0200
+@@ -5,7 +5,7 @@ libmousepoll_la_LDFLAGS = $(PFLAGS)
+ libmousepoll_la_LIBADD = @COMPIZ_LIBS@
+ libmousepoll_la_SOURCES = mousepoll.c
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/neg/Makefile.am compiz-plugins-main-0.8.8/src/neg/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/neg/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/neg/Makefile.am	2013-04-24 19:27:01.390229504 +0200
+@@ -8,7 +8,7 @@ dist_libneg_la_SOURCES = neg.c
+ 
+ BUILT_SOURCES = $(nodist_libneg_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/opacify/Makefile.am compiz-plugins-main-0.8.8/src/opacify/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/opacify/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/opacify/Makefile.am	2013-04-24 19:26:46.378081974 +0200
+@@ -8,7 +8,7 @@ dist_libopacify_la_SOURCES = opacify.c
+ 
+ BUILT_SOURCES = $(nodist_libopacify_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/put/Makefile.am compiz-plugins-main-0.8.8/src/put/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/put/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/put/Makefile.am	2013-04-24 19:24:27.570717859 +0200
+@@ -8,7 +8,7 @@ dist_libput_la_SOURCES = put.c
+ 
+ BUILT_SOURCES = $(nodist_libput_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/resizeinfo/Makefile.am compiz-plugins-main-0.8.8/src/resizeinfo/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/resizeinfo/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/resizeinfo/Makefile.am	2013-04-24 19:21:03.387711228 +0200
+@@ -11,7 +11,7 @@ endif
+ 
+ BUILT_SOURCES = $(nodist_libresizeinfo_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	@PANGO_CFLAGS@		\
+diff -upr compiz-plugins-main-0.8.8-orig/src/ring/Makefile.am compiz-plugins-main-0.8.8/src/ring/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/ring/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/ring/Makefile.am	2013-04-24 19:21:43.991110267 +0200
+@@ -8,7 +8,7 @@ dist_libring_la_SOURCES = ring.c
+ 
+ BUILT_SOURCES = $(nodist_libring_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/scaleaddon/Makefile.am compiz-plugins-main-0.8.8/src/scaleaddon/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/scaleaddon/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/scaleaddon/Makefile.am	2013-04-24 19:22:54.778805943 +0200
+@@ -10,7 +10,7 @@ endif
+ 
+ BUILT_SOURCES = $(nodist_libscaleaddon_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	@SCALE_CFLAGS@                   \
+diff -upr compiz-plugins-main-0.8.8-orig/src/session/Makefile.am compiz-plugins-main-0.8.8/src/session/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/session/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/session/Makefile.am	2013-04-24 19:25:49.637524365 +0200
+@@ -5,7 +5,7 @@ libsession_la_LDFLAGS = $(PFLAGS)
+ libsession_la_LIBADD = @COMPIZ_LIBS@
+ libsession_la_SOURCES = session.c
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/shift/Makefile.am compiz-plugins-main-0.8.8/src/shift/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/shift/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/shift/Makefile.am	2013-04-24 19:26:03.144657105 +0200
+@@ -8,7 +8,7 @@ dist_libshift_la_SOURCES = shift.c
+ 
+ BUILT_SOURCES = $(nodist_libshift_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/snap/Makefile.am compiz-plugins-main-0.8.8/src/snap/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/snap/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/snap/Makefile.am	2013-04-24 19:22:34.956611138 +0200
+@@ -8,7 +8,7 @@ dist_libsnap_la_SOURCES = snap.c
+ 
+ BUILT_SOURCES = $(nodist_libsnap_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/staticswitcher/Makefile.am compiz-plugins-main-0.8.8/src/staticswitcher/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/staticswitcher/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/staticswitcher/Makefile.am	2013-04-24 19:24:58.352020362 +0200
+@@ -9,7 +9,7 @@ dist_libstaticswitcher_la_SOURCES = stat
+ 
+ BUILT_SOURCES = $(nodist_libstaticswitcher_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/text/Makefile.am compiz-plugins-main-0.8.8/src/text/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/text/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/text/Makefile.am	2013-04-24 19:26:25.629878075 +0200
+@@ -10,7 +10,7 @@ endif
+ 
+ BUILT_SOURCES = $(nodist_libtext_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	@PANGO_CFLAGS@			\
+diff -upr compiz-plugins-main-0.8.8-orig/src/thumbnail/Makefile.am compiz-plugins-main-0.8.8/src/thumbnail/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/thumbnail/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/thumbnail/Makefile.am	2013-04-24 19:26:34.352963800 +0200
+@@ -10,7 +10,7 @@ dist_libthumbnail_la_SOURCES = thumbnail
+ 
+ BUILT_SOURCES = $(nodist_libthumbnail_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/titleinfo/Makefile.am compiz-plugins-main-0.8.8/src/titleinfo/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/titleinfo/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/titleinfo/Makefile.am	2013-04-24 19:25:16.958203213 +0200
+@@ -8,7 +8,7 @@ dist_libtitleinfo_la_SOURCES = titleinfo
+ 
+ BUILT_SOURCES = $(nodist_libtitleinfo_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/vpswitch/Makefile.am compiz-plugins-main-0.8.8/src/vpswitch/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/vpswitch/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/vpswitch/Makefile.am	2013-04-24 19:23:11.899974203 +0200
+@@ -8,7 +8,7 @@ dist_libvpswitch_la_SOURCES = vpswitch.c
+ 
+ BUILT_SOURCES = $(nodist_libvpswitch_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/wall/Makefile.am compiz-plugins-main-0.8.8/src/wall/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/wall/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/wall/Makefile.am	2013-04-24 19:27:15.774370861 +0200
+@@ -10,7 +10,7 @@ endif
+ 
+ BUILT_SOURCES = $(nodist_libwall_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	@CAIRO_CFLAGS@			\
+diff -upr compiz-plugins-main-0.8.8-orig/src/winrules/Makefile.am compiz-plugins-main-0.8.8/src/winrules/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/winrules/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/winrules/Makefile.am	2013-04-24 19:20:39.776479183 +0200
+@@ -7,7 +7,7 @@ libwinrules_la_SOURCES = winrules.c
+ 
+ BUILT_SOURCES = $(nodist_libwinrules_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \
+diff -upr compiz-plugins-main-0.8.8-orig/src/workarounds/Makefile.am compiz-plugins-main-0.8.8/src/workarounds/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/src/workarounds/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/workarounds/Makefile.am	2013-04-24 19:28:26.387064788 +0200
+@@ -9,7 +9,7 @@ dist_libworkarounds_la_SOURCES = workaro
+ 
+ BUILT_SOURCES = $(nodist_libworkarounds_la_SOURCES)
+ 
+-INCLUDES =                              \
++AM_CPPFLAGS =                              \
+ 	-I$(top_srcdir)/include         \
+ 	@COMPIZ_CFLAGS@                  \
+ 	-DDATADIR='"$(compdatadir)"'        \

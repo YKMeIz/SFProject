@@ -1,0 +1,9 @@
+6c6fbef2009461392ba927586df6635e  emerald-0.8.8.tar.bz2
+8c93b083885dbfcca200cbcf0b35af17  emerald-aarch64.patch
+2ff76e1b9b07cd5ddaf2c9cae0e58cb5  emerald_automake-1.13.patch
+841bca5fad578fc94d149c7fb3378fdc  emerald_build_without_gtk_disable_deprecated.patch
+f27e188018abb08dfaebb75ff1faec07  emerald_improve_desktop_file.patch
+c2a1408f27bfd5f6e6e1c44e3af7a96b  emerald_manpage.patch
+b4940b4a34be1aa1f17f7b66380f71d5  emerald_new_DSO.patch
+d3eb4a175334189f6a81a12ec28c0b96  emerald_new-mate.patch
+7c4dd4f250518a205edcbcb1944c0cd2  emerald_potfiles_skip.patch

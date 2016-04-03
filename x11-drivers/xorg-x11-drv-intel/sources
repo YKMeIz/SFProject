@@ -1,0 +1,7 @@
+93b8b318a77aa9161730d5d7d22b510d  0001-sna-Let-modestting-glamor-handle-gen9.patch
+b6a9090f786916a1048aa0203bdcb9c6  igt-stat.patch
+fd835e218c0504cc5eddcab129f4ab3a  intel-gcc-pr65873.patch
+1e768f2b1edc8613911b1d33bb361a7f  intel-gpu-tools-1.9.tar.bz2
+22eff448e8025002bec40360b63c40fa  make-git-snapshot.sh
+524f0c1179d05ddc142fb298b90a6378  make-intel-gpu-tools-snapshot.sh
+4ad21757ceff224a2272a204ec8ed88b  xf86-video-intel-20160119.tar.bz2

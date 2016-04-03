@@ -1,0 +1,7 @@
+b4853e23237dfe86a57ee59d761c845a  compiz-plugins-extra-0.8.8.tar.bz2
+78d1608b69ef87a42525495afa72b3db  compiz-plugins-extra-aarch64.patch
+4262379fe7d900e0ed71b4b0ef8c1552  compiz-plugins-extra_automake-1.13.patch
+301979691a1304fb5f8dc3883ab28f3e  compiz-plugins-extra_libnotify.patch
+6e8512945ffe1badf82f3f3dcf8d58da  compiz-plugins-extra_new-mate.patch
+62cf71f7afd4bea013a0499cb4ca9a5a  compiz-plugins-extra_primary-is-control.patch
+98c47bc60662a72f2a28925b798e2be5  compiz-plugins-extra_remove_gconf_usage.patch

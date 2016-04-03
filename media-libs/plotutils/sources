@@ -1,0 +1,4 @@
+ece16cc641dd273f720f2db5c3dc1fca  plotutils-2.6-png15.patch
+c08a424bd2438c80a786a7f4b5bb6a40  plotutils-2.6.tar.gz
+e41887248e9efcc3964378316dbd7c53  plotutils-aarch64.patch
+38acf4cf2761874862a290e6fd6b95b5  plotutils-werror-format-security.patch

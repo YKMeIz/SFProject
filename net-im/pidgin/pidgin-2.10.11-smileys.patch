@@ -1,0 +1,13 @@
+diff -r c00a1fd0d27b pidgin/plugins/history.c
+--- a/pidgin/plugins/history.c	Wed Aug 05 12:32:22 2015 -0500
++++ b/pidgin/plugins/history.c	Fri Aug 21 11:01:50 2015 -0400
+@@ -134,7 +134,8 @@
+ 		header_date = purple_date_format_full(localtime(&((PurpleLog *)logs->data)->time));
+ 
+ 	header = g_strdup_printf(_("<b>Conversation with %s on %s:</b><br>"), escaped_alias, header_date);
+-	gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), header, options);
++	/* times can render as smileys - add an IMHTML option to prevent that */
++	gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), header, options|GTK_IMHTML_NO_SMILEY);
+ 	g_free(header);
+ 	g_free(escaped_alias);
+ 

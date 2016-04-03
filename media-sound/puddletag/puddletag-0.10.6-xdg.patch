@@ -1,0 +1,12 @@
+diff -uNr puddletag-0.10.6.orig/puddlestuff/tagmodel.py puddletag-0.10.6/puddlestuff/tagmodel.py
+--- puddletag-0.10.6.orig/puddlestuff/tagmodel.py	2011-06-04 16:15:40.000000000 +0200
++++ puddletag-0.10.6/puddlestuff/tagmodel.py	2011-07-07 21:37:54.000000000 +0200
+@@ -1282,7 +1282,7 @@
+             ('Show &row numbers', True),
+             ('Automatically resize columns to contents', False),
+             ('&Preserve file modification times (if supported)', True),
+-            ('Program to &play files with:', 'amarok -p')
++            ('Program to &play files with:', 'xdg-open')
+             ]
+ 
+         status['selectedrows'] = self._getSelectedRows

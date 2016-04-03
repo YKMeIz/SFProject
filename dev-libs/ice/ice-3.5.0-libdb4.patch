@@ -1,0 +1,15 @@
+--- Ice-3.5.0/cpp/config/Make.rules.orig	2013-03-11 15:19:48.000000000 +0000
++++ Ice-3.5.0/cpp/config/Make.rules	2013-04-01 11:25:07.723542703 +0100
+@@ -225,9 +225,9 @@
+     endif
+     DB_RPATH_LINK        = $(call rpathlink,$(DB_HOME)/$(libsubdir)$(cpp11suffix))
+ else
+-   ifeq ($(shell if [ -d /usr/include/db53 -a -d /usr/$(libsubdir)/db53 ] ; then echo yes; fi), yes)
+-      DB_FLAGS          = -I/usr/include/db53
+-      DB_LIBS           = -L/usr/$(libsubdir)/db53 -ldb_cxx
++   ifeq ($(shell if [ -d /usr/include/libdb4 -a -d /usr/$(libsubdir)/libdb4 ] ; then echo yes; fi), yes)
++      DB_FLAGS          = -I/usr/include/libdb4
++      DB_LIBS           = -L/usr/$(libsubdir)/libdb4 -ldb_cxx
+    else
+       ifeq ($(shell if [ -d /usr/local/include/db53 -a -d /usr/local/$(libsubdir)/db53 ] ; then echo yes; fi), yes)
+           DB_FLAGS          = -I/usr/local/include/db53

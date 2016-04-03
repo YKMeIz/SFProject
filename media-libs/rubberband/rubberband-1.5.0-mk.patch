@@ -1,0 +1,43 @@
+diff -up rubberband-1.5.0/Makefile.in.mk rubberband-1.5.0/Makefile.in
+--- rubberband-1.5.0/Makefile.in.mk	2010-05-02 15:06:05.000000000 -0400
++++ rubberband-1.5.0/Makefile.in	2010-06-02 09:23:57.045227845 -0400
+@@ -28,11 +28,11 @@ LADSPA_TARGET  		:= lib/ladspa-rubberban
+ 
+ INSTALL_BINDIR		:= @prefix@/bin
+ INSTALL_INCDIR		:= @prefix@/include/rubberband
+-INSTALL_LIBDIR		:= @prefix@/lib
+-INSTALL_VAMPDIR		:= @prefix@/lib/vamp
+-INSTALL_LADSPADIR	:= @prefix@/lib/ladspa
++INSTALL_LIBDIR		:= @libdir@
++INSTALL_VAMPDIR		:= @libdir@/vamp
++INSTALL_LADSPADIR	:= @libdir@/ladspa
+ INSTALL_LRDFDIR		:= @prefix@/share/ladspa/rdf
+-INSTALL_PKGDIR		:= @prefix@/lib/pkgconfig
++INSTALL_PKGDIR		:= @libdir@/pkgconfig
+ 
+ all:	bin lib $(PROGRAM_TARGET) $(STATIC_TARGET) $(DYNAMIC_TARGET) $(VAMP_TARGET) $(LADSPA_TARGET)
+ 
+@@ -144,17 +144,17 @@ install:	all
+ 	$(MKDIR) -p $(DESTDIR)$(INSTALL_LADSPADIR)
+ 	$(MKDIR) -p $(DESTDIR)$(INSTALL_LRDFDIR)
+ 	$(MKDIR) -p $(DESTDIR)$(INSTALL_PKGDIR)
+-	cp $(PROGRAM_TARGET) $(DESTDIR)$(INSTALL_BINDIR)
+-	cp $(PUBLIC_INCLUDES) $(DESTDIR)$(INSTALL_INCDIR)
+-	cp $(STATIC_TARGET) $(DESTDIR)$(INSTALL_LIBDIR)
++	cp -p $(PROGRAM_TARGET) $(DESTDIR)$(INSTALL_BINDIR)
++	cp -p $(PUBLIC_INCLUDES) $(DESTDIR)$(INSTALL_INCDIR)
++	cp -p $(STATIC_TARGET) $(DESTDIR)$(INSTALL_LIBDIR)
+ 	rm -f $(DESTDIR)$(INSTALL_LIBDIR)/$(DYNAMIC_LIBNAME)$(DYNAMIC_ABI_VERSION)
+ 	rm -f $(DESTDIR)$(INSTALL_LIBDIR)/$(DYNAMIC_LIBNAME)
+-	cp $(DYNAMIC_TARGET) $(DESTDIR)$(INSTALL_LIBDIR)/$(DYNAMIC_LIBNAME)$(DYNAMIC_FULL_VERSION)
++	cp -p $(DYNAMIC_TARGET) $(DESTDIR)$(INSTALL_LIBDIR)/$(DYNAMIC_LIBNAME)$(DYNAMIC_FULL_VERSION)
+ 	test -n "$(DYNAMIC_FULL_VERSION)" && ln -s $(DYNAMIC_LIBNAME)$(DYNAMIC_FULL_VERSION) $(DESTDIR)$(INSTALL_LIBDIR)/$(DYNAMIC_LIBNAME)$(DYNAMIC_ABI_VERSION)
+ 	test -n "$(DYNAMIC_FULL_VERSION)" && ln -s $(DYNAMIC_LIBNAME)$(DYNAMIC_FULL_VERSION) $(DESTDIR)$(INSTALL_LIBDIR)/$(DYNAMIC_LIBNAME)
+-	cp $(VAMP_TARGET) $(DESTDIR)$(INSTALL_VAMPDIR)
++	cp -p $(VAMP_TARGET) $(DESTDIR)$(INSTALL_VAMPDIR)
+ 	cp vamp/vamp-rubberband.cat $(DESTDIR)$(INSTALL_VAMPDIR)
+-	cp $(LADSPA_TARGET) $(DESTDIR)$(INSTALL_LADSPADIR)
++	cp -p $(LADSPA_TARGET) $(DESTDIR)$(INSTALL_LADSPADIR)
+ 	cp ladspa/ladspa-rubberband.cat $(DESTDIR)$(INSTALL_LADSPADIR)
+ 	cp ladspa/ladspa-rubberband.rdf $(DESTDIR)$(INSTALL_LRDFDIR)
+ 	sed "s,%PREFIX%,@prefix@," rubberband.pc.in \

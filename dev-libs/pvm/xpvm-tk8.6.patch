@@ -1,0 +1,12 @@
+diff -Naur pvm-3.4.6-7.fc20.x86_64.orig/usr/share/pvm3/xpvm/src/Makefile.aimk pvm-3.4.6-7.fc20.x86_64/usr/share/pvm3/xpvm/src/Makefile.aimk
+--- pvm3/xpvm/src/Makefile.aimk	2014-05-30 10:52:15.112848331 -0500
++++ pvm3/xpvm/src/Makefile.aimk	2014-05-30 10:53:08.143635350 -0500
+@@ -22,7 +22,7 @@
+ #PVMVERSION	=	-DUSE_PVM_33
+ #PVMGLIB	=	-lgpvm3
+ 
+-CFLOPTS		=	-O
++CFLOPTS		=	-O -DUSE_INTERP_RESULT
+ #CFLOPTS	=	-g
+ 
+ CC			=	cc

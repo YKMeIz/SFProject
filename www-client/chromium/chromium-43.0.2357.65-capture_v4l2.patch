@@ -1,0 +1,26 @@
+diff -up chromium-43.0.2357.65/media/video/capture/linux/video_capture_device_factory_linux.cc.capfix43a chromium-43.0.2357.65/media/video/capture/linux/video_capture_device_factory_linux.cc
+--- chromium-43.0.2357.65/media/video/capture/linux/video_capture_device_factory_linux.cc.capfix43a	2015-05-19 16:48:02.399885941 -0400
++++ chromium-43.0.2357.65/media/video/capture/linux/video_capture_device_factory_linux.cc	2015-05-19 16:59:42.615552116 -0400
+@@ -32,8 +32,7 @@ static bool HasUsableFormats(int fd, uin
+     int capability;
+     v4l2_buf_type buf_type;
+   } kCapabilityAndBufferTypes[] = {
+-    {V4L2_CAP_VIDEO_CAPTURE, V4L2_BUF_TYPE_VIDEO_CAPTURE},
+-    {V4L2_CAP_VIDEO_CAPTURE_MPLANE, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE}
++    {V4L2_CAP_VIDEO_CAPTURE, V4L2_BUF_TYPE_VIDEO_CAPTURE}
+   };
+ 
+   for (const auto& capability_and_buffer_type : kCapabilityAndBufferTypes) {
+@@ -178,10 +177,8 @@ void VideoCaptureDeviceFactoryLinux::Get
+     // http://crbug.com/139356.
+     v4l2_capability cap;
+     if ((HANDLE_EINTR(ioctl(fd.get(), VIDIOC_QUERYCAP, &cap)) == 0) &&
+-        ((cap.capabilities & V4L2_CAP_VIDEO_CAPTURE ||
+-         cap.capabilities & V4L2_CAP_VIDEO_CAPTURE_MPLANE) &&
+-         !(cap.capabilities & V4L2_CAP_VIDEO_OUTPUT) &&
+-         !(cap.capabilities & V4L2_CAP_VIDEO_OUTPUT_MPLANE)) &&
++        ((cap.capabilities & V4L2_CAP_VIDEO_CAPTURE) &&
++         !(cap.capabilities & V4L2_CAP_VIDEO_OUTPUT)) &&
+         HasUsableFormats(fd.get(), cap.capabilities)) {
+       device_names->push_back(VideoCaptureDevice::Name(
+           base::StringPrintf("%s", cap.card), unique_id,

@@ -1,0 +1,145 @@
+Tremulous data/mewdia  comes with the following License, which contains an
+exception which makes Tremulous none distributable by Fedora's Guidelines:
+
+---------------------------------------------------------- Tremulous License --
+
+Tremulous is licensed in two broadly separate sections: the code and the
+media.
+
+The code is licensed under the GNU GENERAL PUBLIC LICENSE. This license is
+contained in full in the file named GPL. Please be aware of the exceptions to
+this license as listed below.
+
+The media is licensed under the CREATIVE COMMONS ATTRIBUTION-SHAREALIKE 2.5
+LICENSE. Please read http://creativecommons.org/licenses/by-sa/2.5/ to learn
+more about this license. The full license text is contained in the file named
+CC. Please be aware of the exceptions to this license as listed below.
+
+<code license exception cut (not relevant)>
+
+--------------------------------------------------- Media License Exceptions --
+
+All shaderlab (http://www.shaderlab.com/) textures (by Randy 'ydnar' Reddig)
+are subject to the following license:
+
+  Usage and redistribution policy: Textures may be freely downloaded, modified,
+  and used in free maps, mods or total conversions provided this copyright
+  notice is left intact and a link to Shaderlab is provided in the credits or
+  read-me file. Other non-commercial applications are considered on a
+  case-by-case basis via e-mail. All other usage requires written
+  permission.
+  Bulk redistribution or archival of the textures in any medium, digital or  
+  otherwise (except mapping packages for mods) is prohibited.
+                        
+---
+
+In order to make tremulous-data distributable by Fedora Randy 'ydnar' Reddig
+has been contacted and asked to relicense his textures under a more Fedora
+Friendly license, this was his response:
+
+"I already released the Tremulous textures (I think) under a CC license so
+it could be included with Debian. This should suffice for FC right?
+
+Randy"
+
+Unfortunatly this was hopefull, but to vague to be usefull. So another mail
+was send to Randy to ask him for clarification, which he (sofar) hasn't
+answered. Since Randy mentioned Debian the Debian maillists were searched
+and there it was claimed that Randy send an explicit permission notice to
+the tremulous maintainer for redistribution under the CC license used by
+the rest of tremulous-data. So contant was sought with the tremulous
+maintainer to confirm this, and this has been confirmed. Thus we can
+distribute tremulous data completely under the "Creative Commons
+Attribution-ShareAlike" license without exceptions!
+
+Here is the mail from the tremulous maintainer confirming the removal of the
+license exception:
+
+---
+
+Return-Path: <tim@ngus.net>
+Received: from koko.hhs.nl ([145.52.2.16] verified)
+  by hhs.nl (CommuniGate Pro SMTP 4.3.6)
+  with ESMTP id 50194793 for j.w.r.degoede@hhs.nl; Sun, 27 Aug 2006 12:38:29 +0200
+Received: from exim by koko.hhs.nl with spam-scanned (Exim 4.62)
+	(envelope-from <tim@ngus.net>)
+	id 1GHI26-0002ht-8j
+	for j.w.r.degoede@hhs.nl; Sun, 27 Aug 2006 12:38:29 +0200
+X-Spam-Checker-Version: SpamAssassin 3.1.0 (2005-09-13) on koko.hhs.nl
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=BAYES_50 autolearn=ham 
+	version=3.1.0
+Received: from exim (helo=koko)
+	by koko.hhs.nl with local-smtp (Exim 4.62)
+	(envelope-from <tim@ngus.net>)
+	id 1GHI26-0002hq-4m
+	for j.w.r.degoede@hhs.nl; Sun, 27 Aug 2006 12:38:26 +0200
+Received: from [195.188.213.5] (port=48623 helo=smtp-out2.blueyonder.co.uk)
+	by koko.hhs.nl with esmtp (Exim 4.62)
+	(envelope-from <tim@ngus.net>)
+	id 1GHI25-0002he-Os
+	for j.w.r.degoede@hhs.nl; Sun, 27 Aug 2006 12:38:25 +0200
+Received: from [172.23.170.146] (helo=anti-virus03-09)
+	by smtp-out2.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1GHI25-0005Pw-F6
+	for j.w.r.degoede@hhs.nl; Sun, 27 Aug 2006 11:38:25 +0100
+Received: from [82.41.36.184] (helo=ngus.net)
+	by asmtp-out1.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1GHI21-0002rD-Ud
+	for j.w.r.degoede@hhs.nl; Sun, 27 Aug 2006 11:38:22 +0100
+Received: from abraxas.angiinet ([192.168.101.3] helo=abraxas)
+	by ngus.net with smtp (Exim 3.35 #1 (Debian))
+	id 1GHI21-0002VG-00
+	for <j.w.r.degoede@hhs.nl>; Sun, 27 Aug 2006 11:38:21 +0100
+Date: Sun, 27 Aug 2006 11:38:22 +0100
+From: Tim Angus <tim@ngus.net>
+To: Hans de Goede <j.w.r.degoede@hhs.nl>
+Subject: Re: shaderlab tremulous textures license + jpeglib PATCH
+Message-Id: <20060827113822.24021362.tim@ngus.net>
+In-Reply-To: <44F15998.4060602@hhs.nl>
+References: <44F15998.4060602@hhs.nl>
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-Face: AK:$"\4"XB!81!m.}q=rqjTwW+}B\)}"F{vpJWz65qLwzvE<%~@n8:#APU'c\rja%aiX{6#
+ r05V{Jjv<G[*X-ONubo:c;]WGdS.7]y>5YY`]#n~T".j^.=:8?ksOj+5(=?pD,tzQEh_X{UtY>s0}l
+ QVu-hnd,k6XBp/Km^i)SY)NXG-0vC-Wk2KInLIg(_^<{zitS`uqdTfN!Ya:Rp
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.2/RELEASE, bases: 27082006 #205817, status: clean
+
+On Sun, 27 Aug 2006 10:36:40 +0200 Hans wrote:
+> First a short intro, I'm a Linux enthousiast and developer. Lately I'm
+> mainly spending my time packaging good games for the Fedora
+> distribution. I've recently packaged tremulous for inclusion into
+> Fedora. However the license on the shaderlab textures is stopping us
+> from shipping tremulous at the moment (because it doesn't match our
+> licensing guidelines). I've heard from left and right that Randy has
+> released these Textures under the same CC license as the rest of the
+> tremulous content and that he has send you an official statement that
+> those textures may be shipped with tremulous under this CC license.
+> Can you confirm this, or even better forward Randy's message to me?
+
+"This is for all the textures & other assets that Tremulous uses.
+
+I hereby place all copies of my work in Tremulous 1.1.0 (either in whole
+or in part) under the Creative Commons Attribution-ShareAlike licence
+version 2.5. Users are also hereby licenced to apply any newer version
+of the Creative Commons ShareAlike licence as they wish.
+
+Cheers,
+
+Randy Reddig"
+
+
+> While working on tremulous I've written a patch to use the system
+> installed version of libjpeg instead of the older included copy. I
+> must say that I haven't tested to savetojpeg functionality as I
+> didn't know how to test this. I've attached this patch for you.
+
+Thanks for the effort, but I'm afraid this is something that isn't appropriate for trunk. Tremulous is a cross platform title and as such we want to keep dynamic library dependencies at a minimum as they become difficult to deal with across multiple platforms. Since the static JPEG code already works and does not have any library dependencies, this is most appropriate for the cross platform version. Obviously if you want to use this patch for your own packaging efforts that's fine.
+
+If you ever want to submit patches in the future, http://bugzilla.icculus.org/ is the correct place.
+
+Thanks. :)
+
+

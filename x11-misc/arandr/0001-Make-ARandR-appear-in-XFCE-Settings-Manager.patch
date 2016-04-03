@@ -1,0 +1,23 @@
+From f5a204167f36a53c8157f18115d040a76f6a4ed9 Mon Sep 17 00:00:00 2001
+From: Maros Zatko <hacxman@gmail.com>
+Date: Thu, 14 Nov 2013 17:14:13 +0100
+Subject: [PATCH] Make ARandR appear in XFCE Settings Manager
+
+---
+ data/arandr.desktop | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/data/arandr.desktop b/data/arandr.desktop
+index d64ce16..8daecfe 100644
+--- a/data/arandr.desktop
++++ b/data/arandr.desktop
+@@ -6,5 +6,5 @@ Icon=display
+ Exec=arandr
+ Terminal=false
+ Type=Application
+-Categories=Settings;HardwareSettings;
++Categories=Settings;HardwareSettings;X-XFCE-SettingsDialog;X-XFCE-HardwareSettings;
+ StartupNotify=true
+-- 
+1.8.3.1
+

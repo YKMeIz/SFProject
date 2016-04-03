@@ -1,0 +1,9 @@
+8f93c41017c7f3753a9e938b4b422399  dcmtk-3.6.0-0001-Added-soname-information-for-all-targets.patch
+27e445899b488f85a619512bb3e613d5  dcmtk-3.6.0-0002-Install-libs-in-the-correct-arch-dir.patch
+a665e66c37152083619e24304f5dfbf4  dcmtk-3.6.0-0003-Removed-bundled-libcharl-reference-in-dcmjpls.patch
+df5d86f000069fcdd56b0d2a393f3362  dcmtk-3.6.0-0004-Use-system-charls.patch
+26f7dec9669ade16de1a4c2359e24a66  dcmtk-3.6.0-0005-Fixed-includes-for-CharLS-1.0.patch
+3e4417d48430c5d84a858054003a3087  dcmtk-3.6.0-0006-Added-optional-support-for-building-shared-libraries.patch
+590ab33f6848c1113554fd221b6ff231  dcmtk-3.6.0-0007-Add-soname-generation-for-modules-which-are-not-in-D.patch
+1afed5834344b2c8c87aa5cf6fd01e83  dcmtk-3.6.0-0008-Compiler-Fixes.patch
+19409e039e29a330893caea98715390e  dcmtk-3.6.0.tar.gz

@@ -1,0 +1,14 @@
+338ffccc2e5f803722d3ae7ad3b94807  60-pilot.perms
+751626e48f7069707226c47490b287ea  69-pilot-link.rules
+11e33ed7adbc3dc327c87baf9cc08720  blacklist-visor
+d17a7e9ccd199bd2adde4368c9a9f50c  pilot-link-0.12.1-var.patch
+9cfc8713190a3986c8c756490f1941b8  pilot-link-0.12.2-open.patch
+6afafdd21f0405dd3266a5d29ba611eb  pilot-link-0.12.3-clio.patch
+7545846077564e2099b4c291ec4c1156  pilot-link-0.12.5-aarch64.patch
+e3265a615bf35205bfd5d9e67f78f6a6  pilot-link-0.12.5-compiler_warnings.patch
+d135b7d55834193aef1913a061dcccc7  pilot-link-0.12.5-ftbfs-f19.patch
+e0733f9c60cb6d64cf886913d08b24d4  pilot-link-0.12.5-ftbfs-f21.patch
+86ebfb080353767ee5c515dc497bc228  pilot-link-0.12.5-mp.patch
+11ee309a7f27e3f148850aee310c3c80  pilot-link-0.12.5-redefinePerlsymbols.patch
+568c55bf504b044f6fbd50baa407c990  pilot-link-0.12.5.tar.bz2
+789621465391a2c82fdde5f291ff360e  README.fedora

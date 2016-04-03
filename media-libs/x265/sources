@@ -1,0 +1,5 @@
+f34a1c4c660ff07511365cb0983cf164  x265_1.9.tar.gz
+5558b405e67181978342d57990fc023d  x265-detect_cpu_armhfp.patch
+54dfb7134b03b669a376c4e8edbf16c6  x265-high-bit-depth-soname.patch
+5e58abd8f9e119cac639a167ca030899  x265-pic.patch
+2f17780fe4f522e126b2e6475622afb9  x265-test-shared.patch

@@ -1,0 +1,21 @@
+diff -up gnome-games-3.3.91.1/gnomine/help/gl/gl.po.gl gnome-games-3.3.91.1/gnomine/help/gl/gl.po
+--- gnome-games-3.3.91.1/gnomine/help/gl/gl.po.gl	2012-03-05 13:56:32.000000000 -0500
++++ gnome-games-3.3.91.1/gnomine/help/gl/gl.po	2012-03-06 23:28:32.593352016 -0500
+@@ -588,7 +588,7 @@ msgid ""
+ "sizes."
+ msgstr ""
+ "Ao seleccionar <menuchoice>Preferencias<guimenu></"
+-"guimenu>Preferencias<guimenuitem></guimenuitem> do menú, pode cambiar o "
++"guimenu>Preferencias<guimenuitem></guimenuitem></menuchoice> do menú, pode cambiar o "
+ "tamaño das partidas. Tamaños grandes levan máis tempo e concentración "
+ "obviamente. Os xogos pequenos son máis frenéticos. Fornécense tamaños "
+ "pequenos, medio, grande e personalizado."
+@@ -1030,7 +1030,7 @@ msgstr ""
+ "Este programa distribúese coa esperanza de que lle sexa útil, pero SEN "
+ "NINGUNHA GARANTÍA; sen incluso a garantía implícita de MERCANTIBILIDADE ou "
+ "IDONEIDADE PARA UN PROPÓSITO PARTICULAR. Vexa a <citetitle>Licenza Pública "
+-"Xeral GNU<ulink type=\"help\" url=\"gnome-help:gpl\"></ulink> para máis "
++"Xeral GNU<ulink type=\"help\" url=\"gnome-help:gpl\"></ulink></citetitle> para máis "
+ "detalles."
+ 
+ #: C/gnomine.xml:629(para/address)

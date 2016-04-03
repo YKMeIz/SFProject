@@ -1,0 +1,65 @@
+From 0b4338153d05894fcec22ed8791ec7c6c740e6b8 Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Fri, 27 Feb 2015 15:09:40 +0900
+Subject: [PATCH] pick_font_1: rescue when XftFontOpenXlfd fails correctly
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1195437
+
+Backtrace:
+#0  XftCharIndex (dpy=dpy@entry=0x1954b30, pub=pub@entry=0x0, ucs4=77) at xftglyphs.c:836
+#1  0x00000035dec0a918 in XftTextExtentsUtf8 (dpy=0x1954b30, pub=0x0, string=0x40b91c "M", len=1, extents=0x7fff1affef50) at xftextent.c:234
+#2  0x0000000000404d13 in pick_font_1 (s=<optimized out>, se=<optimized out>) at ../../hacks/fontglide.c:408
+#3  0x00000000004068a4 in fontglide_draw (dpy=<optimized out>, window=<optimized out>, closure=<optimized out>) at ../../hacks/fontglide.c:457
+#4  0x0000000000403750 in run_screenhack_table (ft=0x60e4a0 <fontglide_xscreensaver_function_table>, anim_state=0x0, window2=0, window=39845890,
+#5  main (argc=1, argv=<optimized out>) at ../../hacks/screenhack.c:965
+
+While I don't know the real cause why XftFontOpenXlfd()
+fails (and so se->xftfont is NULL here), anyway we should
+handle this case correctly.
+
+A. Move handling of se->xftfont null case to the
+   correct place
+B. Wrap only the debugging code part with ifdef DEBUG
+---
+ hacks/fontglide.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/hacks/fontglide.c b/hacks/fontglide.c
+index b9aa2e0..d083d0c 100644
+--- a/hacks/fontglide.c
++++ b/hacks/fontglide.c
+@@ -344,6 +344,16 @@ pick_font_1 (state *s, sentence *se)
+   se->xftfont = XftFontOpenXlfd (s->dpy, screen_number (s->xgwa.screen),
+                                  pattern);
+ 
++  if (! se->xftfont)
++    {
++# ifdef DEBUG
++      if (s->debug_p)
++        fprintf (stderr, "%s: unable to load font %s\n",
++                 progname, pattern);
++#endif
++      return False;
++    }
++
+   /* Sometimes we get fonts with screwed up metrics.  For example:
+      -b&h-lucida-medium-r-normal-sans-40-289-100-100-p-0-iso8859-1
+ 
+@@ -429,14 +439,6 @@ pick_font_1 (state *s, sentence *se)
+ 
+ 
+ # ifdef DEBUG
+-  if (! se->xftfont)
+-    {
+-      if (s->debug_p)
+-        fprintf (stderr, "%s: unable to load font %s\n",
+-                 progname, pattern);
+-      return False;
+-    }
+-
+   if (s->debug_p) 
+     fprintf(stderr, "%s: %s\n", progname, pattern);
+ # endif /* DEBUG */
+-- 
+2.1.0
+

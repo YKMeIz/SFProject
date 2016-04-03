@@ -1,0 +1,20 @@
+--- src/main-window.c.orig	2011-04-16 16:34:10.826673407 -0500
++++ src/main-window.c	2011-04-16 16:35:18.218400982 -0500
+@@ -2127,7 +2127,7 @@
+ 	gchar *lang = NULL;
+ 	
+ 	lang = g_strndup(g_getenv("LANG"),2);
+-	file = g_strconcat("file://",DATADIR,"/doc/",PACKAGE,"/html/",lang,"/index.html",NULL);
++	file = g_strconcat("file://",DATADIR,"/doc/",PACKAGE,"-",PACKAGE_VERSION,"/html/",lang,"/index.html",NULL);
+ 	g_free(lang);
+ 	img_message (img, FALSE, "%s\n", file);
+ 
+@@ -2135,7 +2135,7 @@
+ 	if ( !gtk_show_uri(NULL,file, GDK_CURRENT_TIME, NULL))
+ 	{
+ 		g_free( file );
+-		file = g_strconcat("file://",DATADIR,"/doc/",PACKAGE,"/html/en/index.html",NULL);
++		file = g_strconcat("file://",DATADIR,"/doc/",PACKAGE,"-",PACKAGE_VERSION,"/html/en/index.html",NULL);
+ 		gtk_show_uri(NULL,file, GDK_CURRENT_TIME, NULL);
+ 	}
+ 	g_free(file);

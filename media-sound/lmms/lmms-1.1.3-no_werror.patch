@@ -1,0 +1,31 @@
+From: Rex Dieter <rdieter@math.unl.edu>
+Subject: [PATCH] t/no_werror
+
+drop all -Werror related flags
+-Werror is fine for development, not so much for release builds
+
+---
+ CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 63af96c..7b22e7f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -333,10 +333,10 @@ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/lmms.rc.in" "${CMAKE_BINARY_DIR}/lmms.rc")
+ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/plugins/zynaddsubfx/zynaddsubfx.rc.in" "${CMAKE_BINARY_DIR}/plugins/zynaddsubfx/zynaddsubfx.rc")
+ 
+ # set compiler flags
+-SET(WERROR_FLAGS "-Wall -Werror=unused-function -Wno-sign-compare -Wno-strict-overflow")
+-IF(NOT LMMS_BUILD_APPLE)
+-   SET(WERROR_FLAGS "${WERROR_FLAGS} -Werror")
+-ENDIF()
++#SET(WERROR_FLAGS "-Wall -Werror=unused-function -Wno-sign-compare -Wno-strict-overflow")
++#IF(NOT LMMS_BUILD_APPLE)
++#   SET(WERROR_FLAGS "${WERROR_FLAGS} -Werror")
++#ENDIF()
+ 
+ # Due to a regression in gcc-4.8.X, we need to disable array-bounds check
+ IF (CMAKE_COMPILER_IS_GNUCXX AND ((CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL "4.8.0") OR (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "4.8.0")))
+-- 
+tg: (d14f451..) t/no_werror (depends on: stable-1.1)

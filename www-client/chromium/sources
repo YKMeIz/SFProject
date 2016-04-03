@@ -1,0 +1,10 @@
+f2fd38969425597108cbec3e7b5d3a4f  542819fix.patch
+ddd9d9c3fb6ddabcad241fa32ea7a6b2  capfix43.patch
+0ffa9fa55fe3f2ed8030fd150701082c  capfix.patch
+8d78571d3779d1036ab84d63a6553f51  chrometypesbug.patch
+88b326586706134768a892580fa61802  chromium-43.0.2357.65-capture_v4l2.patch
+7fd11db62370c23db681ca6e09e2e633  chromium-49.0.2623.110.tar.xz
+da0ed2eb8ad8b77c0952b007641990a9  chromium-devel.desktop
+c27f77069379fde28dadf4b2e6841c42  chromiumlibssclfix.patch
+cbb7a448289ace71472a0a682325cd46  gtk2fix.patch
+b1eb1447fefbe1ba34c9977c1f7e56a5  ppapifix.patch

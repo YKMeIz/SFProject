@@ -1,0 +1,13 @@
+diff -Nur midori-0.5.9.orig/midori/main.c midori-0.5.9/midori/main.c
+--- midori-0.5.9.orig/midori/main.c	2014-11-10 16:30:22.000000000 -0700
++++ midori-0.5.9/midori/main.c	2015-01-16 16:10:04.278801067 -0700
+@@ -73,6 +73,9 @@
+     gchar** uris;
+     gchar* block_uris;
+     gint inactivity_reset;
++
++g_setenv("G_TLS_GNUTLS_PRIORITY", "NORMAL:%COMPAT:!VERS-SSL3.0", FALSE);
++
+     GOptionEntry entries[] =
+     {
+        { "app", 'a', 0, G_OPTION_ARG_STRING, &webapp,

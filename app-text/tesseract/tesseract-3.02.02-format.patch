@@ -1,0 +1,12 @@
+diff -up ./dict/permdawg.cpp.format ./dict/permdawg.cpp
+--- ./dict/permdawg.cpp.format	2012-09-02 22:08:43.000000000 +0200
++++ ./dict/permdawg.cpp	2014-03-27 18:38:40.026525432 +0100
+@@ -205,7 +205,7 @@ void Dict::go_deeper_dawg_fxn(
+           STRING word_str;
+           word->string_and_lengths(&word_str, NULL);
+           word_str += " ";
+-          fprintf(output_ambig_words_file_, word_str.string());
++          fprintf(output_ambig_words_file_, "%s", word_str.string());
+         }
+         WERD_CHOICE *adjusted_word = word;
+         WERD_CHOICE hyphen_tail_word(&getUnicharset());

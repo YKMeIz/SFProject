@@ -1,0 +1,24 @@
+diff -Nru faac-1.28/common/mp4v2/mpeg4ip.h faac-1.28.1/common/mp4v2/mpeg4ip.h
+--- faac-1.28/common/mp4v2/mpeg4ip.h	2009-01-27 00:42:35.000000000 +0200
++++ faac-1.28.1/common/mp4v2/mpeg4ip.h	2015-01-30 11:22:14.572925781 +0200
+@@ -120,13 +120,13 @@
+ #endif
+ #include <sys/param.h>
+ 
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-char *strcasestr(const char *haystack, const char *needle);
+-#ifdef __cplusplus
+-}
+-#endif
++// #ifdef __cplusplus
++// extern "C" {
++// #endif
++// char *strcasestr(const char *haystack, const char *needle);
++// #ifdef __cplusplus
++// }
++// #endif
+ 
+ #define OPEN_RDWR O_RDWR
+ #define OPEN_CREAT O_CREAT 

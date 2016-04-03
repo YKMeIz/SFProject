@@ -1,0 +1,5 @@
+6998b165540598965499bd99d8aa0eef  recordmydesktop-0.3.8.1.tar.gz
+32517bbcabaa6b6648d54a47bda97a43  recordmydesktop-ALSA-default.patch
+e486a5b457388e809a8e662c725b09e4  recordmydesktop-fix-configure-ac-jack-support.patch
+5af02537cfd1f731cfa8678d87fe0d74  recordmydesktop-sane-theora-defaults.patch
+a4cc592ff28e4c4b906e8e6885ec025f  recordmydesktop-shmstr.h-to-shmproto.h.patch

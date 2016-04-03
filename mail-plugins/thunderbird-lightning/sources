@@ -1,0 +1,8 @@
+fa2317f7f3f6c254f3c5ebf60ea987ca  find-external-requires
+aaeef94716b602924b539a7c700053ee  l10n-2.6.5.tar.xz
+689eece85bd132adc72413158c7a46df  lightning-2.6.5.source.tar.bz2
+95df99a291a0f2fd011b561d6c2fe7b8  mklangsource.sh
+258c9ad13d6033673b4ebe9ba6c55a4d  mozilla-build-arm.patch
+e6a3b457e9dbd55b086fe2519fd51e92  thunderbird-mozconfig
+f0a2b42a93f79968c804befc2e3b204c  thunderbird-version.patch
+276548a75edb3bc52160c639f05ec5d7  xulrunner-10.0-secondary-ipc.patch

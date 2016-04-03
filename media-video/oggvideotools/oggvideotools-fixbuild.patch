@@ -1,0 +1,128 @@
+--- oggvideotools-0.8/src/oggLength.cpp.orig	2012-07-08 15:19:44.397377525 +0100
++++ oggvideotools-0.8/src/oggLength.cpp	2012-07-08 15:20:34.479660350 +0100
+@@ -27,6 +27,7 @@
+ #include <iostream>
+ #include <string>
+ #include <cstdlib>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "streamSerializer.h"
+--- oggvideotools-0.8/src/ringbuffer.cpp.orig	2012-07-08 15:34:27.265976331 +0100
++++ oggvideotools-0.8/src/ringbuffer.cpp	2012-07-08 15:34:41.795347561 +0100
+@@ -47,7 +47,6 @@
+ 
+ unsigned int ringbuffer::addData(const unsigned char* data, unsigned int len)
+ {
+-  bool drop(false);
+ 
+   lock();
+ 
+@@ -74,7 +73,6 @@
+     end += (len - size + used);
+     end %= size;
+     used = size;
+-    drop = true;
+   } else {
+     used += len;
+   }
+--- oggvideotools-0.8/src/oggDump.cpp.orig	2012-07-08 15:40:19.526975653 +0100
++++ oggvideotools-0.8/src/oggDump.cpp	2012-07-08 15:40:53.609846218 +0100
+@@ -31,6 +31,7 @@
+ #include <fstream>
+ #include <ostream>
+ #include <cstdlib>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "rawMediaPacket.h"
+--- oggvideotools-0.8/src/oggCut.cpp.orig	2012-07-08 15:57:32.011339045 +0100
++++ oggvideotools-0.8/src/oggCut.cpp	2012-07-08 15:57:52.765868794 +0100
+@@ -29,6 +29,7 @@
+ #include <map>
+ #include <cstdlib>
+ #include <ctime>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "streamSerializer.h"
+--- oggvideotools-0.8/src/oggCat.cpp.orig	2012-07-08 15:59:30.021351153 +0100
++++ oggvideotools-0.8/src/oggCat.cpp	2012-07-08 16:00:10.699389380 +0100
+@@ -28,6 +28,7 @@
+ #include <map>
+ #include <vector>
+ #include <string>
++#include <unistd.h>
+ 
+ #include <cstdlib>
+ #include <ctime>
+--- oggvideotools-0.8/src/oggJoin.cpp.orig	2012-07-08 16:03:11.116993897 +0100
++++ oggvideotools-0.8/src/oggJoin.cpp	2012-07-08 16:03:36.976653800 +0100
+@@ -23,6 +23,7 @@
+ #include <vector>
+ #include <string>
+ #include <cstdlib>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "oggDecoder.h"
+--- oggvideotools-0.8/src/oggSplit.cpp.orig	2012-07-08 16:02:29.391929053 +0100
++++ oggvideotools-0.8/src/oggSplit.cpp	2012-07-08 16:02:56.752627293 +0100
+@@ -24,6 +24,7 @@
+ #include <sstream>
+ #include <string>
+ #include <cstdlib>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "rawMediaPacket.h"
+--- oggvideotools-0.8/src/oggScroll.cpp.orig	2012-07-08 16:09:13.116248067 +0100
++++ oggvideotools-0.8/src/oggScroll.cpp	2012-07-08 16:09:30.294690040 +0100
+@@ -23,6 +23,7 @@
+ #include <map>
+ #include <termios.h>
+ #include <SDL/SDL.h>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "streamSerializer.h"
+--- oggvideotools-0.8/src/oggSlideshow.cpp.orig	2012-07-08 16:14:54.632032644 +0100
++++ oggvideotools-0.8/src/oggSlideshow.cpp	2012-07-08 16:15:18.481645929 +0100
+@@ -33,6 +33,7 @@
+ #include <cmath>
+ #include <cstring>
+ #include <ctime>
++#include <unistd.h>
+ //#include <cc++/slog.h>
+ 
+ #include "th_helper.h"
+--- oggvideotools-0.8/src/oggThumb.cpp.orig	2012-07-08 16:21:31.202227616 +0100
++++ oggvideotools-0.8/src/oggThumb.cpp	2012-07-08 16:21:48.271666305 +0100
+@@ -32,6 +32,7 @@
+ #include <iostream>
+ #include <cstdlib>
+ #include <queue>
++#include <unistd.h>
+ 
+ #include "fileRepository.h"
+ #include "streamSerializer.h"
+--- oggvideotools-0.8/src/oggResize.cpp.orig	2012-07-08 15:48:55.801477052 +0100
++++ oggvideotools-0.8/src/oggResize.cpp	2012-07-08 15:49:14.555476271 +0100
+@@ -34,6 +34,7 @@
+ #include <cstdlib>
+ #include <cmath>
+ #include <ctime>
++#include <unistd.h>
+ 
+ #ifdef HAVE_CONFIG_H
+ #include "config.h"
+--- oggvideotools-0.8/src/oggSilence.cpp.orig	2012-07-08 15:49:37.517474667 +0100
++++ oggvideotools-0.8/src/oggSilence.cpp	2012-07-08 15:49:52.841473944 +0100
+@@ -30,6 +30,7 @@
+ #include <sstream>
+ #include <cstdlib>
+ #include <ctime>
++#include <unistd.h>
+ 
+ #include "vorbisEncoder.h"
+ #include "streamMux.h"

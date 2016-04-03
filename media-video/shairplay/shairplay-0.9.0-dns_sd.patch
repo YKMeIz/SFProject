@@ -1,0 +1,12 @@
+diff -up ./src/lib/dnssd.c.orig ./src/lib/dnssd.c
+--- ./src/lib/dnssd.c.orig	2015-05-08 13:39:28.000000000 +0200
++++ ./src/lib/dnssd.c	2015-08-11 22:07:11.629214791 +0200
+@@ -167,7 +167,7 @@ dnssd_init(int *error)
+ 		return NULL;
+ 	}
+ #elif USE_LIBDL
+-	dnssd->module = dlopen("libdns_sd.so", RTLD_LAZY);
++	dnssd->module = dlopen("libdns_sd.so.1", RTLD_LAZY);
+ 	if (!dnssd->module) {
+ 		if (error) *error = DNSSD_ERROR_LIBNOTFOUND;
+ 		free(dnssd);

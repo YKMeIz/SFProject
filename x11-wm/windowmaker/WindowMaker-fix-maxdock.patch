@@ -1,0 +1,43 @@
+From 59537ec4cd4d7ba5060b5b2f6dad8e8f92f4c002 Mon Sep 17 00:00:00 2001
+From: =?utf8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>
+Date: Mon, 22 Sep 2014 16:33:24 +0200
+Subject: [PATCH] fix maximize when dock is set 'on top' and it should be
+ covered
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf8
+Content-Transfer-Encoding: 8bit
+
+Window Maker was not correctly maximizing windows in some cases
+
+"... do not cover dock" enabled with "Dock postion":
+Normal             - maximizes ok
+Auto raise & lower - maximizes ok
+Keep on Top        - maximizes ok
+
+"... do not cover dock" disabled with "Dock postion":
+Normal             - maximizes ok
+Auto raise & lower - maximizes ok
+Keep on Top        - maximizes not covering dock
+
+Reported-by: Johann Haarhoff <johann@haarhoff.org.za>
+Signed-off-by: Amadeusz SÅawiÅski <amade@asmblr.net>
+---
+ src/xinerama.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/xinerama.c b/src/xinerama.c
+index e1e47ee..d490b0c 100644
+--- a/src/xinerama.c
++++ b/src/xinerama.c
+@@ -306,7 +306,7 @@ WArea wGetUsableAreaForHead(WScreen * scr, int head, WArea * totalAreaPtr, Bool
+ 
+ 	if (noicons) {
+ 		/* check if user wants dock covered */
+-		if (scr->dock && (!scr->dock->lowered || wPreferences.no_window_over_dock)) {
++		if (scr->dock && wPreferences.no_window_over_dock) {
+ 			int offset = wPreferences.icon_size + DOCK_EXTRA_SPACE;
+ 
+ 			if (scr->dock->on_right_side)
+-- 
+1.7.6.6.GIT
+

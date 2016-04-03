@@ -1,0 +1,10 @@
+22f99a9bbb5eeb8d8ffde7b5f13b6194  libtranslate-0.99-autoconf.patch
+7d4d85c2c0881034d4113a65c2307da9  libtranslate-0.99-charsetparse.diff
+b6da2048edec744ba65a47c5b45baca8  libtranslate-0.99-condfix.diff
+c335196309f0687aa190551074ccc324  libtranslate-0.99-fix-modules.patch
+e7ed043a9ea981b3330191375bec85f7  libtranslate-0.99-int64.diff
+faa671a70891baa869295eb02f112f0f  libtranslate-0.99-libsoup24.diff
+5c53d3b56c6e3e3ec4032bbfd0bc2acb  libtranslate-0.99-postmarker.diff
+78b9a7070957afad4d8789fb9d55f8a9  libtranslate-0.99-strip_tags.patch
+1fe75a6a6e8a0c6518890b5fa6984d42  libtranslate-0.99.tar.gz
+2a30b9e55312deecc999e9646b4ff092  libtranslate-services.xml-20100303

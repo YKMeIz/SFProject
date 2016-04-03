@@ -1,0 +1,11 @@
+[Unit]
+Description=PeerVPN Node (%i)
+After=syslog.target network.target
+ConditionPathExists=/etc/peervpn/%i.conf
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/peervpn /etc/peervpn/%i.conf
+
+[Install]
+WantedBy=multi-user.target

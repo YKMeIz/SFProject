@@ -1,0 +1,25 @@
+From 7e0bb91a11dcc211ca2f08c01b1339ddc1249284 Mon Sep 17 00:00:00 2001
+From: Pierre-Yves Chibon <pingou@pingoured.fr>
+Date: Fri, 2 Nov 2012 17:08:47 +0100
+Subject: [PATCH] Fix regex to include the port number when there is one
+
+---
+ src/globals.py.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/globals.py.in b/src/globals.py.in
+index 002e55a..894db6c 100644
+--- a/src/globals.py.in
++++ b/src/globals.py.in
+@@ -41,7 +41,7 @@ USERCHARS = "-[:alnum:]"
+ PASSCHARS = "-[:alnum:],?;.:/!%$^*&~\"#'"
+ HOSTCHARS = "-[:alnum:]"
+ HOST      = "[" + HOSTCHARS + "]+(\\.[" + HOSTCHARS + "]+)*"
+-PORT      = "(:[:digit:]{1,5})?"
++PORT      = "(:[[:digit:]]{1,5})?"
+ PATHCHARS =  "-[:alnum:]_$.+!*(),;:@&=?/~#%"
+ SCHEME    = "(news:|telnet:|nntp:|file:/|https?:|ftps?:|webcal:)"
+ USER      = "[" + USERCHARS + "]+(:[" + PASSCHARS + "]+)?"
+-- 
+1.7.11.7
+

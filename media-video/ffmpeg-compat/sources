@@ -1,0 +1,6 @@
+76258e11369d64de90760975b3aed252  0001-Fix-build-when-seletected-fpu-is-not-neon-on-arm.patch
+e8695608f13ced95fe753d3cd8a017ce  0002-Add-unconditional-return-statement-to-yuva420_rgb32_.patch
+d962e7bfbc6ed5ca672842e2c784c12a  ffmpeg-0.6.6-compile-fix.patch
+2afecd1ef31053ef077bdb2d6a7402ce  ffmpeg-0.6.7.tar.bz2
+363e5c16255fa7e649d759dea38f33a4  ffmpeg-arm-fix.patch
+4d58d3cfdedb075ceb0a9e98519b3323  ffmpeg-snapshot.sh

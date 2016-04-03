@@ -1,0 +1,17 @@
+--- testdisk-6.14/Makefile.in	2013-07-30 13:38:47.802255382 +0200
++++ testdisk-6.14.new/Makefile.in	2013-09-09 23:34:31.285126523 +0200
+@@ -896,11 +896,11 @@
+ 
+ 
+ install-data-hook:
+-	$(mkinstalldirs) $(DESTDIR)$(datadir)/doc/$(PACKAGE)-$(VERSION)
+-	$(INSTALL_DATA) $(top_srcdir)/AUTHORS $(top_srcdir)/ChangeLog $(top_srcdir)/NEWS $(top_srcdir)/README $(top_srcdir)/THANKS $(top_srcdir)/documentation.html $(DESTDIR)$(datadir)/doc/$(PACKAGE)-$(VERSION)/
++	$(mkinstalldirs) $(DESTDIR)$(docdir)
++	$(INSTALL_DATA) $(top_srcdir)/AUTHORS $(top_srcdir)/ChangeLog $(top_srcdir)/NEWS $(top_srcdir)/README $(top_srcdir)/THANKS $(top_srcdir)/documentation.html $(DESTDIR)$(docdir)
+ 
+ uninstall-hook:
+-	rm -rf $(DESTDIR)$(datadir)/doc/$(PACKAGE)-$(VERSION)
++	rm -rf $(DESTDIR)$(ddocdir)
+ 
+ static:
+ 	rm -f src/testdisk src/testdisk.exe src/photorec src/photorec.exe src/fidentify src/fidentify.exe src/qphotorec src/qphotorec.exe

@@ -1,0 +1,14 @@
+fe943ceabcd993407a7141fbfd9ba2a1  0002-Texmap-GTK-The-poster-circle-doesn-t-appear.patch
+9ea009e0a9666c2cc65a001db2acfecb  0003-Qt-Tiled-backing-store-not-clipped-to-frame-or-visib.patch
+fe4f9103bd27751983dec0d34551e4d7  0004-Qt-Images-scaled-poorly-on-composited-canvas.patch
+fa6f435802b583f1dd924db15220889e  0005-Port-of-r118587-to-TextBreakIteratorQt.cpp.patch
+123ea242d7f714e55591e966e92526d7  0006-JSC-ARM-traditional-failing-on-Octane-NavierStokes-t.patch
+b25e44747c7bd033211d3a5311370b4c  0007-Correct-range-used-for-Emoji-checks.patch
+9766d17d3f29d63442db16af5e18348f  0008-Qt-RepaintRequested-signal-sometimes-not-emitted.patch
+816c3eda9464ea8dc8a2637140a3d6f9  0009-TexMap-Remove-ParentChange-in-TextureMapperLayer.patch
+6f9b0af3c401a43fa29cd3a9c393729a  qtwebkit-2.3.3.tar.xz
+ed71c70755dabbd6b83bb7072348a477  qtwebkit-2.3-debuginfo.patch
+1e87e920ce8c6f26cdfdd1e20393f778  qtwebkit-23-LLInt-C-Loop-backend-ppc.patch
+e588c0c49b72951c68358970db75b4fd  qtwebkit-2.3-save_memory.patch
+8445229f7e38c61d486e1397bad2077e  qtwebkit-ppc.patch
+9da8f759b5b4fdc305d3e206fce16356  webkit-qtwebkit-2.2-tp1-pluginpath.patch

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Tremulous
+Comment=First person shooter
+Exec=tremulous-wrapper
+Icon=tremulous.png
+Terminal=false
+StartupNotify=false
+Type=Application
+Categories=Game;ActionGame;

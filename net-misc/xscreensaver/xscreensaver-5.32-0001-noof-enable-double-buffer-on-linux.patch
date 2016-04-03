@@ -1,0 +1,39 @@
+From 5a9cd418ca6c6841f89078c6d8eda880d170fbd4 Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Sat, 20 Dec 2014 01:57:28 +0900
+Subject: [PATCH] noof: enable double buffer on linux
+
+It seems that at least on Fedora 21 x86_64 box,
+while noof can be displayed on xscreensaver-demo
+window it shows whole black screen in actual
+saver mode, as written on launchpad #1390304.
+
+It seems that enabling double buffer resolves
+this issue. As other gl hacks also uses double
+buffer and there seems no problem, just enable
+double buffer also on linux.
+
+Maybe it is better that double buffering gets
+enabled by default but disabled on the specified
+platform.
+---
+ hacks/glx/noof.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/hacks/glx/noof.c b/hacks/glx/noof.c
+index ee2810b..2dc4f78 100644
+--- a/hacks/glx/noof.c
++++ b/hacks/glx/noof.c
+@@ -448,6 +448,9 @@ init_noof (ModeInfo *mi)
+ #ifdef HAVE_JWZGLES
+   dbuf_p = 1;
+ #endif
++#ifdef __linux__
++  dbuf_p = 1;
++#endif
+ 
+   if (!bps) {
+     bps = (noof_configuration *)
+-- 
+2.1.0
+

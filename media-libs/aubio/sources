@@ -1,0 +1,4 @@
+ffc3e5e4880fec67064f043252263a44  aubio-0.3.2.tar.gz
+65c45df4c1863de39dbad8328c1da37d  aubio-format-security.patch
+674259ce137ca28ef24bd62482829cd5  aubio-linking.patch
+39c916e71f915569673e4f557ce9723f  aubio-numarray-gnuplot.patch

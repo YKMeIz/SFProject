@@ -1,0 +1,6 @@
+b82fd21ff9cd692e3c8938e21fcf55ce  knock-0.5-limits.patch
+e20cd96ab9a7901ec8e30fdaf6371678  knock-0.5-syslog.patch
+ca09d61458974cff90a700aba6120891  knock-0.5.tar.gz
+4dc0e44f33102aef17c408188891ccd3  knockd.conf
+3a49f4e4dd2ad3c64a373443282c1ee2  knockd.init
+37f6bb744ed32c07472e1e498fc16f12  knockd.sysconfig

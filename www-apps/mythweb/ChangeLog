@@ -1,0 +1,84 @@
+commit fca2bd2f78136a5363b1fbe7a313677b6bd1adc5
+Author: Karl Dietz <dekarl@mythtv.org>
+Date:   Tue May 6 08:34:51 2014 +0200
+
+    change base for custom aspect from 10,000 to 1,000,000
+    
+    Patch by FU-REN XIAO (蕭輔仁)
+    
+    Fixes #11996
+    (cherry picked from commit af4635569c4facacde9c089ca0be712797bfdc75)
+
+commit c99ad5fbea7dc6e3024a78b859d875e01b9f8a21
+Author: Karl Dietz <dekarl@mythtv.org>
+Date:   Tue May 6 08:34:28 2014 +0200
+
+    remove trailing white space
+    (cherry picked from commit b8655cb58e6b9065d46c41a8c345fff60ebc39a3)
+
+commit a492e9343caff760e0081f785d540ca6a1fe39fa
+Author: Karl Dietz <dekarl@mythtv.org>
+Date:   Mon Apr 28 17:55:41 2014 +0200
+
+    Mythweb - allow direct downloading of .mkv, .avi, .mp4, .xvid, .okv files
+    
+    Patch by Barry Rosenstock and David Goldfarb
+    
+    Fixes #7730
+    (cherry picked from commit c82601f426ba87ec86ffa6c4f076f7b325c9b902)
+
+commit 3829292163bcdc5bd8e4ff8140dba34002954adf
+Author: Karl Dietz <dekarl@mythtv.org>
+Date:   Mon Apr 28 17:44:07 2014 +0200
+
+    fix sorting by season/episode for seasons > 9 and episodes > 99
+    
+    Patch by Steve Campbell, extended to cover "year as season" and series
+    with lots of episodes
+    
+    Fixes #11893
+    (cherry picked from commit 86d4b489d5b633c5d92bc1adbc94ccc9485098e6)
+
+commit 3793da2ac7d5baa43b403dbfa10b4919aadece2b
+Author: Karl Dietz <dekarl@mythtv.org>
+Date:   Mon Apr 28 17:08:28 2014 +0200
+
+    Fix mime type for video streaming
+    
+    Patch by deg
+    
+    Fixes #12129
+    (cherry picked from commit aac42919007aa5296e296d4aad4eeed06920a14f)
+
+commit b4983f178bc847bfe7647ce5b9f235f5d2cbe362
+Author: Stuart Auchterlonie <stuarta@squashedfrog.net>
+Date:   Sun Mar 23 20:15:28 2014 +0000
+
+    Fixes #12096. Add a note to enable cgi for asx streaming
+    (cherry picked from commit 022cc273cb7d888f7db90ce779af6e7e143b049f)
+
+commit 0be4a506835b02edbb86c059df2941e5805844d5
+Author: Stuart Auchterlonie <stuarta@squashedfrog.net>
+Date:   Wed Mar 19 09:25:45 2014 +0000
+
+    Update the default Options string in the apache config.
+    
+    Apache 2.4+ removes the use of the "All" directive.
+    
+    No trac ticket, but this was reported on the forum
+    (cherry picked from commit 00d5acd1a6621e7862233e42e68ec4c932e63898)
+
+commit 5a3c43c50e498f6adcb1d3272d4836b837ee8d7a
+Author: Karl Dietz <dekarl@mythtv.org>
+Date:   Mon Mar 17 21:17:33 2014 +0100
+
+    Avoid localized decimal delimiter for integer
+    
+    Fixes #12038
+    (cherry picked from commit 5c6067f1d31a3fcd7cfd93631df84f18fab7750f)
+
+commit 6d10afe73e1fb5f21688d4b6d6919cab618e6e88
+Author: Stuart Morgan <smorgan@mythtv.org>
+Date:   Thu Oct 17 21:37:02 2013 +0100
+
+    Fix channel icons in mythweb. There was a typo which meant the services API call failed.

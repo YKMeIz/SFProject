@@ -1,0 +1,6 @@
+91ba35a21c163a55982bedaab076bc7f  info-dir
+554b8914fbcc3fd6970415017f822579  texinfo-4.12-zlib.patch
+689d9810fde578970277abb961ff8a9b  texinfo-4.13a-powerpc.patch
+91e0cc64efa02974bdb2158132cc28b2  texinfo-5.2-non-existing-info-page-segfault.patch
+cb489df8a7ee9d10a236197aefdb32c5  texinfo-5.2.tar.xz
+23be0c1d1ff653bc7599643e359ca1be  texinfo-5.2.tar.xz.sig

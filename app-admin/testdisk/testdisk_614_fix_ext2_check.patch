@@ -1,0 +1,11 @@
+--- testdisk-6.14/src/ext2.c.org	2012-09-10 09:26:05.786605497 +0200
++++ testdisk-6.14/src/ext2.c	2013-11-06 08:04:23.050649362 +0100
+@@ -180,6 +180,8 @@
+     return 6;
+   if(le32(sb->s_log_block_size)>2)  /* block size max = 4096, can be 8192 on alpha */
+     return 7;
++  if(le32(sb->s_blocks_per_group)==0)
++    return 8;
+   if(partition==NULL)
+     return 0;
+   if(partition->part_size!=0 &&

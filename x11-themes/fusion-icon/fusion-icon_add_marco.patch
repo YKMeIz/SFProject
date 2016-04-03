@@ -1,0 +1,14 @@
+diff -upr fusion-icon-5e2dc9-orig/FusionIcon/data.py fusion-icon-5e2dc9/FusionIcon/data.py
+--- fusion-icon-5e2dc9-orig/FusionIcon/data.py	2008-03-16 23:58:07.000000000 +0100
++++ fusion-icon-5e2dc9/FusionIcon/data.py	2012-05-16 16:45:35.000000000 +0200
+@@ -92,6 +92,10 @@ wms = {
+ 		('icewm', ['icewm', '--replace'],
+ 		 'IceWM', None, None, None),
+ 
++	'marco':
++		('marco', ['marco', '--replace'],
++		 'marco', 'mate', None, None,),
++
+ }
+ 
+ #decorator

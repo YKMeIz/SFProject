@@ -1,0 +1,12 @@
+--- xmltv-0.5.63/Makefile.PL.noask	2012-06-14 01:59:46.000000000 -0500
++++ xmltv-0.5.63/Makefile.PL	2012-07-24 09:50:09.517479108 -0500
+@@ -910,7 +910,8 @@
+                       "\n");
+     }
+     print STDERR "\n";
+-    if (not ask(0, 'Do you want to proceed with this configuration?', 1)) {
++#    if (not ask(0, 'Do you want to proceed with this configuration?', 1)) {
++    if (0) {
+         # Need to set {install} for each component by prompting.
+         foreach my $info (@opt_components) {
+             my $missing = $info->{missing};

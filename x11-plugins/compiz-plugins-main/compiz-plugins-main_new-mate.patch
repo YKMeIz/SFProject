@@ -1,0 +1,849 @@
+diff -uprN compiz-plugins-main-0.8.8-orig/configure.ac compiz-plugins-main-0.8.8/configure.ac
+--- compiz-plugins-main-0.8.8-orig/configure.ac	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/configure.ac	2013-04-23 16:07:23.613798585 +0200
+@@ -191,7 +191,7 @@ data/Makefile
+ data/filters/Makefile
+ images/Makefile
+ images/Oxygen/Makefile
+-images/Gnome/Makefile
++images/Default/Makefile
+ Makefile
+ metadata/Makefile
+ include/Makefile
+diff -uprN compiz-plugins-main-0.8.8-orig/images/Default/Makefile.am compiz-plugins-main-0.8.8/images/Default/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/images/Default/Makefile.am	1970-01-01 01:00:00.000000000 +0100
++++ compiz-plugins-main-0.8.8/images/Default/Makefile.am	2013-04-23 15:57:59.407032694 +0200
+@@ -0,0 +1,8 @@
++imagesdir = $(imagedir)/Default
++images_DATA =	       \
++	overlay.png \
++	mask.png
++
++EXTRA_DIST =	       \
++	overlay.png \
++	mask.png 
+diff -uprN compiz-plugins-main-0.8.8-orig/images/Gnome/Makefile.am compiz-plugins-main-0.8.8/images/Gnome/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/images/Gnome/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/images/Gnome/Makefile.am	1970-01-01 01:00:00.000000000 +0100
+@@ -1,8 +0,0 @@
+-imagesdir = $(imagedir)/Gnome
+-images_DATA =	       \
+-	overlay.png \
+-	mask.png
+-
+-EXTRA_DIST =	       \
+-	overlay.png \
+-	mask.png 
+diff -uprN compiz-plugins-main-0.8.8-orig/images/Makefile.am compiz-plugins-main-0.8.8/images/Makefile.am
+--- compiz-plugins-main-0.8.8-orig/images/Makefile.am	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/images/Makefile.am	2013-04-23 15:56:41.086226317 +0200
+@@ -1 +1 @@
+-SUBDIRS = Oxygen Gnome
+\ Kein Zeilenumbruch am Dateiende.
++SUBDIRS = Oxygen Default
+diff -uprN compiz-plugins-main-0.8.8-orig/metadata/animation.xml.in compiz-plugins-main-0.8.8/metadata/animation.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/animation.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/animation.xml.in	2013-04-23 15:46:19.332051305 +0200
+@@ -59,7 +59,7 @@
+ 	    <_long>The windows that will be animated.</_long>
+ 	    <type>match</type>
+ 	    <default>
+-	      <value>(type=Normal | Dialog | ModalDialog | Unknown) &amp; !(name=gnome-screensaver)</value>
++	      <value>(type=Normal | Dialog | ModalDialog | Unknown) &amp; !(name=mate-screensaver)</value>
+ 	      <value>(type=Menu | PopupMenu | DropdownMenu)</value>
+ 	      <value>(type=Tooltip | Notification | Utility) &amp; !(name=compiz) &amp; !(title=notify-osd)</value>
+ 	    </default>
+@@ -125,7 +125,7 @@
+ 	    <_long>The windows that will be animated.</_long>
+ 	    <type>match</type>
+ 	    <default>
+-	      <value>(type=Normal | Dialog | ModalDialog | Unknown) &amp; !(name=gnome-screensaver)</value>
++	      <value>(type=Normal | Dialog | ModalDialog | Unknown) &amp; !(name=mate-screensaver)</value>
+ 	      <value>(type=Menu | PopupMenu | DropdownMenu)</value>
+ 	      <value>(type=Tooltip | Notification | Utility) &amp; !(name=compiz) &amp; !(title=notify-osd)</value>
+ 	    </default>
+diff -uprN compiz-plugins-main-0.8.8-orig/metadata/mag.xml.in compiz-plugins-main-0.8.8/metadata/mag.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/mag.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/mag.xml.in	2013-04-23 15:46:19.362051602 +0200
+@@ -123,13 +123,13 @@
+ 						<_short>Magnifier image</_short>
+ 						<_long>Magnifier image.</_long>
+ 						<hints>file;image;</hints>
+-						<default>Gnome/overlay.png</default>
++						<default>Default/overlay.png</default>
+ 					</option>
+ 					<option name="mask" type="string">
+ 						<_short>Clip mask</_short>
+ 						<_long>Clip mask.</_long>
+ 						<hints>file;image;</hints>
+-						<default>Gnome/mask.png</default>
++						<default>Default/mask.png</default>
+ 					</option>
+ 					<option name="x_offset" type="int">
+ 						<_short>X offset of the cursor</_short>
+diff -uprN compiz-plugins-main-0.8.8-orig/metadata/resizeinfo.xml.in compiz-plugins-main-0.8.8/metadata/resizeinfo.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/resizeinfo.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/resizeinfo.xml.in	2013-04-23 15:46:19.302051008 +0200
+@@ -2,7 +2,7 @@
+ <compiz>
+   <plugin name="resizeinfo" useBcop="true">
+     <_short>Resize Info</_short>
+-    <_long>Display info on resize similar to metacity</_long>
++    <_long>Display info on resize similar to marco</_long>
+ 	<category>Utility</category>
+ 	<deps>
+ 		<relation type="after">
+diff -uprN compiz-plugins-main-0.8.8-orig/metadata/workarounds.xml.in compiz-plugins-main-0.8.8/metadata/workarounds.xml.in
+--- compiz-plugins-main-0.8.8-orig/metadata/workarounds.xml.in	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/metadata/workarounds.xml.in	2013-04-23 15:46:19.281050800 +0200
+@@ -6,7 +6,7 @@
+         <deps>
+         </deps>
+         <_short>Workarounds</_short>
+-        <_long>Metacity-like workarounds.</_long>
++        <_long>Marco-like workarounds.</_long>
+         <display>
+             <option type="bool" name="legacy_fullscreen">
+                 <_short>Legacy Fullscreen Support</_short>
+diff -uprN compiz-plugins-main-0.8.8-orig/po/ar.po compiz-plugins-main-0.8.8/po/ar.po
+--- compiz-plugins-main-0.8.8-orig/po/ar.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/ar.po	2013-04-23 15:46:18.343041510 +0200
+@@ -3576,7 +3576,7 @@ msgstr ""
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5593,7 +5593,7 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr ""
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr ""
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/bn.po compiz-plugins-main-0.8.8/po/bn.po
+--- compiz-plugins-main-0.8.8-orig/po/bn.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/bn.po	2013-04-23 15:46:18.000038113 +0200
+@@ -3545,7 +3545,7 @@ msgstr ""
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5557,7 +5557,7 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr ""
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr ""
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/ca.po compiz-plugins-main-0.8.8/po/ca.po
+--- compiz-plugins-main-0.8.8-orig/po/ca.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/ca.po	2013-04-23 15:46:17.593034082 +0200
+@@ -3728,7 +3728,7 @@ msgstr "Color 3 del degradat de fons."
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5855,7 +5855,7 @@ msgstr ""
+ "Fer que les aplicacions antigues i Wine puguin anar a pantalla complerta "
+ "correctament."
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr ""
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/cs.po compiz-plugins-main-0.8.8/po/cs.po
+--- compiz-plugins-main-0.8.8-orig/po/cs.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/cs.po	2013-04-23 15:46:17.727035409 +0200
+@@ -3770,7 +3770,7 @@ msgstr ""
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5973,7 +5973,7 @@ msgid "Make Wine and legacy applications
+ msgstr ""
+ 
+ #, fuzzy
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr "Obcházení chyb v serverech"
+ 
+ #, fuzzy
+diff -uprN compiz-plugins-main-0.8.8-orig/po/de.po compiz-plugins-main-0.8.8/po/de.po
+--- compiz-plugins-main-0.8.8-orig/po/de.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/de.po	2013-04-23 15:46:18.138039480 +0200
+@@ -3864,7 +3864,7 @@ msgstr "Farbe 3 für den Hintergrundfarb
+ msgid "Color of text on resize popup."
+ msgstr "Textfarbe"
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr "Zeigt Informationen beim Skalieren von Fenstern an"
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -6095,8 +6095,8 @@ msgstr "Dringliche Fenster sollen sich b
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Wine und Legacy Anwendungen im Vollbildmodus betreiben."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Workarounds wie Metacity"
++msgid "Marco-like workarounds."
++msgstr "Workarounds wie Marco"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Workaround für Fenster von 'Notification Daemon'"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/el.po compiz-plugins-main-0.8.8/po/el.po
+--- compiz-plugins-main-0.8.8-orig/po/el.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/el.po	2013-04-23 15:46:19.139049393 +0200
+@@ -3777,8 +3777,8 @@ msgstr "Χρώμα 3 του διαβαθ
+ msgid "Color of text on resize popup."
+ msgstr "Χρώμα κειμένου στην μορφοποίηση popup."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Εμφάνιση πληροφοριών στην μορφοποίηση παρόμοια του metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Εμφάνιση πληροφοριών στην μορφοποίηση παρόμοια του marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Χρόνος ξεθωριάσματος (σε ms) για το παράθυρο popup"
+@@ -5877,7 +5877,7 @@ msgid "Make Wine and legacy applications
+ msgstr ""
+ "Κάνε τις Wine και παραδοσιακές εφαρμογές να γίνονται πλήρους οθόνης σωστά."
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr "Metacito-ειδεις μοντίφες."
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/en_GB.po compiz-plugins-main-0.8.8/po/en_GB.po
+--- compiz-plugins-main-0.8.8-orig/po/en_GB.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/en_GB.po	2013-04-23 15:46:18.926047284 +0200
+@@ -3736,8 +3736,8 @@ msgstr "Third colour of the gradient bac
+ msgid "Color of text on resize popup."
+ msgstr "Colour of text on resize popup."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Display info on resize similar to marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Fade time (in ms) for popup window"
+@@ -5832,8 +5832,8 @@ msgstr "Activate next window which has t
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Make Wine and legacy applications fullscreen properly."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity-like workarounds."
++msgid "Marco-like workarounds."
++msgstr "Marco-like workarounds."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/es.po compiz-plugins-main-0.8.8/po/es.po
+--- compiz-plugins-main-0.8.8-orig/po/es.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/es.po	2013-04-23 15:46:18.280040886 +0200
+@@ -3951,8 +3951,8 @@ msgstr "Color del suelo (lejos)."
+ msgid "Color of text on resize popup."
+ msgstr "Color del suelo (lejos)."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Mostrar información en el redimensionado similar a metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Mostrar información en el redimensionado similar a marco"
+ 
+ #, fuzzy
+ msgid "Fade time (in ms) for popup window"
+@@ -6119,8 +6119,8 @@ msgstr ""
+ 
+ # This translation is wrong, i'm working for a better one
+ #, fuzzy
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity como solución"
++msgid "Marco-like workarounds."
++msgstr "Marco como solución"
+ 
+ # same as below
+ #, fuzzy
+diff -uprN compiz-plugins-main-0.8.8-orig/po/eu.po compiz-plugins-main-0.8.8/po/eu.po
+--- compiz-plugins-main-0.8.8-orig/po/eu.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/eu.po	2013-04-23 15:46:17.367031844 +0200
+@@ -3688,7 +3688,7 @@ msgstr "Atzeko planoko gradientearen 3.
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5708,7 +5708,7 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr ""
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr ""
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/fa.po compiz-plugins-main-0.8.8/po/fa.po
+--- compiz-plugins-main-0.8.8-orig/po/fa.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/fa.po	2013-04-23 15:46:18.556043619 +0200
+@@ -3490,7 +3490,7 @@ msgstr ""
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5462,7 +5462,7 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr ""
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr ""
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/fi.po compiz-plugins-main-0.8.8/po/fi.po
+--- compiz-plugins-main-0.8.8-orig/po/fi.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/fi.po	2013-04-23 15:46:18.623044283 +0200
+@@ -3715,8 +3715,8 @@ msgstr "Väri 3 liukuvärjätystä taust
+ msgid "Color of text on resize popup."
+ msgstr "Koonmuutoksen ponnahdusviestin tekstin väri."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Näytä ilmoitus kokoa muuttaessa samalla tavalla kuin Metacity:ssä"
++msgid "Display info on resize similar to marco"
++msgstr "Näytä ilmoitus kokoa muuttaessa samalla tavalla kuin Marco:ssä"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Häivytyksen aika (millisekunneissa) ponnahdusviestiin"
+@@ -5715,8 +5715,8 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Laita Wine ja vanhempien sovellusten kokonäyttötila toimimaan oikein."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacityn kaltaiset kiertokeinot."
++msgid "Marco-like workarounds."
++msgstr "Marcon kaltaiset kiertokeinot."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Ilmoitus taustaprosessin korjaus"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/fr.po compiz-plugins-main-0.8.8/po/fr.po
+--- compiz-plugins-main-0.8.8-orig/po/fr.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/fr.po	2013-04-23 15:46:17.300031181 +0200
+@@ -3838,8 +3838,8 @@ msgstr "Couleur 3 du gradient d'arrière
+ msgid "Color of text on resize popup."
+ msgstr "Couleur du texte de l'indicateur de redimensionnement."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Afficher des informations sur le redimensionnment comme Metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Afficher des informations sur le redimensionnment comme Marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Temps de fondu (en ms) pour l'indicateur"
+@@ -5950,7 +5950,7 @@ msgid ""
+ "viewports."
+ msgstr ""
+ "Rendre adhésives les fenêtres \"Sur tous les Bureaux\". Les fenêtres "
+-"Adhésives sont visibles sur tous les \"Viewports\" (Pour Gnome et KDE, 1 "
++"Adhésives sont visibles sur tous les \"Viewports\" (Pour Mate et KDE, 1 "
+ "Viewport = 1 Bureau, mais pas pour Compiz... Ce problème devrait être "
+ "corrigé dans une prochaine version)"
+ 
+@@ -5960,8 +5960,8 @@ msgstr "Rendre \"urgentes\" les fenêtre
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Rendre correctement les applications Wine et natives en plein écran."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Solutions alternatives Metacity-like"
++msgid "Marco-like workarounds."
++msgstr "Solutions alternatives Marco-like"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Correction du Démon de Notification"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/gl.po compiz-plugins-main-0.8.8/po/gl.po
+--- compiz-plugins-main-0.8.8-orig/po/gl.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/gl.po	2013-04-23 15:46:17.523033389 +0200
+@@ -3305,8 +3305,8 @@ msgstr "Cor 3 do gradiente de fondo."
+ msgid "Color of text on resize popup."
+ msgstr "Cor do texto do consello de redimensionado."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Mostrar información acerca do redimensionado en metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Mostrar información acerca do redimensionado en marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Tempo de desvanecemento (en ms) para as xanelas popup"
+@@ -5193,8 +5193,8 @@ msgstr "Facer que as xanelas \"urxentes\
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Facer que as aplicacións de Wine e as aplicacións normais entren no modo pantalla completa correctamente."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Correccións para que algúns programas funcionen co xestor de xanelas dognome (metacity)"
++msgid "Marco-like workarounds."
++msgstr "Correccións para que algúns programas funcionen co xestor de xanelas domate (marco)"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Corrección para o demonio de notificacións"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/gu.po compiz-plugins-main-0.8.8/po/gu.po
+--- compiz-plugins-main-0.8.8-orig/po/gu.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/gu.po	2013-04-23 15:46:18.857046601 +0200
+@@ -3756,7 +3756,7 @@ msgstr "ઢાળવાળા પાશ�
+ msgid "Color of text on resize popup."
+ msgstr "પોપઅપનું માપ બદલવા પર લખાણનો રંગ."
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr "મેટાસીટીને સરખું માપ બદલવા પર ડિસ્પ્લે જાણકારી"
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5894,7 +5894,7 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Wine અને લીગસી કાર્યક્રમો પૂર્ણસ્ક્રીન યોગ્ય રીતે બનાવો."
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr "મેટાસીટી-જેવા ઉકેલો."
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/he.po compiz-plugins-main-0.8.8/po/he.po
+--- compiz-plugins-main-0.8.8-orig/po/he.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/he.po	2013-04-23 15:46:17.661034756 +0200
+@@ -3662,8 +3662,8 @@ msgstr "צבע 3 עבור הרקע המ�
+ msgid "Color of text on resize popup."
+ msgstr "צבע הטקסט בחלונית שינוי הגודל."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "הצג מידע אודות שינוי גודל בדומה ל-metacity"
++msgid "Display info on resize similar to marco"
++msgstr "הצג מידע אודות שינוי גודל בדומה ל-marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "משך דהיית החלונית (במילישניות)"
+@@ -5685,8 +5685,8 @@ msgstr "ודא שחלון המוגדר �
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "הצג כראוי במסך מלא יישומים מיושנים ויישומי Wine."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "תיקונים דמויי Metacity."
++msgid "Marco-like workarounds."
++msgstr "תיקונים דמויי Marco."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "תיקון לדיימון ההודעות"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/hi.po compiz-plugins-main-0.8.8/po/hi.po
+--- compiz-plugins-main-0.8.8-orig/po/hi.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/hi.po	2013-04-23 15:46:18.485042916 +0200
+@@ -3751,7 +3751,7 @@ msgstr "ढ़ाल पृष्ठभ�
+ msgid "Color of text on resize popup."
+ msgstr "पॉपअप को फिर आकार देने पर पाठ का रंग."
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr "मेटासिटी के समान फिर आकार पर प्रदर्शन सूचना"
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5881,7 +5881,7 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "वाइन व पुरातन अनुप्रयोग को पूर्णस्क्रीन ठीक से बनाएं."
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr "मेटासिटी के समान समाधान."
+ 
+ msgid "Notification Daemon Fix"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/hu.po compiz-plugins-main-0.8.8/po/hu.po
+--- compiz-plugins-main-0.8.8-orig/po/hu.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/hu.po	2013-04-23 15:46:17.436032527 +0200
+@@ -3687,8 +3687,8 @@ msgstr "A háttér színátmenetének ha
+ msgid "Color of text on resize popup."
+ msgstr "A szöveg színe az átméretező ablakon."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Ablakátméretezési információk megjelenítése a Metacity módján"
++msgid "Display info on resize similar to marco"
++msgstr "Ablakátméretezési információk megjelenítése a Marco módján"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "A felbukkanó ablakok áttűnési ideje (ezredmásodpercben megadva)"
+@@ -5754,8 +5754,8 @@ msgstr "A „Sürgős” jelölésű abl
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Teljes képernyős Wine és örökölt alkalmazások helyes megjelenítése."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity témához szánt hibajavítások"
++msgid "Marco-like workarounds."
++msgstr "Marco témához szánt hibajavítások"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Értesítés démon javítása"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/it.po compiz-plugins-main-0.8.8/po/it.po
+--- compiz-plugins-main-0.8.8-orig/po/it.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/it.po	2013-04-23 15:46:18.417042243 +0200
+@@ -3969,10 +3969,10 @@ msgstr "Colore 3 del gradiente di sfondo
+ msgid "Color of text on resize popup."
+ msgstr "Colore del testo nella finestra del ridimensionamento."
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ "Mostra informazione al ridimensionamento, in maniera simile a quella di "
+-"Metacity"
++"Marco"
+ 
+ # (ndt) suggerimento
+ msgid "Fade time (in ms) for popup window"
+@@ -6188,8 +6188,8 @@ msgstr ""
+ "Fa in modo che le applicazioni Wine e quelle più datate funzionino "
+ "correttamente a schermo intero."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Alternative stile Metacity."
++msgid "Marco-like workarounds."
++msgstr "Alternative stile Marco."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Correzione demone di notifica"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/ja.po compiz-plugins-main-0.8.8/po/ja.po
+--- compiz-plugins-main-0.8.8-orig/po/ja.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/ja.po	2013-04-23 15:46:19.266050651 +0200
+@@ -3301,8 +3301,8 @@ msgstr "グラデーション背景の�
+ msgid "Color of text on resize popup."
+ msgstr "サイズ変更ポップアップのテキストの色"
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Metacity に似たサイズ変更情報の表示"
++msgid "Display info on resize similar to marco"
++msgstr "Marco に似たサイズ変更情報の表示"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "ポップアップウィンドウのフェード時間（ミリ秒）"
+@@ -5189,8 +5189,8 @@ msgstr "緊急（urgent）フラグの�
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Wine とレガシーアプリケーションを全画面表示で起動するときの設定"
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity のような次善策"
++msgid "Marco-like workarounds."
++msgstr "Marco のような次善策"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "通知デーモンの修正"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/ko.po compiz-plugins-main-0.8.8/po/ko.po
+--- compiz-plugins-main-0.8.8-orig/po/ko.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/ko.po	2013-04-23 15:46:18.208040173 +0200
+@@ -3582,8 +3582,8 @@ msgstr "그래디엔트 배경을 위한
+ msgid "Color of text on resize popup."
+ msgstr "크기 변경 팝업의 글자 색"
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Metacity처럼 크기 변경할 때 정보를 보여줍니다."
++msgid "Display info on resize similar to marco"
++msgstr "Marco처럼 크기 변경할 때 정보를 보여줍니다."
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "팝업 창의 페이드 시간 (밀리세컨드 단위)"
+@@ -5596,8 +5596,8 @@ msgstr "\"긴급한\" 창을 \"주의 �
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Wine이나 오래된 응용 프로그램의 전체 화면을 제대로 만들어줍니다."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity 같은 문제 회피 방법"
++msgid "Marco-like workarounds."
++msgstr "Marco 같은 문제 회피 방법"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "알림 데몬 고침"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/nb.po compiz-plugins-main-0.8.8/po/nb.po
+--- compiz-plugins-main-0.8.8-orig/po/nb.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/nb.po	2013-04-23 15:46:17.936037479 +0200
+@@ -3771,8 +3771,8 @@ msgstr "Farge 3 av fargeoverganen i bakg
+ msgid "Color of text on resize popup."
+ msgstr "Farge på tekst i størrelseendrings-oppsprett"
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Vis info ved endre størrelse, lignende Metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Vis info ved endre størrelse, lignende Marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Inn-/uttoningstid for oppsprettvindu"
+@@ -5885,8 +5885,8 @@ msgid "Make Wine and legacy applications
+ msgstr ""
+ "La Wine-programmer og gamle programmer bruke fullskjermmodus ordentlig."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity-lignende omveier."
++msgid "Marco-like workarounds."
++msgstr "Marco-lignende omveier."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Korreksjon for varslingsnisse"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/nl.po compiz-plugins-main-0.8.8/po/nl.po
+--- compiz-plugins-main-0.8.8-orig/po/nl.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/nl.po	2013-04-23 15:46:17.865036776 +0200
+@@ -3828,8 +3828,8 @@ msgstr "Kleur 3 van de gradatie achtergr
+ msgid "Color of text on resize popup."
+ msgstr "Kleur van de tekst bĳ grootte wĳzigen popup."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Toon info bĳ grootte wĳzigen vergelĳkbaar met metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Toon info bĳ grootte wĳzigen vergelĳkbaar met marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Vervaag tĳd (in ms) voor popup venster"
+@@ -5992,8 +5992,8 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Maak Wine en legacy vensters op de juiste manier volledig scherm."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity-achtige workarounds."
++msgid "Marco-like workarounds."
++msgstr "Marco-achtige workarounds."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Fix voor notificatie daemon"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/pl.po compiz-plugins-main-0.8.8/po/pl.po
+--- compiz-plugins-main-0.8.8-orig/po/pl.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/pl.po	2013-04-23 15:46:18.996047977 +0200
+@@ -3776,8 +3776,8 @@ msgstr "Kolor %d dla gradientu w tle."
+ msgid "Color of text on resize popup."
+ msgstr "Kolor teksu w dymku wyświetlającym rozmiar"
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Pokazuj okno o rozmiarze okna podobny jak w metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Pokazuj okno o rozmiarze okna podobny jak w marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Czas zanikania (w ms) dymka z rozmiarem"
+@@ -5930,8 +5930,8 @@ msgstr ""
+ "Spraw, by okna Wine i starszych aplikacji działały właściwie w trybie "
+ "pełnoekranowym."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Obejścia problemów podobne jak w Metacity."
++msgid "Marco-like workarounds."
++msgstr "Obejścia problemów podobne jak w Marco."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Poprawka demona powiadomień"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/pt_BR.po compiz-plugins-main-0.8.8/po/pt_BR.po
+--- compiz-plugins-main-0.8.8-orig/po/pt_BR.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/pt_BR.po	2013-04-23 15:46:18.721045254 +0200
+@@ -12,7 +12,7 @@ msgstr ""
+ "POT-Creation-Date: 2009-03-24 08:11+0100\n"
+ "PO-Revision-Date: 2008-04-18 17:28+0200\n"
+ "Last-Translator: Arthur Rodrigues Araruna <araruna@gmail.com>\n"
+-"Language-Team: Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
++"Language-Team: Portuguese <mate-l10n-br@listas.cipsga.org.br>\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+@@ -3846,8 +3846,8 @@ msgstr "Cor 3 do gradiente de fundo."
+ msgid "Color of text on resize popup."
+ msgstr "Cor do texto no popup de redimensionamento."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Mostrar informação sobre o redimensionamento como no metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Mostrar informação sobre o redimensionamento como no marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Tempo de desvanecimento (em ms) para as janelas popup"
+@@ -6041,10 +6041,10 @@ msgstr ""
+ "Fazer com que aplicações mais antigas e Wine funcionem como esperado no modo "
+ "de tela inteira."
+ 
+-msgid "Metacity-like workarounds."
++msgid "Marco-like workarounds."
+ msgstr ""
+ "Correções para alguns programas funcionarem como no gerenciador de janelas "
+-"do gnome (metacity)"
++"do mate (marco)"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Correção para o daemon de notificações"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/pt.po compiz-plugins-main-0.8.8/po/pt.po
+--- compiz-plugins-main-0.8.8-orig/po/pt.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/pt.po	2013-04-23 15:46:17.793036063 +0200
+@@ -3011,8 +3011,8 @@ msgstr "Cor 3 do gradiente de fundo."
+ msgid "Color of text on resize popup."
+ msgstr "Cor do texto no popup de redimensionamento."
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Mostrar informação acerca do redimensionamento como metacity"
++msgid "Display info on resize similar to marco"
++msgstr "Mostrar informação acerca do redimensionamento como marco"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Tempo de desvanecimento (em ms) para as janelas popup"
+@@ -4893,8 +4893,8 @@ msgstr "Tornar janelas \"urgentes\" tamb
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Fazer com que aplicações mais antigas e Wine funcionem como esperado em modo ecrã inteiro."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Correcções para alguns programas funcionarem como no metacity."
++msgid "Marco-like workarounds."
++msgstr "Correcções para alguns programas funcionarem como no marco."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Correcção para o daemon de notificações"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/ru.po compiz-plugins-main-0.8.8/po/ru.po
+--- compiz-plugins-main-0.8.8-orig/po/ru.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/ru.po	2013-04-23 15:46:19.068048690 +0200
+@@ -3907,7 +3907,7 @@ msgstr "Степень непрозра�
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -6204,8 +6204,8 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr ""
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Исправления в Metacity."
++msgid "Marco-like workarounds."
++msgstr "Исправления в Marco."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Исправление демонов уведомлений"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/sv.po compiz-plugins-main-0.8.8/po/sv.po
+--- compiz-plugins-main-0.8.8-orig/po/sv.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/sv.po	2013-04-23 15:46:18.789045927 +0200
+@@ -3742,8 +3742,8 @@ msgstr "Färg 3 för gradient bakgrund"
+ msgid "Color of text on resize popup."
+ msgstr "Färg för texten på popup för storleksändring"
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "Visa info liknade metacity under storleksändring"
++msgid "Display info on resize similar to marco"
++msgstr "Visa info liknade marco under storleksändring"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "Toningstid (i ms) för popupfönster"
+@@ -5829,8 +5829,8 @@ msgstr ""
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "Få wine och äldre program att använda helskärm korrekt."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity-liknande problemlösningar."
++msgid "Marco-like workarounds."
++msgstr "Marco-liknande problemlösningar."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Korrigering av notifikations-daemon"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/tr.po compiz-plugins-main-0.8.8/po/tr.po
+--- compiz-plugins-main-0.8.8-orig/po/tr.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/tr.po	2013-04-23 15:46:18.067038777 +0200
+@@ -3671,7 +3671,7 @@ msgstr ""
+ msgid "Color of text on resize popup."
+ msgstr ""
+ 
+-msgid "Display info on resize similar to metacity"
++msgid "Display info on resize similar to marco"
+ msgstr ""
+ 
+ msgid "Fade time (in ms) for popup window"
+@@ -5747,8 +5747,8 @@ msgid "Make Wine and legacy applications
+ msgstr ""
+ "Wine ve önceden açık olan uygulamaların pencerelerini düzgünce tam ekran yap."
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "Metacity ile ilgili hızlı çözümler."
++msgid "Marco-like workarounds."
++msgstr "Marco ile ilgili hızlı çözümler."
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "Uyarıcı Servisi Hatasının Çözümü"
+diff -uprN compiz-plugins-main-0.8.8-orig/po/zh_CN.po compiz-plugins-main-0.8.8/po/zh_CN.po
+--- compiz-plugins-main-0.8.8-orig/po/zh_CN.po	2011-04-21 13:41:49.000000000 +0200
++++ compiz-plugins-main-0.8.8/po/zh_CN.po	2013-04-23 15:46:19.204050037 +0200
+@@ -3620,8 +3620,8 @@ msgstr "渐变背景颜色3。"
+ msgid "Color of text on resize popup."
+ msgstr "弹出的改变大小窗口的文本颜色。"
+ 
+-msgid "Display info on resize similar to metacity"
+-msgstr "类似metacity般显示改变窗口大小的信息"
++msgid "Display info on resize similar to marco"
++msgstr "类似marco般显示改变窗口大小的信息"
+ 
+ msgid "Fade time (in ms) for popup window"
+ msgstr "弹出窗口的淡入淡出时间(微妙)"
+@@ -5611,8 +5611,8 @@ msgstr "使“紧急”的窗口同时�
+ msgid "Make Wine and legacy applications fullscreen properly."
+ msgstr "使Wine和旧式程序正确地全屏。"
+ 
+-msgid "Metacity-like workarounds."
+-msgstr "类metacity的工作区。"
++msgid "Marco-like workarounds."
++msgstr "类marco的工作区。"
+ 
+ msgid "Notification Daemon Fix"
+ msgstr "通知守护进程修正"
+diff -uprN compiz-plugins-main-0.8.8-orig/src/animation/animation.c compiz-plugins-main-0.8.8/src/animation/animation.c
+--- compiz-plugins-main-0.8.8-orig/src/animation/animation.c	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/animation/animation.c	2013-04-23 15:46:19.523053196 +0200
+@@ -4607,7 +4607,7 @@ static Bool animInitDisplay(CompPlugin *
+     matchInit (&ad->neverAnimateMatch);
+     matchAddExp (&ad->neverAnimateMatch, 0, "title=gksu");
+     matchAddExp (&ad->neverAnimateMatch, 0, "title=x-session-manager");
+-    matchAddExp (&ad->neverAnimateMatch, 0, "title=gnome-session");
++    matchAddExp (&ad->neverAnimateMatch, 0, "title=mate-session");
+     matchUpdate (d, &ad->neverAnimateMatch);
+ 
+     WRAP(ad, d, handleEvent, animHandleEvent);
+diff -uprN compiz-plugins-main-0.8.8-orig/src/resizeinfo/resizeinfo.c compiz-plugins-main-0.8.8/src/resizeinfo/resizeinfo.c
+--- compiz-plugins-main-0.8.8-orig/src/resizeinfo/resizeinfo.c	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/resizeinfo/resizeinfo.c	2013-04-23 15:46:19.429052265 +0200
+@@ -1,6 +1,6 @@
+ /**
+  *
+- * Compiz metacity like info during resize
++ * Compiz marco like info during resize
+  *
+  * resizeinfo.c
+  *
+diff -uprN compiz-plugins-main-0.8.8-orig/src/workarounds/workarounds.c compiz-plugins-main-0.8.8/src/workarounds/workarounds.c
+--- compiz-plugins-main-0.8.8-orig/src/workarounds/workarounds.c	2011-04-21 12:20:09.000000000 +0200
++++ compiz-plugins-main-0.8.8/src/workarounds/workarounds.c	2013-04-23 15:46:19.583053791 +0200
+@@ -17,7 +17,7 @@
+  * along with this program; if not, write to the Free Software
+  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+  *
+- * This plug-in for Metacity-like workarounds.
++ * This plug-in for Marco-like workarounds.
+  */
+ 
+ #include <string.h>

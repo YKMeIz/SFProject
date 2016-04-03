@@ -1,0 +1,125 @@
+diff -up paprefs-0.9.10/configure.ac.modules-path paprefs-0.9.10/configure.ac
+--- paprefs-0.9.10/configure.ac.modules-path	2011-09-27 10:25:35.000000000 +0200
++++ paprefs-0.9.10/configure.ac	2011-09-27 10:25:35.000000000 +0200
+@@ -43,8 +43,8 @@ AC_SUBST(GUILIBS_CFLAGS)
+ AC_SUBST(GUILIBS_LIBS)
+ 
+ PKG_CHECK_MODULES(LIBPULSE, libpulse)
+-LIBPULSE_MODLIBDIR=`pkg-config libpulse --variable libdir`
+-AC_SUBST(LIBPULSE_MODLIBDIR)
++LIBPULSE_MODLIBEXECDIR=`pkg-config libpulse --variable modlibexecdir`
++AC_SUBST(LIBPULSE_MODLIBEXECDIR)
+ 
+ # If using GCC specifiy some additional parameters
+ if test "x$GCC" = "xyes" ; then
+diff -up paprefs-0.9.10/configure.modules-path paprefs-0.9.10/configure
+--- paprefs-0.9.10/configure.modules-path	2011-09-27 10:26:17.000000000 +0200
++++ paprefs-0.9.10/configure	2012-10-29 23:06:20.226909723 +0100
+@@ -670,7 +670,7 @@ USE_NLS
+ USE_LYNX_FALSE
+ USE_LYNX_TRUE
+ have_lynx
+-LIBPULSE_MODLIBDIR
++LIBPULSE_MODLIBEXECDIR
+ LIBPULSE_LIBS
+ LIBPULSE_CFLAGS
+ GUILIBS_LIBS
+@@ -4973,7 +4973,7 @@ else
+ $as_echo "yes" >&6; }
+ 
+ fi
+-LIBPULSE_MODLIBDIR=`pkg-config libpulse --variable libdir`
++LIBPULSE_MODLIBEXECDIR=`pkg-config libpulse --variable modlibexecdir`
+ 
+ 
+ # If using GCC specifiy some additional parameters
+diff -up paprefs-0.9.10/doc/Makefile.in.modules-path paprefs-0.9.10/doc/Makefile.in
+--- paprefs-0.9.10/doc/Makefile.in.modules-path	2011-09-27 10:26:18.000000000 +0200
++++ paprefs-0.9.10/doc/Makefile.in	2012-10-29 23:06:20.228909741 +0100
+@@ -123,7 +123,7 @@ LIBINTL = @LIBINTL@
+ LIBOBJS = @LIBOBJS@
+ LIBPULSE_CFLAGS = @LIBPULSE_CFLAGS@
+ LIBPULSE_LIBS = @LIBPULSE_LIBS@
+-LIBPULSE_MODLIBDIR = @LIBPULSE_MODLIBDIR@
++LIBPULSE_MODLIBEXECDIR = @LIBPULSE_MODLIBEXECDIR@
+ LIBS = @LIBS@
+ LN_S = @LN_S@
+ LTLIBICONV = @LTLIBICONV@
+diff -up paprefs-0.9.10/Makefile.in.modules-path paprefs-0.9.10/Makefile.in
+--- paprefs-0.9.10/Makefile.in.modules-path	2011-09-27 10:26:18.000000000 +0200
++++ paprefs-0.9.10/Makefile.in	2012-10-29 23:06:20.229909749 +0100
+@@ -176,7 +176,7 @@ LIBINTL = @LIBINTL@
+ LIBOBJS = @LIBOBJS@
+ LIBPULSE_CFLAGS = @LIBPULSE_CFLAGS@
+ LIBPULSE_LIBS = @LIBPULSE_LIBS@
+-LIBPULSE_MODLIBDIR = @LIBPULSE_MODLIBDIR@
++LIBPULSE_MODLIBEXECDIR = @LIBPULSE_MODLIBEXECDIR@
+ LIBS = @LIBS@
+ LN_S = @LN_S@
+ LTLIBICONV = @LTLIBICONV@
+diff -up paprefs-0.9.10/src/Makefile.am.modules-path paprefs-0.9.10/src/Makefile.am
+--- paprefs-0.9.10/src/Makefile.am.modules-path	2009-12-05 21:20:20.000000000 +0100
++++ paprefs-0.9.10/src/Makefile.am	2012-10-29 23:06:20.227909732 +0100
+@@ -31,7 +31,7 @@ paprefs_SOURCES=paprefs.cc
+ 
+ paprefs_LDADD=$(AM_LDADD) $(GUILIBS_LIBS) $(LIBPULSE_LIBS)
+ paprefs_CXXFLAGS=$(AM_CXXFLAGS) $(GUILIBS_CFLAGS) $(LIBPULSE_CFLAGS)
+-paprefs_CXXFLAGS+=-DGLADE_FILE=\"$(gladedir)/paprefs.glade\" -DLOCALEDIR=\"$(localedir)\" -DMODLIBDIR=\""$(LIBPULSE_MODLIBDIR)/"\" -DSHREXT=\"$(SHREXT)\"
++paprefs_CXXFLAGS+=-DGLADE_FILE=\"$(gladedir)/paprefs.glade\" -DLOCALEDIR=\"$(localedir)\" -DMODDIR=\""$(LIBPULSE_MODLIBEXECDIR)"\" -DSHREXT=\"$(SHREXT)\"
+ 
+ EXTRA_DIST = $(glade_DATA) $(desktop_in_files)
+ 
+diff -up paprefs-0.9.10/src/Makefile.in.modules-path paprefs-0.9.10/src/Makefile.in
+--- paprefs-0.9.10/src/Makefile.in.modules-path	2011-09-27 10:26:18.000000000 +0200
++++ paprefs-0.9.10/src/Makefile.in	2012-10-29 23:06:20.228909741 +0100
+@@ -164,7 +164,7 @@ LIBINTL = @LIBINTL@
+ LIBOBJS = @LIBOBJS@
+ LIBPULSE_CFLAGS = @LIBPULSE_CFLAGS@
+ LIBPULSE_LIBS = @LIBPULSE_LIBS@
+-LIBPULSE_MODLIBDIR = @LIBPULSE_MODLIBDIR@
++LIBPULSE_MODLIBEXECDIR = @LIBPULSE_MODLIBEXECDIR@
+ LIBS = @LIBS@
+ LN_S = @LN_S@
+ LTLIBICONV = @LTLIBICONV@
+@@ -266,7 +266,7 @@ paprefs_LDADD = $(AM_LDADD) $(GUILIBS_LI
+ paprefs_CXXFLAGS = $(AM_CXXFLAGS) $(GUILIBS_CFLAGS) $(LIBPULSE_CFLAGS) \
+ 	-DGLADE_FILE=\"$(gladedir)/paprefs.glade\" \
+ 	-DLOCALEDIR=\"$(localedir)\" \
+-	-DMODLIBDIR=\""$(LIBPULSE_MODLIBDIR)/"\" \
++	-DMODDIR=\""$(LIBPULSE_MODLIBEXECDIR)"\" \
+ 	-DSHREXT=\"$(SHREXT)\"
+ EXTRA_DIST = $(glade_DATA) $(desktop_in_files)
+ CLEANFILES = $(desktop_DATA)
+diff -up paprefs-0.9.10/src/paprefs.cc.modules-path paprefs-0.9.10/src/paprefs.cc
+--- paprefs-0.9.10/src/paprefs.cc.modules-path	2011-03-20 15:01:13.000000000 +0100
++++ paprefs-0.9.10/src/paprefs.cc	2012-10-29 23:06:20.230909757 +0100
+@@ -637,12 +637,25 @@ void MainWindow::readFromGConf() {
+ }
+ 
+ gchar * MainWindow::modulePath(const gchar *name) {
+-  gchar *path, *pulsedir, *c;
++  gchar *path, *c, **versions;
+ 
+-  pulsedir = g_strdup_printf ("pulse-%d.%d", PA_MAJOR, PA_MINOR);
++  versions = g_strsplit(pa_get_library_version(), ".", 3);
++  if (versions[0] && versions[1]) {
++      gchar *pulsedir, *search;
+ 
+-  path = g_build_filename (MODLIBDIR, pulsedir, "modules", name, NULL);
+-  g_free (pulsedir);
++      /* Remove the "/pulse-x.y/modules" suffix so we can dynamically inject
++       * it again with runtime library version numbers */
++      pulsedir = g_strdup_printf ("%s", MODDIR);
++      if ((search = g_strrstr (pulsedir, G_DIR_SEPARATOR_S))) {
++          *search = '\0';
++          if ((search = g_strrstr (pulsedir, G_DIR_SEPARATOR_S)))
++              *search = '\0';
++      }
++      path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "pulse-%s.%s" G_DIR_SEPARATOR_S "modules" G_DIR_SEPARATOR_S "%s", pulsedir, versions[0], versions[1], name);
++      g_free (pulsedir);
++  } else
++      path = g_build_filename (MODDIR, name, NULL);
++  g_strfreev(versions);
+ 
+   return path;
+ }

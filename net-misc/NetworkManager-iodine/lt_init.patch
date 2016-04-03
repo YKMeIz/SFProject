@@ -1,0 +1,12 @@
+diff -urN NetworkManager-iodine-0.0.4.a/configure.ac NetworkManager-iodine-0.0.4.b/configure.ac
+--- NetworkManager-iodine-0.0.4.a/configure.ac	2012-12-25 23:38:59.000000000 +1100
++++ NetworkManager-iodine-0.0.4.b/configure.ac	2013-12-14 17:03:10.085586196 +1100
+@@ -14,7 +14,7 @@
+ AC_PROG_CC
+ AM_PROG_CC_C_O
+ AC_PROG_INSTALL
+-AC_PROG_LIBTOOL
++LT_INIT
+ 
+ dnl
+ dnl Required headers

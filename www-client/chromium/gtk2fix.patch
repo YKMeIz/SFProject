@@ -1,0 +1,49 @@
+diff -up chromium-38.0.2125.58/chrome/browser/ui/libgtk2ui/x11_input_method_context_impl_gtk2.cc.gtk2fix chromium-38.0.2125.58/chrome/browser/ui/libgtk2ui/x11_input_method_context_impl_gtk2.cc
+--- chromium-38.0.2125.58/chrome/browser/ui/libgtk2ui/x11_input_method_context_impl_gtk2.cc.gtk2fix	2014-09-17 16:36:48.628108404 -0400
++++ chromium-38.0.2125.58/chrome/browser/ui/libgtk2ui/x11_input_method_context_impl_gtk2.cc	2014-09-17 16:41:28.764263568 -0400
+@@ -80,7 +80,8 @@ bool X11InputMethodContextImplGtk2::Disp
+   // Translate a XKeyEvent to a GdkEventKey.
+   GdkEvent* event = GdkEventFromNativeEvent(key_event.native_event());
+   if (!event) {
+-    LOG(ERROR) << "Cannot translate a XKeyEvent to a GdkEvent.";
++    // RHEL 6 only patch.
++    // LOG(ERROR) << "Cannot translate a XKeyEvent to a GdkEvent.";
+     return false;
+   }
+ 
+@@ -236,13 +237,21 @@ GdkEvent* X11InputMethodContextImplGtk2:
+   g_free(keyvals);
+   keyvals = NULL;
+   // Get a GdkWindow.
+-  GdkWindow* window = gdk_x11_window_lookup_for_display(display, xkey.window);
++  // This function is not availible in gtk2 2.2 so we use a depriciated function call instead.
++  // gdk_window_lookup()
++  // RHEL 6 only patch.
++  // If anyone knows a better way to fix this any suggestions are welcome!
++  //GdkWindow* window = gdk_x11_window_lookup_for_display(display, xkey.window);
++  GdkWindow* window = gdk_window_lookup(xkey.window);
+   if (window)
+     g_object_ref(window);
+   else
+-    window = gdk_x11_window_foreign_new_for_display(display, xkey.window);
++    // Same story here. RHEL 6 only patch.
++    // window = gdk_x11_window_foreign_new_for_display(display, xkey.window);
++    window = gdk_window_lookup(xkey.window);
+   if (!window) {
+-    LOG(ERROR) << "Cannot get a GdkWindow for a key event.";
++  // Not an error under RHEL 6. Ignore. RHEL 6 only patch.
++  //  LOG(ERROR) << "Cannot get a GdkWindow for a key event.";
+     return NULL;
+   }
+ 
+@@ -348,7 +357,9 @@ void X11InputMethodContextImplGtk2::OnPr
+ 
+ X11InputMethodContextImplGtk2::GtkCommitSignalTrap::GtkCommitSignalTrap()
+     : is_trap_enabled_(false),
+-      gdk_event_key_keyval_(GDK_KEY_VoidSymbol),
++  // RHEL 6 only patch.
++  //    gdk_event_key_keyval_(GDK_KEY_VoidSymbol),
++      gdk_event_key_keyval_(GDK_VoidSymbol),
+       is_signal_caught_(false) {}
+ 
+ void X11InputMethodContextImplGtk2::GtkCommitSignalTrap::StartTrap(

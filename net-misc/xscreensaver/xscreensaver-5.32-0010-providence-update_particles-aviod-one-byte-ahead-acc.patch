@@ -1,0 +1,80 @@
+From a55333c625e769fb845277a346a14f3949fb57ab Mon Sep 17 00:00:00 2001
+From: Mamoru TASAKA <mtasaka@fedoraproject.org>
+Date: Sun, 19 Apr 2015 22:11:06 +0900
+Subject: [PATCH] providence:update_particles: aviod one byte ahead access
+
+gcc (5.0.1) -fsanitize=address -fsanitize=undefined detected
+the following error:
+
+../../../hacks/glx/providence.c:458:43: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:457:50: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:472:43: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:471:50: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:491:43: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:490:50: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:504:43: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:503:50: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:558:44: runtime error: index 300 out of bounds for type 'double [300][2]'
+../../../hacks/glx/providence.c:557:51: runtime error: index 300 out of bounds for type 'double [300][2]'
+
+The line 458 says:
+   456    for(i = 0; i < EYE_PARTICLE_COUNT/2; ++i) {
+   457      glVertex3f(mp->lookup[mp->eyeparticles[i][0]][mp->eyeparticles[i][1]][0],
+   458                 mp->lookup[mp->eyeparticles[i][0]][mp->eyeparticles[i][1]][1],
+   459                 0.0);
+   460    }
+
+Note that lookup[] definition is at the line 105:
+    77  #define LOOKUPSIZE (3600/5)  /* 3600 was way too much RAM on iOS */
+    78  #define EYELENGTH 300
+
+    81  #define PARTICLE_COUNT 2000
+
+    85  typedef struct {
+   103    double particles[PARTICLE_COUNT][5];
+
+   104    int eyeparticles[EYE_PARTICLE_COUNT][2];
+   105    double lookup[LOOKUPSIZE][EYELENGTH][2];
+   106    double lookup2[LOOKUPSIZE][EYELENGTH][2];
+   107
+   108  } providencestruct;
+
+and the above runtime error implies that mp->eyeparticles[i][1] has the value 300,
+which causes one byte ahead access error.
+
+So investigating where mp->eyeparticles is set, the cause is below:
+   271    /* now update eye particles */
+   272    for(i = 0; i < EYE_PARTICLE_COUNT; ++i) {
+
+   274      int x = mp->eyeparticles[i][1] + random()%(cos(mp->theta) < 0.0 ? 8 : 16);
+   277      if(x > EYELENGTH || random()%(cos(mp->theta) < 0.0 ? 40 : 10) == 0) {
+
+   282      }
+   283      else {
+   284        mp->eyeparticles[i][1] = x;
+   285      }
+   286    }
+   287  }
+
+On the above line 284, x can be 300 (because the line 277 says
+"x > EYELENGTH"), which causes this error.
+---
+ hacks/glx/providence.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hacks/glx/providence.c b/hacks/glx/providence.c
+index 3bd49b0..fcf8d31 100644
+--- a/hacks/glx/providence.c
++++ b/hacks/glx/providence.c
+@@ -274,7 +274,7 @@ static void update_particles(providencestruct *mp)
+     int x = mp->eyeparticles[i][1] + random()%(cos(mp->theta) < 0.0 ? 8 : 16);
+ 
+     /* reset if dead */
+-    if(x > EYELENGTH || random()%(cos(mp->theta) < 0.0 ? 40 : 10) == 0) {
++    if(x >= EYELENGTH || random()%(cos(mp->theta) < 0.0 ? 40 : 10) == 0) {
+ 
+ /*     if(x > EYELENGTH || (x > EYELENGTH/(2/3.0) && random()%7 == 0)) { */
+       mp->eyeparticles[i][0] = random()%LOOKUPSIZE;
+-- 
+2.3.5
+

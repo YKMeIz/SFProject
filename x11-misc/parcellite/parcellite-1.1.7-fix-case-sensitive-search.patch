@@ -1,0 +1,25 @@
+Index: src/main.c
+===================================================================
+--- src/main.c	(Revision 496)
++++ src/main.c	(Revision 497)
+@@ -1400,7 +1400,7 @@
+ 	}	/**end alt key pressed  */
+ 	if(e->state & (GDK_MODIFIER_MASK_MINE))	/**ignore all modifier keys  */
+ 		return FALSE;
+-	if(e->state &GDK_SHIFT_MASK   && get_pref_int32("case_search"))	/**ignore shift   */
++	if(e->state &GDK_SHIFT_MASK   && !get_pref_int32("case_search"))	/**ignore shift   */
+ 		return FALSE;
+ 	if( GDK_EXPOSE== e->type || GDK_BUTTON_RELEASE==e->type)	/**fix bug 3560995, item 1/2, red clipboard.  */
+ 		return FALSE;
+Index: ChangeLog
+===================================================================
+--- ChangeLog	(Revision 496)
++++ ChangeLog	(Revision 497)
+@@ -3,6 +3,7 @@
+  +Fixed bug 108, red search-as-you-type with super-K key.
+  +Fixed bug 109, segfault when action key missing and history key changed.
+  +Updated Russian translation.
++ +Fix broken case-sensitive search.
+  
+ V1.1.7 Tuesday, October 15, 2013
+  +Added remote i386 build and upload to sourceforge.

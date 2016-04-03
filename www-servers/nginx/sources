@@ -1,0 +1,13 @@
+928c8b677713b532d386034283a8ff17  COPYRIGHT
+db861faafc08f38fcce873913ba3459f  logrotate
+e7502dc170277597ca73eb53c359c771  nginx-1.9.13.tar.gz
+f7984934bd6cab883e1f33d5129834bb  nginx.conf
+b7447a24c08d7bf12484f574b6cb5426  nginx-debug.service
+21e8a05c9ccf1948bb13c14c0fb218f8  nginx-debug.sysconf
+536cff4e31baccd8692db5d6cb5c3abd  nginx.init.in
+09b23ee29e479ac1aec63ea0ef146e0e  nginx.service
+59441ba573d699f941e21063da7d0698  nginx.suse.logrotate
+dfe2f3d932aa5181131f5f2b08aafc6d  nginx.sysconf
+be6ae92e03039b3f8068cb876cabb5a7  nginx.upgrade.sh
+4dce452bf8dbb01f278ec0ea9ba6cf40  nginx.vh.default.conf
+1e2a80d832faceb5f5e9bf5147b262da  njs-91543c86f412.tar.gz

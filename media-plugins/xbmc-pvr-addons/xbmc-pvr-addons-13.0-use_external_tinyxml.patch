@@ -1,0 +1,167 @@
+diff -up ./addons/pvr.demo/Makefile.am.orig ./addons/pvr.demo/Makefile.am
+--- ./addons/pvr.demo/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.demo/Makefile.am	2014-05-13 14:47:04.295458751 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.demo
+ LIBNAME         = libpvrdemo-addon
+ lib_LTLIBRARIES = libpvrdemo-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./addons/pvr.dvbviewer/Makefile.am.orig ./addons/pvr.dvbviewer/Makefile.am
+--- ./addons/pvr.dvbviewer/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.dvbviewer/Makefile.am	2014-05-13 14:52:41.261469200 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.dvbviewer
+ LIBNAME         = libdvbviewer-addon
+ lib_LTLIBRARIES = libdvbviewer-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./addons/pvr.dvbviewer/src/DvbData.cpp.orig ./addons/pvr.dvbviewer/src/DvbData.cpp
+--- ./addons/pvr.dvbviewer/src/DvbData.cpp.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.dvbviewer/src/DvbData.cpp	2014-05-13 14:47:43.566459969 +0200
+@@ -1,7 +1,7 @@
+ #include "DvbData.h"
+ #include "client.h"
+ #include "platform/util/util.h"
+-#include "tinyxml/tinyxml.h"
++#include "tinyxml.h"
+ #include "tinyxml/XMLUtils.h"
+ #include <inttypes.h>
+ #include <set>
+diff -up ./addons/pvr.mediaportal.tvserver/Makefile.am.orig ./addons/pvr.mediaportal.tvserver/Makefile.am
+--- ./addons/pvr.mediaportal.tvserver/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.mediaportal.tvserver/Makefile.am	2014-05-13 14:47:04.296458751 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.mediaportal.tvserv
+ LIBNAME         = libmediaportal-addon
+ lib_LTLIBRARIES = libmediaportal-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./addons/pvr.mediaportal.tvserver/src/GenreTable.cpp.orig ./addons/pvr.mediaportal.tvserver/src/GenreTable.cpp
+--- ./addons/pvr.mediaportal.tvserver/src/GenreTable.cpp.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.mediaportal.tvserver/src/GenreTable.cpp	2014-05-13 14:47:04.296458751 +0200
+@@ -19,7 +19,7 @@
+ 
+ #include "client.h"
+ #include "GenreTable.h"
+-#include "tinyxml/tinyxml.h"
++#include "tinyxml.h"
+ 
+ using namespace ADDON;
+ using namespace std;
+diff -up ./addons/pvr.nextpvr/Makefile.am.orig ./addons/pvr.nextpvr/Makefile.am
+--- ./addons/pvr.nextpvr/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.nextpvr/Makefile.am	2014-05-13 14:47:04.297458751 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.nextpvr
+ LIBNAME         = libnextpvr-addon
+ lib_LTLIBRARIES = libnextpvr-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./addons/pvr.nextpvr/src/pvrclient-nextpvr.cpp.orig ./addons/pvr.nextpvr/src/pvrclient-nextpvr.cpp
+--- ./addons/pvr.nextpvr/src/pvrclient-nextpvr.cpp.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.nextpvr/src/pvrclient-nextpvr.cpp	2014-05-13 14:47:04.298458751 +0200
+@@ -30,7 +30,7 @@
+ 
+ #include "md5.h"
+ 
+-#include "tinyxml/tinyxml.h"
++#include "tinyxml.h"
+ 
+ #if defined(TARGET_WINDOWS)
+   #define atoll(S) _atoi64(S) 
+diff -up ./addons/pvr.njoy/Makefile.am.orig ./addons/pvr.njoy/Makefile.am
+--- ./addons/pvr.njoy/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.njoy/Makefile.am	2014-05-13 14:47:04.299458751 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.njoy
+ LIBNAME         = libpvrnjoy-addon
+ lib_LTLIBRARIES = libpvrnjoy-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./addons/pvr.njoy/src/N7Xml.cpp.orig ./addons/pvr.njoy/src/N7Xml.cpp
+--- ./addons/pvr.njoy/src/N7Xml.cpp.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.njoy/src/N7Xml.cpp	2014-05-13 14:47:04.299458751 +0200
+@@ -1,7 +1,7 @@
+ 
+ 
+ #include "N7Xml.h"
+-#include "tinyxml/tinyxml.h"
++#include "tinyxml.h"
+ #include "tinyxml/XMLUtils.h"
+ 
+ using namespace ADDON;
+diff -up ./addons/pvr.vuplus/Makefile.am.orig ./addons/pvr.vuplus/Makefile.am
+--- ./addons/pvr.vuplus/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.vuplus/Makefile.am	2014-05-13 14:47:04.300458751 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.vuplus
+ LIBNAME         = libvuplus-addon
+ lib_LTLIBRARIES = libvuplus-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./addons/pvr.vuplus/src/VuData.h.orig ./addons/pvr.vuplus/src/VuData.h
+--- ./addons/pvr.vuplus/src/VuData.h.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.vuplus/src/VuData.h	2014-05-13 14:47:04.301458751 +0200
+@@ -3,7 +3,7 @@
+ #include "platform/util/StdString.h"
+ #include "client.h"
+ #include "platform/threads/threads.h"
+-#include "tinyxml/tinyxml.h"
++#include "tinyxml.h"
+     
+ #define CHANNELDATAVERSION  2
+ 
+diff -up ./addons/pvr.wmc/Makefile.am.orig ./addons/pvr.wmc/Makefile.am
+--- ./addons/pvr.wmc/Makefile.am.orig	2014-05-07 01:53:24.000000000 +0200
++++ ./addons/pvr.wmc/Makefile.am	2014-05-13 14:47:04.302458751 +0200
+@@ -10,7 +10,7 @@ ADDONNAME       = pvr.wmc
+ LIBNAME         = libpvrwmc-addon
+ lib_LTLIBRARIES = libpvrwmc-addon.la
+ 
+-LIBS            = @abs_top_srcdir@/lib/tinyxml/libtinyxml.la
++LIBS            = -ltinyxml
+ 
+ include ../Makefile.include.am
+ 
+diff -up ./configure.ac.orig ./configure.ac
+--- ./configure.ac.orig	2014-05-13 14:45:39.950456136 +0200
++++ ./configure.ac	2014-05-13 14:47:04.303458751 +0200
+@@ -266,7 +266,6 @@ AC_SUBST(DATADIR)
+ AC_CONFIG_FILES([Makefile \
+                  lib/Makefile \
+                  lib/libhts/Makefile \
+-                 lib/tinyxml/Makefile \
+                  lib/cmyth/Makefile \
+                  lib/cmyth/libcmyth/Makefile \
+                  lib/cmyth/librefmem/Makefile \
+diff -up ./lib/Makefile.am.orig ./lib/Makefile.am
+--- ./lib/Makefile.am.orig	2014-05-13 14:45:39.951456136 +0200
++++ ./lib/Makefile.am	2014-05-13 14:47:04.303458751 +0200
+@@ -2,7 +2,7 @@ if ADDON_MYTHTV
+           ADDITIONAL_SUBDIRS = cmyth
+ endif
+ 
+-SUBDIRS = libhts tinyxml tinyxml2 libdvblinkremote $(ADDITIONAL_SUBDIRS)
++SUBDIRS = libhts tinyxml2 libdvblinkremote $(ADDITIONAL_SUBDIRS)
+ 
+ zip:
+ 

@@ -1,0 +1,7 @@
+2bdd57839ec626fb739ba2c6089fae65  gpgme-1.3.2-bufferoverflow.patch
+d8f9dbc565114ce65b2d59f62204c453  gpgme-1.3.2-config_extras.patch
+e88015b2afd5e4f8f689ff116dfb7b0f  gpgme-1.3.2-largefile.patch
+626e9ccbb5fb6941957eaaa7cd6ef3bd  gpgme-1.4.3-no_gpgsm_t-verify.patch
+334e524cffa8af4e2f43ae8afe585672  gpgme-1.4.3.tar.bz2
+cda8a4b121dd60583db5dc3b52d9d016  gpgme-1.4.3.tar.bz2.sig
+37a21f43708cc874d360a92bddf77f16  gpgme-multilib.h

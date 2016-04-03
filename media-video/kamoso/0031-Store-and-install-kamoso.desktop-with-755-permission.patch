@@ -1,0 +1,31 @@
+From 3102d5424539f8f27ce8989c3e18abe319b3e82c Mon Sep 17 00:00:00 2001
+From: Jekyll Wu <adaptee@gmail.com>
+Date: Mon, 10 Dec 2012 19:21:56 +0800
+Subject: [PATCH 31/32] Store and install kamoso.desktop with 755 permission
+
+See https://bugs.kde.org/show_bug.cgi?id=304569#c3
+---
+ src/CMakeLists.txt | 4 ++--
+ src/kamoso.desktop | 0
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 src/kamoso.desktop
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 3ed93c7..2166b7d 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -57,5 +57,5 @@ if(HAVE_NEPOMUK)
+ endif(HAVE_NEPOMUK)
+ 
+ install(TARGETS kamoso ${INSTALL_TARGETS_DEFAULT_ARGS})
+-install(FILES kamoso.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+-install(FILES kamosoplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+\ No newline at end of file
++install(PROGRAMS kamoso.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
++install(FILES kamosoplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+diff --git a/src/kamoso.desktop b/src/kamoso.desktop
+old mode 100644
+new mode 100755
+-- 
+1.8.0.2
+

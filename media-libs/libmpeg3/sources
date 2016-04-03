@@ -1,0 +1,9 @@
+0aeab3ed1e4787b66ada984cdd7ea8ec  libmpeg3-1.5.2-gnustack.patch
+f3d1db22c8bc5df32d57a39ca2c1aa1b  libmpeg3-1.7-boostrap.patch
+7a70830e8994d6fdbe287f0546099eb3  libmpeg3-1.7-cinelerra_hacking.patch
+48c69b2ffba73378e88e00abc996fe39  libmpeg3-1.7-fix_commented.patch
+6c5c360a59c071f876799f5dd847c5ee  libmpeg3-1.7-mpeg2qt-args.patch
+68aab0b9dbc4b70efcde1fe797d19a74  libmpeg3-1.7-pkgconfig.in.patch
+30ff496e98b486a99be76f51a494fa5d  libmpeg3-1.8-cinelerra_autotools.patch
+577bbbe445f4c8f8d74b6c63810d5918  libmpeg3-1.8-mmx.patch
+a9d0d34e8941a4437eb8e7dfe559eca1  libmpeg3-1.8-src.tar.bz2

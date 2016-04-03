@@ -1,0 +1,4 @@
+ac8f848f59038a414f3ab4f4cc08e99c  qtlockedfile-2.4_1-opensource.tar.gz
+3e54f56c5ead667b573138ffaaed4b8d  qtlockedfile-dont-build-example.patch
+64489da211f8b9c5bdc75b8728af0f9f  qtlockedfile-dont-link-qtgui.patch
+f5dfddd58885e6f1fc3473d40518b4c1  qtlockedfile.prf

@@ -1,0 +1,127 @@
+diff -up qwt-5.2.2/designer/designer.pro.install_qt qwt-5.2.2/designer/designer.pro
+--- qwt-5.2.2/designer/designer.pro.install_qt	2011-08-01 04:28:22.000000000 -0500
++++ qwt-5.2.2/designer/designer.pro	2013-10-29 12:46:08.724510656 -0500
+@@ -27,6 +27,7 @@ contains(CONFIG, QwtDesigner) {
+         else {
+             SUFFIX_STR = $${RELEASE_SUFFIX}
+         }
++        LIBNAME         = qwt-qt3$${SUFFIX_STR}
+     }
+     else {
+ 
+@@ -36,6 +37,7 @@ contains(CONFIG, QwtDesigner) {
+         else {
+             SUFFIX_STR = $${RELEASE_SUFFIX}
+         }
++        LIBNAME         = qwt$${SUFFIX_STR}
+     }
+ 
+     TEMPLATE        = lib
+@@ -45,7 +47,6 @@ contains(CONFIG, QwtDesigner) {
+     INCLUDEPATH    += $${QWT_ROOT}/src 
+     DEPENDPATH     += $${QWT_ROOT}/src 
+ 
+-    LIBNAME         = qwt$${SUFFIX_STR}
+     contains(CONFIG, QwtDll) {
+         win32 {
+             DEFINES += QT_DLL QWT_DLL
+@@ -103,7 +104,7 @@ contains(CONFIG, QwtDesigner) {
+ 
+         # Qt 4
+ 
+-        TARGET    = qwt_designer_plugin$${SUFFIX_STR}
++        TARGET    = qwt5_designer_plugin$${SUFFIX_STR}
+         CONFIG    += qt designer plugin 
+ 
+         RCC_DIR   = resources
+diff -up qwt-5.2.2/qwtconfig.pri.install_qt qwt-5.2.2/qwtconfig.pri
+--- qwt-5.2.2/qwtconfig.pri.install_qt	2011-08-01 04:28:22.000000000 -0500
++++ qwt-5.2.2/qwtconfig.pri	2013-10-29 12:46:08.724510656 -0500
+@@ -7,18 +7,15 @@ VER_MIN      = 2
+ VER_PAT      = 2
+ VERSION      = $${VER_MAJ}.$${VER_MIN}.$${VER_PAT}
+ 
+-unix {
+-    INSTALLBASE    = /usr/local/qwt-$$VERSION
++target.path    = $$[QT_INSTALL_LIBS]
++doc.path       = $$[QT_INSTALL_DOCS]
++VVERSION = $$[QT_VERSION]
++isEmpty(VVERSION) {
++headers.path   = $$[QT_INSTALL_HEADERS]/qwt5-qt3
++} else {
++headers.path   = $$[QT_INSTALL_HEADERS]/qwt5-qt4
+ }
+ 
+-win32 {
+-    INSTALLBASE    = C:/Qwt-$$VERSION
+-}
+-
+-target.path    = $$INSTALLBASE/lib
+-headers.path   = $$INSTALLBASE/include
+-doc.path       = $$INSTALLBASE/doc
+-
+ ######################################################################
+ # qmake internal options
+ ######################################################################
+@@ -26,7 +23,7 @@ doc.path       = $$INSTALLBASE/doc
+ CONFIG           += qt     # Also for Qtopia Core!
+ CONFIG           += warn_on
+ CONFIG           += thread
+-CONFIG           += silent
++#CONFIG           += silent
+ 
+ ######################################################################
+ # release/debug mode
+diff -up qwt-5.2.2/src/src.pro.install_qt qwt-5.2.2/src/src.pro
+--- qwt-5.2.2/src/src.pro.install_qt	2011-08-01 04:28:22.000000000 -0500
++++ qwt-5.2.2/src/src.pro	2013-10-29 12:46:08.725510637 -0500
+@@ -24,6 +24,7 @@ isEmpty(VVERSION) {
+     else {
+         SUFFIX_STR = $${RELEASE_SUFFIX} 
+     }
++    TARGET            = qwt-qt3$${SUFFIX_STR}
+ }
+ else {
+     CONFIG(debug, debug|release) {
+@@ -32,9 +33,17 @@ else {
+     else {
+         SUFFIX_STR = $${RELEASE_SUFFIX}
+     }
++    TARGET            = qwt$${SUFFIX_STR}
++    # pkgconfig support
++    CONFIG     += create_pc create_prl no_install_prl
++    QMAKE_PKGCONFIG_NAME = qwt5-qt4$${SUFFIX_STR} 
++    QMAKE_PKGCONFIG_DESCRIPTION = Qt Widgets for Technical Applications
++    QMAKE_PKGCONFIG_LIBDIR = $$[QT_INSTALL_LIBS]
++    QMAKE_PKGCONFIG_INCDIR = $$[QT_INSTALL_HEADERS]/qwt5-qt4
++    QMAKE_PKGCONFIG_REQUIRES = QtGui QtSvg
++    QMAKE_PKGCONFIG_DESTDIR = pkgconfig
+ }
+ 
+-TARGET            = qwt$${SUFFIX_STR}
+ TEMPLATE          = lib
+ 
+ MOC_DIR           = moc
+@@ -220,9 +229,17 @@ contains(CONFIG, QwtWidgets) {
+ # Install directives
+ 
+ headers.files  = $$HEADERS
+-doc.files      = $${QWT_ROOT}/doc/html $${QWT_ROOT}/doc/qwt-5.2.0.qch
+-unix {
+-    doc.files      += $${QWT_ROOT}/doc/man
+-}
++INSTALLS      += target headers
++
++html.files     = $${QWT_ROOT}/doc/html
++html.path      = $$[QT_INSTALL_DOCS]/html/
++INSTALLS      += html
++
++qch.files      = $${QWT_ROOT}/doc/qwt-5.2.0.qch
++qch.path       = $$[QT_INSTALL_DOCS]/qch
++INSTALLS      += qch 
++
++unix:man.files += $${QWT_ROOT}/doc/man
++unix:man.path  = /usr/share
++unix:INSTALLS  += man
+ 
+-INSTALLS       = target headers doc

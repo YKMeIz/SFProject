@@ -1,0 +1,118 @@
+--- mp3gain.c~	2010-05-19 05:48:34.000000000 +0200
++++ mp3gain.c	2011-10-04 16:57:33.654259207 +0200
+@@ -43,7 +43,11 @@
+  *  out there will have come up with superior versions already...
+  *
+  *  So have fun dissecting.
+- */
++ */
++
++/* stf: make 	-t the default
++ *		-T restores old behaviour
++ */
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -128,8 +132,8 @@
+ unsigned char buffer[BUFFERSIZE];
+ 
+ int writeself = 0;
+-int QuietMode = 0;
+-int UsingTemp = 0;
++int QuietMode = 0;
++int UsingTemp = 1;
+ int NowWriting = 0;
+ double lastfreq = -1.0;
+ 
+@@ -760,7 +764,8 @@
+ 		        fclose(inf); 
+ 			inf = NULL;
+             passError(MP3GAIN_UNSPECIFED_ERROR, 3,
+-                "\nCan't open ", outfilename, " for temp writing\n");
++                "\nCan't open ", outfilename, " for temp writing\n");
++			NowWriting = 0;
+ 			return M3G_ERR_CANT_MAKE_TMP;
+ 		} 
+  
+@@ -774,7 +779,8 @@
+ 	  if (UsingTemp && (outf != NULL))
+ 		  fclose(outf);
+ 	  passError( MP3GAIN_UNSPECIFED_ERROR, 3,
+-          "\nCan't open ", filename, " for modifying\n");
++          "\nCan't open ", filename, " for modifying\n");
++	  NowWriting = 0;
+ 	  return M3G_ERR_CANT_MODIFY_FILE;
+   }
+   else {
+@@ -975,7 +981,8 @@
+ 			passError(MP3GAIN_CANCELLED,3,"Cancelled processing.\n", filename, " is probably corrupted now.");
+ 		}
+ 		if (saveTime) 
+-		  fileTime(filename, setStoredTime);		
++		  fileTime(filename, setStoredTime);
++		NowWriting = 0;		
+ 		return;
+ 	}
+ #endif
+@@ -1044,8 +1051,9 @@
+         if (outlength != inlength) {
+             deleteFile(outfilename);
+ 			passError( MP3GAIN_UNSPECIFED_ERROR, 3,
+-                "Not enough temp space on disk to modify ", filename, 
+-                "\nEither free some space, or do not use \"temp file\" option\n");
++                "Not enough temp space on disk to modify ", filename,
++		"\nEither free some space, or switch off \"temp file\" option with -T\n");
++            NowWriting = 0; 
+             return M3G_ERR_NOT_ENOUGH_TMP_SPACE;
+         }
+         else {
+@@ -1053,7 +1061,8 @@
+ 		    if (deleteFile(filename)) {
+ 				deleteFile(outfilename); //try to delete tmp file
+ 				passError( MP3GAIN_UNSPECIFED_ERROR, 3,
+-                    "Can't open ", filename, " for modifying\n");
++                    "Can't open ", filename, " for modifying\n");
++			    NowWriting = 0;
+ 			    return M3G_ERR_CANT_MODIFY_FILE;
+ 		    }
+ 		    if (moveFile(outfilename, filename)) {
+@@ -1061,7 +1070,8 @@
+                     "Problem re-naming ", outfilename, " to ", filename, 
+                     "\nThe mp3 was correctly modified, but you will need to re-name ", 
+                     outfilename, " to ", filename, 
+-                    " yourself.\n");
++                    " yourself.\n");
++			    NowWriting = 0;
+ 			    return M3G_ERR_RENAME_TMP;
+ 		    };
+ 		    if (saveTime)
+@@ -1327,11 +1337,12 @@
+ 		fprintf(stderr,"\t%cd <n> - modify suggested dB gain by floating-point n\n",SWITCH_CHAR);
+ 		fprintf(stderr,"\t%cc - ignore clipping warning when applying gain\n",SWITCH_CHAR);
+ 		fprintf(stderr,"\t%co - output is a database-friendly tab-delimited list\n",SWITCH_CHAR);
+-		fprintf(stderr,"\t%ct - writes modified data to temp file, then deletes original\n",SWITCH_CHAR);
+-		fprintf(stderr,"\t     instead of modifying bytes in original file\n");
++		fprintf(stderr,"\t%ct - mp3gain writes modified mp3 to temp file, then deletes original \n",SWITCH_CHAR);
++		fprintf(stderr,"\t     instead of modifying bytes in original file (default)\n");
+ #ifdef AACGAIN
+ 		fprintf(stderr,"\t     A temp file is always used for AAC files.\n");
+ #endif
++		fprintf(stderr,"\t%cT - mp3gain directly modifies mp3 file (opposite of %ct)\n",SWITCH_CHAR,SWITCH_CHAR);
+ 		fprintf(stderr,"\t%cq - Quiet mode: no status messages\n",SWITCH_CHAR);
+ 		fprintf(stderr,"\t%cp - Preserve original file timestamp\n",SWITCH_CHAR);
+ 		fprintf(stderr,"\t%cx - Only find max. amplitude of file\n",SWITCH_CHAR);
+@@ -1674,9 +1685,12 @@
+ 
+                     break;
+ 
+-				case 't':
+-				case 'T':
++				case 't':
+ 					UsingTemp = !0;
++					break;
++
++				case 'T':
++					UsingTemp = 0;
+ 					break;
+ 
+ 				case 'u':

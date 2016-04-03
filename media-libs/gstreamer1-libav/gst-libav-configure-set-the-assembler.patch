@@ -1,0 +1,25 @@
+From 7c160e64686e6b9d971955246ffd0eccad9c3359 Mon Sep 17 00:00:00 2001
+From: Sebastian Dröge <sebastian.droege@collabora.co.uk>
+Date: Thu, 07 Mar 2013 08:30:55 +0000
+Subject: configure: Set the assembler used for libav to $CC
+
+libav assumes that it's not just an assembler but something that
+can also handle CPPFLAGS and other things.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=694416
+---
+diff --git a/configure.ac b/configure.ac
+index 22ede88..5317bd1 100644
+--- a/configure
++++ b/configure
+@@ -342,7 +342,7 @@ else
+   fi
+ 
+   if test x"$AS" != x; then
+-    emblibav_configure_args="$emblibav_configure_args --as=\\\"\\\$AS\\\""
++    emblibav_configure_args="$emblibav_configure_args --as=\\\"\\\$CC\\\""
+   fi
+ 
+   if test x"$CC" != x; then
+--
+cgit v0.9.0.2-2-gbebe

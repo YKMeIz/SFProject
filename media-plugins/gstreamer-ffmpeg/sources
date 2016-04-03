@@ -1,0 +1,15 @@
+632ca5013e711a2c54e2fd5f53a54a51  0001-configure.ac-Fix-for-new-libav.patch
+1b8e797ce7a593b5a6b12edb7d69c780  0002-gstffmpegutils-Fix-include.patch
+4d835bdcec0c4d506791cfa887dbb35d  0003-gstffmpegdec-Re-enable-MT-decoding-by-default.patch
+693db657b12cc0a371cab749071b148e  0004-ffmpeg-fix-pad-template-ref-leaks.patch
+c31ecfc9f97956229601e64e32e7dbf3  0005-ffmpegdec-Report-latency-if-B-frames-are-present.patch
+5a7837cab104e743889b6b34e5830cca  0006-ffmpeg-Channel-layouts-are-now-set-for-DTS-and-E-AC3.patch
+38e96e910db863eb4286169ad2e04409  0007-ffmpegdemux-fix-caps-leak.patch
+47b4bd52cf7d0f5df5be74dac6f662ba  0008-ffdec-Only-set-get_buffer-function-for-video.patch
+5b3a8ef2f9cb44ff26aa3a1ddcd9f75c  0009-codecmap-Add-mapping-for-Indeo-4-video-codec.patch
+c92396a9fe6d69107b941f875c52863d  0010-ffmpegdec-Use-auto-threads-if-available-and-only-sli.patch
+7f5fbc9e18f24e8317cfe470c1de47e9  0011-ffmux-Use-correct-enum-type-for-return-value.patch
+20872ef4a8704ab3e74ed83feca2820f  0012-ffdec-don-t-flush-buffers-on-DISCONT.patch
+b77ed4a830b230a16a8bc7a3d26012d8  gst-ffmpeg-0.10.12-ChangeLog-UTF-8.patch
+7f5beacaf1312db2db30a026b36888c4  gst-ffmpeg-0.10.13.tar.bz2
+4232d39bcecae7d61ef924c031591ca5  libav-0.8.17.tar.xz

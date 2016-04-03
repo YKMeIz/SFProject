@@ -1,0 +1,21 @@
+diff -Nurb --strip-trailing-cr geeqie-1.1-orig/src/image-overlay.c geeqie-1.1/src/image-overlay.c
+--- geeqie-1.1-orig/src/image-overlay.c	2012-08-12 22:13:41.000000000 +0200
++++ geeqie-1.1/src/image-overlay.c	2014-01-26 19:37:32.288510852 +0100
+@@ -261,7 +261,7 @@
+ 
+ 	new = g_string_new(str);
+ 
+-	prev = 0;
++	prev = -1;
+ 
+ 	while (TRUE)
+ 		{
+@@ -272,7 +272,7 @@
+ 		gchar *extrapos = NULL;
+ 		gchar *p;
+ 
+-		start = strchr(new->str, delim);
++		start = strchr(new->str + (prev + 1), delim);
+ 		if (!start)
+ 			break;
+ 		end = strchr(start+1, delim);

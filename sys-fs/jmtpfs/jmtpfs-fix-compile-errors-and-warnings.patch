@@ -1,0 +1,49 @@
+diff -Naur a/src/jmtpfs.cpp b/src/jmtpfs.cpp
+--- a/src/jmtpfs.cpp	2012-05-11 18:17:33.000000000 -0500
++++ b/src/jmtpfs.cpp	2012-08-25 12:47:43.030294818 -0500
+@@ -32,6 +32,7 @@
+ #include <sstream>
+ #include <iomanip>
+ #include <assert.h>
++#include <unistd.h>
+ 
+ #define JMTPFS_VERSION "0.4"
+ 
+@@ -275,9 +276,9 @@
+ struct jmtpfs_options
+ {
+ 	jmtpfs_options() : listDevices(0), displayHelp(0),
+-			showVersion(0), device(0), listStorage(0) {}
++			showVersion(0), listStorage(0), device(0) {}
+ 
+-	int	listDevices;
++	int listDevices;
+ 	int displayHelp;
+ 	int showVersion;
+ 	int listStorage;
+@@ -293,7 +294,7 @@
+ 		{"-device=%s", offsetof(struct jmtpfs_options, device),0},
+ 		{"-V", offsetof(struct jmtpfs_options, showVersion),1},
+ 		{"--version", offsetof(struct jmtpfs_options, showVersion),1},
+-		FUSE_OPT_END
++//		FUSE_OPT_END
+ };
+ 
+ 
+diff -Naur a/src/MtpFuseContext.h b/src/MtpFuseContext.h
+--- a/src/MtpFuseContext.h	2012-05-10 22:57:07.000000000 -0500
++++ b/src/MtpFuseContext.h	2012-08-25 11:02:04.051537234 -0500
+@@ -39,10 +39,10 @@
+ 	gid_t gid() const;
+ 
+ protected:
+-	uid_t						m_uid;
+-	gid_t						m_gid;
+ 	std::unique_ptr<MtpDevice>	m_device;
+-	MtpMetadataCache 		  	m_cache;
++	uid_t				m_uid;
++	gid_t				m_gid;
++	MtpMetadataCache 		m_cache;
+ };
+ 
+ 

@@ -1,0 +1,10 @@
+diff --git a/projects/demo/Banded b/projects/demo/Banded
+old mode 100755
+new mode 100644
+index be738c7..519b21e
+--- a/projects/demo/Banded
++++ b/projects/demo/Banded
+@@ -1 +1 @@
+-wish < tcl/Banded.tcl | demo BandedWG -or -ip
+\ No newline at end of file
++wish < tcl/Banded.tcl | ./demo BandedWG -or -ip

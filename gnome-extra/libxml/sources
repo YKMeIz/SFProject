@@ -1,0 +1,11 @@
+e5c64cf74ce4b5d389b7a4288dc3355d  libxml-1.8.17-aarch64-config.patch
+bfaf6009630404e20b43ed561cb8d55d  libxml-1.8.17-CAN-2004-0110.patch
+625fafaf4b4ccf89ee616ea7d553f078  libxml-1.8.17-CVE-2011-1944.patch
+5334287f061855a47131acc21b6dab0f  libxml-1.8.17-declarations.patch
+aa2c781333693e20ab716aef00a530dd  libxml-1.8.17-ficora-245608.patch
+c45a9691791a094589f13cf6068d158c  libxml-1.8.17-multiarch.patch
+ea7052d3397ca40b5690535fdfc8d772  libxml-1.8.17-open-mode.patch
+9c69867fc01a6fb25dd0bdd77f0e16cc  libxml-1.8.17-ppc64-config.patch
+53846294aa850a7d042948176d1d19dc  libxml-1.8.17.tar.gz
+2d35a77d6372f6d8529e478b40d959c2  libxml-1.8.17-utf8.patch
+07866fb06100888d4b5223f7e527ae7b  libxml-1.8.17-xpath.patch

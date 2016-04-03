@@ -1,0 +1,10 @@
+049b4cb370a2d55ab0d2d8e22d73b2ec  0001-bonjour-use-Qt-AutoConnection-for-BonjourServiceReso.patch
+228fff5975a61872b83052be97e2eabf  mumble-1.2.10.tar.gz
+3a944f16c9448dc6f9a7c245787358e3  mumble-1.2.3-logrotate.patch
+e1b8f758eb16f4e1971c4bc364576acd  mumble-1.2.4-celt_include_dir.patch
+16f8785e0779628977061cf9b0dd2aaf  mumble-1.2.5-compile-fix.patch
+d117d1920ea08ee4c69bfd0efc853171  mumble-1.2.5-slice2cpp.patch
+de91f913093f520c6aa205d9cb7b974e  mumble.desktop
+0b88be20699bef7e22fb4b1cede618ea  mumble-fixspeechd.patch
+ee6d4fe46baf71943e597238bd83dc8c  murmur.service
+b61d67127624e0ac3ccbc30eb678ca66  murmur-tmpfiles.conf

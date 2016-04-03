@@ -1,0 +1,51 @@
+.\"jmtpfs Man Page
+
+.TH "jmtpfs Man Page" "1" "26. Aug. 2012" "Malcolm J Lewis" ""
+.SH "NAME"
+jmtpfs \- FUSE based MTP filesystem
+
+.SH "SYNOPSIS"
+\fBjmtpfs\fP [OPTIONS] <mountpoint>
+
+.SH DESCRIPTION
+\fBjmtpfs\fP is a FUSE and libmtp based filesystem for accessing MTP (Media Transfer Protocol) devices.
+It was specifically designed for exchanging files between Linux systems and newer Android devices that support MTP but not USB Mass Storage.
+.PP
+This manual page documents briefly the \fBjmtpfs\fP commands.
+
+.SH OPTIONS
+.SS "FUSE Options:"
+.TP
+\fB\-h\fP
+Show fuse help options.
+.SS "Application Options:"
+.TP
+\fB\-l\fP or \fB\-\-listDevices\fP
+list available mtp devices (busLocation, devNum, productId, vendorId, product, vendor) and then exit.
+.TP
+\fB\-device=<busnum>,<devnum>\fP
+Device to mount. If not specified the first device found is used.
+.TP
+\fB\-V\fP or \fB\-\-version\fP
+Show jmtpfs and FUSE version information.
+
+.SH UNMOUNT DEVICE
+Use \fBfusermount -u <mountpoint>\fP to umount the device.
+
+.SH EXAMPLE
+jmtpfs -o allow_other ~/transformer
+.PP
+fusermount -u ~/transformer
+
+.SH UDEV RULES
+You will need to identify the device (via dmesg) and add a new rule to;
+/lib/udev/rules.d/51-android.rules to identify the ATTRS{idVendor} and ATTRS{idProduct} for the device.
+
+Current rules are for the ASUS Transformer TF101 and Samsung GT.
+
+.SH COPYRIGHT
+Copyright \(co 2012  Jason "J" Ferrara http://research.jacquette.com/
+.PP
+.SH AUTHOR
+This manual page was originally written by Malcolm J Lewis
+<malcolmlewis@opensuse.org> for the openSUSE project.

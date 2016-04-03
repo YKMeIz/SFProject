@@ -1,0 +1,14 @@
+diff -up ./AirTV-Qt/AirTV.pro.orig ./AirTV-Qt/AirTV.pro
+--- ./AirTV-Qt/AirTV.pro.orig	2015-05-08 13:39:28.000000000 +0200
++++ ./AirTV-Qt/AirTV.pro	2015-08-10 15:09:39.726026638 +0200
+@@ -21,8 +21,8 @@ macx {
+     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
+ }
+ 
+-LIBS += -lshairplay
+-INCLUDEPATH += ../src/include/ ../src/bindings/qt4/
++LIBS += -lshairplay -L../src/lib/.libs/
++INCLUDEPATH += ../src/include/ ../src/bindings/qt4/ ../include/
+ SOURCES += main.cpp\
+     ../src/bindings/qt4/raopservice.cpp \
+     ../src/bindings/qt4/raopcallbackhandler.cpp \

@@ -1,0 +1,90 @@
+.\" Preview this file with
+.\" groff -man -Tascii pac.1
+.\" Copy to /usr/share/man/man1
+.\"
+.TH pac 1 "MARCH 2010" Linux "User Manuals"
+.SH NAME
+pac \- Perl Auto Connector
+.SH SYNOPSIS
+.B pac [-start_tray]
+.SH DESCRIPTION
+.B pac
+is a (simple?) GUI to manage/launch connections to remote machines with:
+
+	- Configurable [Pre|Post]-connection local commands execution.
+
+	- Configurable list of macros (commands) to send to connected client.
+
+	- Configurable list of macros (commands) to execute locally when connected.
+
+	- Configurable list of conditional executions on connected machine via 'Expect':
+
+		. forget about SSH certificates
+
+		. chain multiple ssh connections
+
+		. automate tunnels creation
+
+		. etc
+
+	- Ability to connect to machines through a Proxy server!
+
+	- Scripting (Perl language), just like SecureCRT, but much better! :P
+
+	- Wake On LAN capabilities
+
+	- TABBED/WINDOWED terminals
+
+	- Possibility to *CLUSTER* terminals!!
+
+	- Local and Global variables, eg.: write down a password once, use it ANY where, centralizing its modification for faster changes! use them for:
+
+		. password vault
+
+		. reusing connection strings
+
+		. etc
+
+	- Seamless Gnome/Gtk integration.
+
+	- Tray icon for 'right button' quick launching of managed connections.
+
+	- Written in Perl/Gtk (wait, *is* that a feature? Well, it is for me! ;=)
+.SH OPTIONS
+.IP -start_tray
+Initialise
+.B pac
+minimized to tray.
+.SH FILES
+.I ~/.pac/
+.RS
+Per user configuration directory.
+.SH ENVIRONMENT
+Uses next Gnome's configuration paths:
+.IP /system/http_proxy/host
+Takes this proxy path
+.IP /system/http_proxy/port
+Takes this proxy port
+.IP /system/http_proxy/authentication_user
+Takes this proxy user name
+.IP /system/http_proxy/authentication_password
+Takes this proxy password
+.SH BUGS
+Well... I thinks that by this version, there should not be any known bugs but, I'm sure you 'will' find some. If so, please, let me know!
+.SH AUTHOR
+David Torrejón Vaquerizas <david.tv@gmail.com>
+
+Visit:
+
+http://sourceforge.net/projects/pacmanager/
+
+https://sites.google.com/site/davidtv/
+.SH "SEE ALSO"
+.BR ssh (1),
+.BR sftp (1),
+.BR telnet (1)
+.BR rdesktop (1)
+.BR vncviewer (1)
+.BR remote-tty (1)
+.BR cu (1)
+
