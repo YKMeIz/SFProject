@@ -1,0 +1,7 @@
+e1f50a3e8a444582e5f5adf0dc22649c  g2p_train.hpp
+b58233d5deb63d9b9f9f53e6a4ee00ac  sphinxtrain-1.0.8-bigendian.patch
+0f7155ba92fbdec169c92c1759303106  sphinxtrain-1.0.8.tar.gz
+2c2906e1b6c5d634fc28063e3942c210  sphinxtrain-extension.patch
+642cbfb1e187b66a57453518c670e4cc  sphinxtrain-largefile.patch
+10789a8cc55d23a50576ea75dade1ea7  sphinxtrain-openfst.patch
+c82c83004c62ba6f04ef3e298590b2a0  sphinxtrain-opengrm.patch

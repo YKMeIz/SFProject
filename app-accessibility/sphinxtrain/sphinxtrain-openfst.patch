@@ -1,0 +1,29 @@
+--- ./src/programs/g2p_train/g2p_train.cpp.orig	2012-09-28 15:26:18.000000000 -0600
++++ ./src/programs/g2p_train/g2p_train.cpp	2016-02-18 22:03:39.787325589 -0700
+@@ -196,7 +196,7 @@ void relabel(StdMutableFst *fst, StdMuta
+ 	string dest = prefix+".fst.txt";
+ 	ostream *ostrm = new fst::ofstream(dest.c_str());
+ 	ostrm->precision(9);
+-	s::FstClass *fstc = new s::FstClass(out);
++	s::FstClass *fstc = new s::FstClass(*out);
+ 	s::PrintFst(*fstc, *ostrm, dest, isyms, osyms, NULL, acceptor, show_weight_one);
+ 	ostrm->flush();
+ 	delete ostrm;
+@@ -232,7 +232,7 @@ void train_model(string eps, string s1s2
+ 	                       prefix+".corpus.syms", unknown_symbol,
+ 	                       keep_symbols, initial_symbols,
+ 	                       allow_negative_labels,
+-	                       file_list_input, key_prefix,
++	                       key_prefix,
+ 	                       key_suffix);
+ 
+ 	//count n-grams
+@@ -355,7 +355,7 @@ void train_model(string eps, string s1s2
+ 	}
+ 
+ 	cout << "Minimizing model..." << endl;
+-	MutableFstClass *minimized = new s::MutableFstClass(fst);
++	MutableFstClass *minimized = new s::MutableFstClass(*fst);
+ 	Minimize(minimized, 0, fst::kDelta);
+ 	fst = minimized->GetMutableFst<StdArc>();
+ 

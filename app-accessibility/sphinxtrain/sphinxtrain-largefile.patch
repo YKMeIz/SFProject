@@ -1,0 +1,544 @@
+--- ./configure.in.orig	2012-12-13 11:19:47.000000000 -0700
++++ ./configure.in	2013-03-29 09:25:32.966568669 -0600
+@@ -1,6 +1,6 @@
+ # Automake-based build system
+ 
+-AC_INIT(SphinxTrain, 1.0.8)
++AC_INIT([SphinxTrain],[1.0.8])
+ AM_INIT_AUTOMAKE([no-define])
+ AC_CONFIG_MACRO_DIR([m4])
+ 
+@@ -8,8 +8,16 @@ AC_CANONICAL_HOST
+ 
+ AC_PROG_CC
+ AC_PROG_CXX
+-AM_PROG_LIBTOOL
++LT_INIT
+ AC_C_BIGENDIAN
++AC_SYS_LARGEFILE
++AC_FUNC_FSEEKO
++AC_TYPE_OFF_T
++AC_CHECK_TYPES(long long)
++AC_CHECK_SIZEOF(long long)
++AC_CHECK_SIZEOF(long)
++AC_CHECK_SIZEOF(int)
++AC_CHECK_SIZEOF(off_t)
+ 
+ AC_CHECK_LIB(m, log)
+ AC_CHECK_LIB(g2c, d_log)
+@@ -123,10 +131,10 @@ if test x$sphinxbase != x && test x$cros
+ fi
+ if test x$sphinxbase != x && test x$cross_compiling != xyes; then
+    AC_CHECK_FILE($sphinxbase/include/sphinxbase/prim_type.h,CPPFLAGS="-I$sphinxbase/include $CPPFLAGS",
+-   AC_ERROR(
+-[SphinxBase headers not found in $sphinxbase.  Please use the
++   AC_MSG_ERROR(
++SphinxBase headers not found in $sphinxbase.  Please use the
+ --with-sphinxbase option to `configure' to specify the location of
+-SphinxBase.  Run $0 --help for more information.]))
++SphinxBase.  Run $0 --help for more information.))
+ fi
+ # We include libsphinxbase/.libs because of stupid broken versions of libtool
+ if test x$sphinxbasebuild != x && test x$cross_compiling != xyes; then
+@@ -136,10 +144,10 @@ LIBS="$LIBS -lsphinxbase"
+ LDFLAGS="$LDFLAGS -L$sphinxbasebuild/src/libsphinxad \
+ 		  -L$sphinxbasebuild/src/libsphinxbase \
+ 		  -L$sphinxbasebuild/src/libsphinxbase/.libs"],
+-		   AC_ERROR(
+-[SphinxBase libraries were not found in $sphinxbasebuild.
++		   AC_MSG_ERROR(
++SphinxBase libraries were not found in $sphinxbasebuild.
+ Use the --with-sphinxbase-build option to `configure' to specify
+-the build directory for SphinxBase.  Run $0 --help for more information.]))
++the build directory for SphinxBase.  Run $0 --help for more information.))
+ fi
+ 
+ AC_ARG_ENABLE(g2p-decoder,
+--- ./src/libs/libcommon/Makefile.am.orig	2012-12-12 07:09:59.000000000 -0700
++++ ./src/libs/libcommon/Makefile.am	2013-03-29 09:26:41.461417362 -0600
+@@ -21,6 +21,6 @@ libcommon_la_SOURCES = \
+ 	 vector.c \
+ 	 was_added.c
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+ libcommon_la_LIBADD = $(top_builddir)/src/libs/libclust/libclust.la
+--- ./src/libs/libclust/Makefile.am.orig	2012-09-28 15:26:16.000000000 -0600
++++ ./src/libs/libclust/Makefile.am	2013-03-29 09:26:30.358441874 -0600
+@@ -6,4 +6,4 @@ libclust_la_SOURCES = \
+ 	kmeans.c \
+ 	metric.c
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+--- ./src/libs/libmllr/Makefile.am.orig	2012-09-28 15:26:16.000000000 -0600
++++ ./src/libs/libmllr/Makefile.am	2013-03-29 09:27:10.229356234 -0600
+@@ -4,4 +4,4 @@ libmllr_la_SOURCES = \
+ 	mllr.c \
+ 	mllr_io.c
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+--- ./src/libs/libmodinv/Makefile.am.orig	2012-12-12 07:10:04.000000000 -0700
++++ ./src/libs/libmodinv/Makefile.am	2013-03-29 09:27:22.181331552 -0600
+@@ -4,6 +4,6 @@ libmodinv_la_SOURCES = \
+ 	gauden.c \
+ 	mod_inv.c
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+ libmodinv_la_LIBADD = $(top_builddir)/src/libs/libcommon/libcommon.la
+--- ./src/libs/libio/Makefile.am.orig	2012-12-12 07:10:03.000000000 -0700
++++ ./src/libs/libio/Makefile.am	2013-03-29 09:26:55.077387321 -0600
+@@ -19,7 +19,7 @@ libio_la_SOURCES = \
+ 	 swap.c \
+ 	 topo_read.c
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+ libio_la_LIBADD = $(top_builddir)/src/libs/libcommon/libcommon.la
+ 
+--- ./src/libs/libio/s3io.c.orig	2012-09-28 15:26:16.000000000 -0600
++++ ./src/libs/libio/s3io.c	2013-03-29 09:25:08.847622004 -0600
+@@ -194,7 +194,7 @@ static int
+ wr_bin_hdr(FILE *fp)
+ {
+     uint32 i;
+-    long padding;
++    OFF_T padding;
+     int ret;
+ 
+     if (fprintf(fp, "s3\n") != 3) {
+@@ -213,7 +213,7 @@ wr_bin_hdr(FILE *fp)
+ 
+     /* Align to an 8-byte boundary (guarantees natural alignment for
+      * whatever follows) */
+-    padding = ftell(fp) + strlen("endhdr\n");
++    padding = FTELL(fp) + strlen("endhdr\n");
+     padding = 8 - (padding & 7);
+     if (padding != 8) {
+ 	fwrite("        ", 1, padding, fp);
+@@ -295,7 +295,7 @@ s3open(const char *file_name,
+ 	    goto error_loc;
+ 	}
+ 
+-	if (ftell(fp) == 0) {
++	if (FTELL(fp) == 0) {
+ 	    /* Write a header when no data */
+ 	    if (wr_bin_hdr(fp) != S3_SUCCESS) {
+ 		goto error_loc;
+@@ -517,7 +517,7 @@ s3read_intv_3d(void ****arr,
+     /* # of rows in subinterval */
+     s_d1 = e - s + 1;
+     
+-    if (fseek(fp, (long)(s*l_d2*l_d3*e_sz + sizeof(uint32)), SEEK_CUR) < 0) {
++    if (FSEEK(fp, (long)(s*l_d2*l_d3*e_sz + sizeof(uint32)), SEEK_CUR) < 0) {
+ 	E_FATAL_SYSTEM("Can't seek in file");
+     }
+ 
+@@ -891,13 +891,14 @@ int get_length(char *file,
+   }
+ 
+   /* Check if length matches file size */
+-  if ((length*sizeof(float) + 4) != statbuf.st_size) {
++  if ((OFF_T) (length*sizeof(float) + 4) != statbuf.st_size) {
+       n = length;
+       MYSWAP_INT(&n);
+ 
+-      if ((n*sizeof(float) + 4) != statbuf.st_size) {
+-          printf("Header size field: %d(%08x); filesize: %d(%08x)\n",
+-                  length, length, (int)statbuf.st_size, (int)statbuf.st_size);
++      if ((OFF_T) (n*sizeof(float) + 4) != statbuf.st_size) {
++          printf("Header size field: %d(%08x); filesize: %" PRIdOFF_T "(%08"
++                  PRIxOFF_T ")\n",
++                  length, length, statbuf.st_size, statbuf.st_size);
+           fflush(stdout);
+           fclose (fp);
+           return -1;
+@@ -1035,7 +1036,7 @@ areadfloat_part (char *file,
+         e_coeff = len-1;
+     }
+ 
+-    if (fseek(fp, s_coeff * sizeof(float) + sizeof(int), SEEK_SET) < 0) {
++    if (FSEEK(fp, s_coeff * sizeof(float) + sizeof(int), SEEK_SET) < 0) {
+         fprintf(stderr, "areadfloat_part: seek fail;");
+         perror("");
+         fprintf(stderr, "offset == %zu in %s\n",
+--- ./src/libs/libio/segdmp.c.orig	2012-09-28 15:26:16.000000000 -0600
++++ ./src/libs/libio/segdmp.c	2013-03-29 09:25:08.848622001 -0600
+@@ -168,7 +168,7 @@ dump_frm_buf()
+ 	    fp = dmp_fp[id_part[i]];
+ 
+ 	    if (h_seg[i]) {
+-		if (fseek(fp, id_off[i], SEEK_SET) < 0) {
++		if (FSEEK(fp, id_off[i], SEEK_SET) < 0) {
+ 		    E_ERROR_SYSTEM("Can't seek in dmp file\n");
+ 
+ 		    return S3_ERROR;
+@@ -178,7 +178,7 @@ dump_frm_buf()
+ 		
+ 		h_seg[i] = t_seg[i] = NULL;
+ 
+-		id_off[i] = ftell(fp);
++		id_off[i] = FTELL(fp);
+ 	    }
+ 	}
+     }
+@@ -574,7 +574,7 @@ segdmp_open_write(const char **dirs,		/*
+ 	dmp_fp[i] = s3open(dmp_fn, "wb", NULL);
+ 
+ 	/* add the file header size to all the offsets computed above. */
+-	hdr_sz = ftell(dmp_fp[i]);
++	hdr_sz = FTELL(dmp_fp[i]);
+ 	for (j = 0; j < n_id; j++) {
+ 	    if (id_part[j] == i)
+ 		id_off[j] += hdr_sz;
+@@ -720,8 +720,8 @@ segdmp_next_feat(uint32 id,
+     }
+ 
+     off = id_nxt_off[id];
+-    if (ftell(fp) != off) {
+-	if (fseek(fp, off, SEEK_SET) < 0) {
++    if (FTELL(fp) != off) {
++	if (FSEEK(fp, off, SEEK_SET) < 0) {
+ 	    E_FATAL_SYSTEM("Unable to seek to position in dmp file");
+ 	}
+     }
+@@ -740,7 +740,7 @@ segdmp_next_feat(uint32 id,
+ 	E_FATAL_SYSTEM("Unable to read segment from dmp file");
+     }
+ 
+-    id_nxt_off[id] = ftell(fp);
++    id_nxt_off[id] = FTELL(fp);
+ 
+     feat = (vector_t **)ckd_calloc_2d(n_seg_frame, n_stream, sizeof(vector_t));
+     for (i = 0, l = 0; i < n_seg_frame; i++) {
+--- ./src/programs/printp/Makefile.am.orig	2012-12-12 07:03:39.000000000 -0700
++++ ./src/programs/printp/Makefile.am	2013-03-29 09:33:58.549553692 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/cdcn_norm/Makefile.am.orig	2012-12-12 07:01:34.000000000 -0700
++++ ./src/programs/cdcn_norm/Makefile.am	2013-03-29 09:28:30.525188258 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mk_mllr_class/Makefile.am.orig	2012-12-12 07:02:55.000000000 -0700
++++ ./src/programs/mk_mllr_class/Makefile.am	2013-03-29 09:32:14.701769147 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/norm/Makefile.am.orig	2012-12-12 07:03:29.000000000 -0700
++++ ./src/programs/norm/Makefile.am	2013-03-29 09:33:38.101597962 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mixw_interp/Makefile.am.orig	2012-12-12 07:02:40.000000000 -0700
++++ ./src/programs/mixw_interp/Makefile.am	2013-03-29 09:31:25.021832154 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/inc_comp/Makefile.am.orig	2012-12-12 07:02:02.000000000 -0700
++++ ./src/programs/inc_comp/Makefile.am	2013-03-29 09:29:45.372028481 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/prunetree/Makefile.am.orig	2012-12-12 07:03:45.000000000 -0700
++++ ./src/programs/prunetree/Makefile.am	2013-03-29 09:34:12.533523299 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/kdtree/Makefile.am.orig	2012-12-12 07:02:18.000000000 -0700
++++ ./src/programs/kdtree/Makefile.am	2013-03-29 09:30:25.021943098 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/bldtree/Makefile.am.orig	2012-12-12 07:01:21.000000000 -0700
++++ ./src/programs/bldtree/Makefile.am	2013-03-29 09:28:06.405239189 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/g2p_eval/Makefile.am.orig	2012-12-05 06:14:51.000000000 -0700
++++ ./src/programs/g2p_eval/Makefile.am	2013-03-29 09:29:22.429077685 -0600
+@@ -4,4 +4,4 @@ pkglibexec_PROGRAMS = phonetisaurus-g2p
+ phonetisaurus_g2p_SOURCES = main.cpp phonetisaurus-g2p.hpp phonetisaurus-g2p.cpp util.hpp Phonetisaurus.cpp Phonetisaurus.hpp ../g2p_train/FstPathFinder.cpp  ../g2p_train/FstPathFinder.hpp utf8.h utf8/checked.h utf8/unchecked.h utf8/core.h
+ phonetisaurus_g2p_LDADD = @OPENFST_LIBS@
+ 
+-INCLUDES = @OPENFST_CFLAGS@
++AM_CPPFLAGS = @OPENFST_CFLAGS@
+--- ./src/programs/mk_ts2cb/Makefile.am.orig	2012-12-12 07:03:08.000000000 -0700
++++ ./src/programs/mk_ts2cb/Makefile.am	2013-03-29 09:33:00.445678292 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mk_flat/Makefile.am.orig	2012-12-12 07:02:45.000000000 -0700
++++ ./src/programs/mk_flat/Makefile.am	2013-03-29 09:31:37.621823541 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/agg_seg/agg_all_seg.c.orig	2012-09-28 15:26:19.000000000 -0600
++++ ./src/programs/agg_seg/agg_all_seg.c	2013-03-29 09:25:08.848622001 -0600
+@@ -93,7 +93,7 @@ agg_all_seg(feat_t *fcb,
+     uint32 *veclen;
+     FILE *fp;
+     uint32 ignore = 0;
+-    long start;
++    OFF_T start;
+     int32 no_retries=0;
+     
+     n_stream = feat_dimension1(fcb);
+@@ -103,7 +103,7 @@ agg_all_seg(feat_t *fcb,
+ 
+     fp = open_dmp(fn);
+ 
+-    start = ftell(fp);
++    start = FTELL(fp);
+ 
+     if (s3write(&i, sizeof(uint32), 1, fp, &ignore) != 1) {
+ 	E_ERROR_SYSTEM("Unable to write to dmp file");
+@@ -171,7 +171,7 @@ agg_all_seg(feat_t *fcb,
+ 	    }
+     }
+ 
+-    if (fseek(fp, start, SEEK_SET) < 0) {
++    if (FSEEK(fp, start, SEEK_SET) < 0) {
+ 	E_ERROR_SYSTEM("Unable to seek to begin of dmp");
+ 
+ 	return S3_ERROR;
+--- ./src/programs/agg_seg/Makefile.am.orig	2012-12-12 07:01:13.000000000 -0700
++++ ./src/programs/agg_seg/Makefile.am	2013-03-29 09:27:46.765280390 -0600
+@@ -26,5 +26,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/make_quests/Makefile.am.orig	2012-12-12 07:02:29.000000000 -0700
++++ ./src/programs/make_quests/Makefile.am	2013-03-29 09:30:47.332894898 -0600
+@@ -12,4 +12,4 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+--- ./src/programs/mk_s2sendump/Makefile.am.orig	2012-12-12 07:03:03.000000000 -0700
++++ ./src/programs/mk_s2sendump/Makefile.am	2013-03-29 09:32:48.285703550 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mk_s2sendump/mk_s2sendump.c.orig	2012-09-28 15:26:19.000000000 -0600
++++ ./src/programs/mk_s2sendump/mk_s2sendump.c	2013-03-29 09:25:08.848622001 -0600
+@@ -226,7 +226,7 @@ static void pocketsphinx_senone_dump(con
+     fwrite(pshdr, sizeof(char), strlen(pshdr)+1, fpout);
+ 
+     /* Pad the header for alignment purposes */
+-    k = ftell(fpout) & 3;
++    k = FTELL(fpout) & 3;
+     if (k > 0) {
+         k = 4 - k;
+         fwrite_int32(fpout, k);
+--- ./src/programs/bw/Makefile.am.orig	2012-12-12 07:01:27.000000000 -0700
++++ ./src/programs/bw/Makefile.am	2013-03-29 09:28:17.653215480 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/delint/Makefile.am.orig	2012-12-12 07:01:52.000000000 -0700
++++ ./src/programs/delint/Makefile.am	2013-03-29 09:29:10.557103076 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mllr_transform/Makefile.am.orig	2012-12-12 07:03:19.000000000 -0700
++++ ./src/programs/mllr_transform/Makefile.am	2013-03-29 09:33:26.396623155 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/cdcn_train/Makefile.am.orig	2012-12-12 07:01:40.000000000 -0700
++++ ./src/programs/cdcn_train/Makefile.am	2013-03-29 09:28:42.917161968 -0600
+@@ -10,4 +10,4 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+--- ./src/programs/cp_parm/Makefile.am.orig	2012-12-12 07:01:47.000000000 -0700
++++ ./src/programs/cp_parm/Makefile.am	2013-03-29 09:28:55.045136168 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/param_cnt/Makefile.am.orig	2012-12-12 07:03:34.000000000 -0700
++++ ./src/programs/param_cnt/Makefile.am	2013-03-29 09:33:48.636575186 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/init_mixw/Makefile.am.orig	2012-12-12 07:02:12.000000000 -0700
++++ ./src/programs/init_mixw/Makefile.am	2013-03-29 09:30:13.140968724 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/tiestate/Makefile.am.orig	2012-12-12 07:03:51.000000000 -0700
++++ ./src/programs/tiestate/Makefile.am	2013-03-29 09:34:23.269499927 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mk_mdef_gen/Makefile.am.orig	2012-12-12 07:02:50.000000000 -0700
++++ ./src/programs/mk_mdef_gen/Makefile.am	2013-03-29 09:31:50.319808562 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/mllr_solve/Makefile.am.orig	2012-12-12 07:03:14.000000000 -0700
++++ ./src/programs/mllr_solve/Makefile.am	2013-03-29 09:33:15.957645483 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/map_adapt/Makefile.am.orig	2012-12-12 07:02:34.000000000 -0700
++++ ./src/programs/map_adapt/Makefile.am	2013-03-29 09:31:06.557853291 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/kmeans_init/Makefile.am.orig	2012-12-12 07:02:23.000000000 -0700
++++ ./src/programs/kmeans_init/Makefile.am	2013-03-29 09:30:35.140921249 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 
+--- ./src/programs/kmeans_init/main.c.orig	2012-12-08 07:54:13.000000000 -0700
++++ ./src/programs/kmeans_init/main.c	2013-03-29 09:25:08.849621999 -0600
+@@ -82,7 +82,7 @@ static uint32 l_strm = -1;
+ static float32 *obuf = NULL;
+ 
+ static uint32 multiclass;
+-static long   data_offset;
++static OFF_T  data_offset;
+ 
+ static uint32 *n_o2d = NULL;
+ static uint32 *i_o2d = NULL;
+@@ -252,7 +252,7 @@ setup_obs_1class(uint32 strm, uint32 n_f
+     assert(l == blksize);
+     assert(dmp_fp != NULL);
+ 
+-    if (fseek(dmp_fp, data_offset, SEEK_SET) < 0) {
++    if (FSEEK(dmp_fp, data_offset, SEEK_SET) < 0) {
+ 	E_ERROR_SYSTEM("Can't seek to start of data\n");
+ 
+ 	return 0;
+@@ -1362,7 +1362,7 @@ init_state(const char *obsdmp,
+ 	    return S3_ERROR;
+ 	}
+ 
+-	data_offset = ftell(dmp_fp);
++	data_offset = FTELL(dmp_fp);
+     }
+ 
+     tot_sqerr = 0;
+--- ./src/programs/g2p_train/Makefile.am.orig	2012-12-05 06:15:12.000000000 -0700
++++ ./src/programs/g2p_train/Makefile.am	2013-03-29 09:29:33.278054439 -0600
+@@ -5,4 +5,4 @@ g2p_train_SOURCES = FstPathFinder.cpp  F
+ 
+ g2p_train_LDADD = @OPENFST_LIBS@
+ 
+-INCLUDES = @OPENFST_CFLAGS@
++AM_CPPFLAGS = @OPENFST_CFLAGS@
+--- ./src/programs/init_gau/Makefile.am.orig	2012-12-12 07:02:07.000000000 -0700
++++ ./src/programs/init_gau/Makefile.am	2013-03-29 09:30:01.524993745 -0600
+@@ -10,5 +10,5 @@ LDADD = \
+ 	$(top_builddir)/src/libs/libclust/libclust.la \
+ 	$(top_builddir)/src/libs/libmllr/libmllr.la
+ 
+-INCLUDES = -I$(top_srcdir)/include
++AM_CPPFLAGS = -I$(top_srcdir)/include
+ 

@@ -1,0 +1,12 @@
+diff -up sphinxtrain-1.0.8/src/programs/mk_s2sendump/mk_s2sendump.c.bigendian sphinxtrain-1.0.8/src/programs/mk_s2sendump/mk_s2sendump.c
+--- sphinxtrain-1.0.8/src/programs/mk_s2sendump/mk_s2sendump.c.bigendian	2013-10-25 13:19:20.000000000 +0200
++++ sphinxtrain-1.0.8/src/programs/mk_s2sendump/mk_s2sendump.c	2013-10-25 13:19:40.000000000 +0200
+@@ -82,7 +82,7 @@ static char *fmtdesc[] = {
+ 
+ static void fwrite_int32 (FILE *fp, int32 val)
+ {
+-    SWAP_LE_32(val);
++    SWAP_LE_32(&val);
+     fwrite (&val, sizeof(int), 1, fp);
+ }
+ 
