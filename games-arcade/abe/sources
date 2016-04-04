@@ -1,0 +1,8 @@
+ec2206d2d64043a25300871c562cb5de  abe-1.1-aarch64.patch
+75811f34b3bb6b9296d1548b4899fedf  abe-1.1-doublefree.patch
+9a68bef24abc44a91b9e2cf5a74e8651  abe-1.1-format.patch
+54db7b1c99936f260b08b2526ed1464d  abe-1.1-format-security.patch
+7a62eefce49e70f23ac644f8b8d8002b  abe-1.1-settings.patch
+5537920e1746708e1a631d84d3500f5c  abe-1.1.tar.gz
+7f11ed32583c6680eba3f67e3acadab2  abe.appdata.xml
+e41f81ca337cbfd7251d252232347f6b  abe-icons.tar.xz

@@ -1,0 +1,11 @@
+c7d8e738044c07b8bfd655e120d01d63  0001-Add-the-missing-URI-device-path-to-the-unions.patch
+d09521c26ae76ca37bba4c64d5cfc4e2  0002-From-Pete-Batard-pete-akeo.ie.patch
+572220bca179c5b258f46339cc1c5727  0003-From-Pete-Batard-pete-akeo.ie.patch
+b53235519711cc61f18a084376737e8a  0004-From-Julian-Andres-Klode-jak-debian.org.patch
+f55d6bfd181d10a03b2c284c56afdfd3  0005-From-Ard-Biesheuvel-ard.biesheuvel-linaro.org.patch
+cb03dfb51d34767152ff77b36f63b822  0006-From-Ard-Biesheuvel-ard.biesheuvel-linaro.org.patch
+b042fc2103f84f2e1013acffb4180fa8  0007-From-Ard-Biesheuvel-ard.biesheuvel-linaro.org.patch
+a596355d911c50dea97710fd8038de1f  0008-From-Ard-Biesheuvel-ard.biesheuvel-linaro.org.patch
+fe873247639fde48e8588838392df047  0009-arm-fix-linker-script-for-building-efi-binaries.patch
+c47ab0bb5968938d927c9e290d117b83  0010-Explicitly-place-our-build-id-notes-on-all-arches.patch
+15a4bcbc18a9a5e8110ed955970622e6  gnu-efi-3.0.3.tar.bz2

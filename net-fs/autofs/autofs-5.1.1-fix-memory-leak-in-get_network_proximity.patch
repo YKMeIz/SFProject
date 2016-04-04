@@ -1,0 +1,36 @@
+autofs-5.1.1 - fix memory leak in get_network_proximity()
+
+From: Ian Kent <raven@themaw.net>
+
+Fix an obvious memory leak in the get_network_proximity() function.
+
+Signed-off-by: Ian Kent <raven@themaw.net>
+---
+ CHANGELOG        |    1 +
+ lib/parse_subs.c |    1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/CHANGELOG b/CHANGELOG
+index 49e0142..9d8096e 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -38,6 +38,7 @@
+ - fix use after free in sun parser parse_init().
+ - fix use after free in open_lookup().
+ - fix typo in autofs_sasl_bind().
++- fix memory leak in get_network_proximity().
+ 
+ 21/04/2015 autofs-5.1.1
+ =======================
+diff --git a/lib/parse_subs.c b/lib/parse_subs.c
+index 6145828..8520d11 100644
+--- a/lib/parse_subs.c
++++ b/lib/parse_subs.c
+@@ -488,6 +488,7 @@ unsigned int get_network_proximity(const char *name)
+ 			proximity = prx;
+ 		this = this->ai_next;
+ 	}
++	freeaddrinfo(ni);
+ 
+ 	return proximity;
+ }

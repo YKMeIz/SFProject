@@ -1,0 +1,105 @@
+--- joystick-1.2.15/Makefile.22	Fri Mar  2 10:55:09 2001
++++ joystick-1.2.15/Makefile	Fri Mar  2 10:55:38 2001
+@@ -29,7 +29,7 @@
+ 
+ CC		= gcc
+ 
+-CPPFLAGS	= -I.#						# for joystick.h
++CPPFLAGS	= -I.#						# for 
+ 
+ CFLAGS		= -O2 -Wall -pipe $(RPM_OPT_FLAGS)
+ # CFLAGS	= -O2 -Wall -pipe -m68020 -ffixed-a2#		# m68k
+@@ -73,7 +73,6 @@
+ 	cp joy*.o $(RPM_BUILD_ROOT)/$(MODDIR)
+ 	/sbin/depmod -a
+ 	mkdir -p $(RPM_BUILD_ROOT)/usr/include
+-	install -m 644 joystick.h $(RPM_BUILD_ROOT)/usr/include/linux
+ 	mkdir -p $(RPM_BUILD_ROOT)$(BINDIR)
+ 	install -m 755 jscal $(RPM_BUILD_ROOT)$(BINDIR)
+ 	install -m 755 jstest $(RPM_BUILD_ROOT)$(BINDIR)
+@@ -93,58 +92,58 @@
+ 	install -m 644 jstest.1 $(RPM_BUILD_ROOT)$(MANDIR)/man1
+ 	install -m 644 jsattach.1 $(RPM_BUILD_ROOT)$(MANDIR)/man1
+ 
+-joystick.o: joystick.c joystick.h
++joystick.o: joystick.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -DEXPORT_SYMTAB -c joystick.c -o joystick.o
+ 
+-joy-analog.o: joy-analog.c joy-analog.h joystick.h
++joy-analog.o: joy-analog.c joy-analog.h 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-analog.c -o joy-analog.o
+ 
+-joy-sidewinder.o: joy-sidewinder.c joystick.h
++joy-sidewinder.o: joy-sidewinder.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-sidewinder.c -o joy-sidewinder.o
+ 
+-joy-logitech.o: joy-logitech.c joystick.h
++joy-logitech.o: joy-logitech.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-logitech.c -o joy-logitech.o
+ 
+-joy-gravis.o: joy-gravis.c joystick.h
++joy-gravis.o: joy-gravis.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-gravis.c -o joy-gravis.o
+ 
+-joy-assassin.o: joy-assassin.c joy-analog.h joystick.h
++joy-assassin.o: joy-assassin.c joy-analog.h 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-assassin.c -o joy-assassin.o
+ 
+-joy-thrustmaster.o: joy-thrustmaster.c joystick.h
++joy-thrustmaster.o: joy-thrustmaster.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-thrustmaster.c -o joy-thrustmaster.o
+ 
+-joy-creative.o: joy-creative.c joystick.h
++joy-creative.o: joy-creative.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-creative.c -o joy-creative.o
+ 
+-joy-lightning.o: joy-lightning.c joy-analog.h joystick.h
++joy-lightning.o: joy-lightning.c joy-analog.h 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-lightning.c -o joy-lightning.o
+ 
+-joy-pci.o: joy-pci.c joy-analog.h joystick.h
++joy-pci.o: joy-pci.c joy-analog.h 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-pci.c -o joy-pci.o
+ 
+-joy-amiga.o: joy-amiga.c joystick.h
++joy-amiga.o: joy-amiga.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-amiga.c -o joy-amiga.o
+ 
+-joy-console.o: joy-console.c joystick.h
++joy-console.o: joy-console.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-console.c -o joy-console.o
+ 
+-joy-db9.o: joy-db9.c joystick.h
++joy-db9.o: joy-db9.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-db9.c -o joy-db9.o
+ 
+-joy-turbografx.o: joy-turbografx.c joystick.h
++joy-turbografx.o: joy-turbografx.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-turbografx.c -o joy-turbografx.o
+ 
+-joy-spaceorb.o: joy-spaceorb.c joystick.h
++joy-spaceorb.o: joy-spaceorb.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-spaceorb.c -o joy-spaceorb.o
+ 
+-joy-spaceball.o: joy-spaceball.c joystick.h
++joy-spaceball.o: joy-spaceball.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-spaceball.c -o joy-spaceball.o
+ 
+-joy-magellan.o: joy-magellan.c joystick.h
++joy-magellan.o: joy-magellan.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-magellan.c -o joy-magellan.o
+ 
+-joy-warrior.o: joy-warrior.c joystick.h
++joy-warrior.o: joy-warrior.c 
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(MODFLAGS) -c joy-warrior.c -o joy-warrior.o
+ 
+ joydump: joydump.o
+@@ -204,6 +203,6 @@
+ 	  ssh suse-ftp rm -f "joystick/devel/*" &\
+ 	)
+ 
+-jstest.o: jstest.c joystick.h
+-jscal.o: jscal.c joystick.h
++jstest.o: jstest.c 
++jscal.o: jscal.c 
+ jsattach.o: jsattach.c

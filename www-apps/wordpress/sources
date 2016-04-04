@@ -1,0 +1,11 @@
+d66a9350ebb3f0a8d612f79e0946371a  README.fedora.wordpress
+27662aab6f0eff8e35c1b6b3c2e80af0  README.fedora.wordpress-mu
+de7b15448abd2801b082b6dbbcb9961b  wordpress-4.0-config.patch
+cef9799962ea95f7a275183895c86485  wordpress-4.0-tinymce_noflash.patch
+a591273a6eb589c1d928a5f9a731a76d  wordpress-4.4-no_swfupload.patch
+3d7b3ab45abda39e97d527c98ebb9be9  wordpress-4.4-systemlibs.patch
+f6f0314f774fedd65fd23373fe5eebca  wordpress-4.5-noupdate.patch
+bebca5aab54fac11646c3da3416b1ca5  wordpress-4.5-RC1.tar.gz
+550ed1b2b5c8bd585e7bb1b548cb6215  wordpress-debian_patches_hello.patch
+094da75ebaa74b75fd43684b15aaf8b2  wordpress-httpd-conf
+af09a7e0425ad70d4330b16a892384a1  wordpress-move-wp-content.patch

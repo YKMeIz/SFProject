@@ -1,0 +1,2 @@
+#!/bin/sh
+wget -O - -q http://localhost/drupal/cron.php

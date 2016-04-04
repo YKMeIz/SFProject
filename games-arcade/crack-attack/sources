@@ -1,0 +1,10 @@
+6c42bef707937b3bede26dc83e865e74  crack-attack-1.1.14-audio.patch
+1d24a261ea6b3a2d15328c3b7d9305d0  crack-attack-1.1.14-audio-ppc.patch
+73826923d561c82d82283163b5cd14d2  crack-attack-1.1.14-format-security.patch
+b6a21f65d3579a6cf3c9e48cede0b012  crack-attack-1.1.14-gcc43.patch
+75a884a0003521099b4bb417bfe8339b  crack-attack-1.1.14-glutInit.patch
+9c00a38332bce6506d5177b8bbd0de5f  crack-attack-1.1.14-rhbz1065649.patch
+71912b5516affa52de8e3b7daeda63f3  crack-attack-1.1.14-sanitize.patch
+77bfcb38a293e87fd0d0eab05bae8177  crack-attack-1.1.14.tar.bz2
+1d82103472efd879ca7e65298ec9f8cf  crack-attack-music.tar.gz
+ba9f4ac0b0972427801f28c4f50422c8  crack-attack-sounds.tar.gz

@@ -1,0 +1,10 @@
+--- cygnal/crc.cpp~	2012-01-19 13:17:47.000000000 -0600
++++ cygnal/crc.cpp	2013-06-11 08:49:05.480706299 -0500
+@@ -41,6 +41,7 @@
+ #include <vector>
+ #include <iostream>
+ #include <fstream>
++#include <stdint.h>
+ 
+ using namespace std;
+ using namespace gnash;

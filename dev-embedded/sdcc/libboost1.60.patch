@@ -1,0 +1,17 @@
+diff --git a/src/SDCCralloc.hpp b/src/SDCCralloc.hpp
+index bf67962..1686eb7 100644
+--- a/src/SDCCralloc.hpp
++++ b/src/SDCCralloc.hpp
+@@ -51,6 +51,12 @@
+ #include <sstream>
+ #include <fstream>
+ 
++// PATCH for libboost 1.60
++#include <boost/version.hpp>
++#if BOOST_VERSION >= 106000
++   #include <boost/type_traits/ice.hpp>
++#endif
++
+ #include <boost/graph/graphviz.hpp>
+ #include <boost/graph/adjacency_matrix.hpp>
+ #include <boost/graph/connected_components.hpp>

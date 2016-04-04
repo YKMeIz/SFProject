@@ -1,0 +1,12 @@
+3b6ee39056b9ece0cd5e073a4c272b05  pm-quirks-20100619.tar.gz
+0ffc1e20b1b51095ada9bc0f5476a6f2  pm-utils-1.4.1-add-in-kernel-suspend-to-both.patch
+b6c7bac28fa5d9e043084a39ffff93ec  pm-utils-1.4.1-grub2.patch
+52ea3e3d88b506c25898f1e1f36b2454  pm-utils-1.4.1-hook-exit-code-log.patch
+24fd5791f1e1cd0ee65c0c1ef5c7360b  pm-utils-1.4.1-init-logfile-append.patch
+cf027ae7f173514de90f4e59f2fad8ed  pm-utils-1.4.1-log-line-spacing-fix.patch
+acea8d2277ac4f3c6326f0d0f28d72cf  pm-utils-1.4.1-man-fix.patch
+0762352b7bac288376afdffc707198bf  pm-utils-1.4.1-networkmanager-typo-fix.patch
+454f4e791b8402a6a894825b6237238a  pm-utils-1.4.1-nm_method.patch
+1742a556089c36c3a89eb1b957da5a60  pm-utils-1.4.1.tar.gz
+6e85e005e71708695448aa2516386f87  pm-utils-bugreport-info.sh
+26dfb91514a24ef5a5f96fa5b8a9f724  pm-utils-bugreport-info.sh.8

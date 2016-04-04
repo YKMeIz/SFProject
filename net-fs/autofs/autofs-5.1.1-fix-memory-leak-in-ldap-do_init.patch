@@ -1,0 +1,37 @@
+autofs-5.1.1 - fix memory leak in ldap do_init()
+
+From: Ian Kent <raven@themaw.net>
+
+Fix error return without free of temporory allocated storage in
+do_init().
+
+Signed-off-by: Ian Kent <raven@themaw.net>
+---
+ CHANGELOG             |    1 +
+ modules/lookup_ldap.c |    1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/CHANGELOG b/CHANGELOG
+index bb2ea30..0c467e0 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -34,6 +34,7 @@
+ - fix unbind sasl external mech.
+ - fix sasl connection concurrancy problem.
+ - fix memory leak in nisplus lookup_reinit().
++- fix memory leak in ldap do_init().
+ 
+ 21/04/2015 autofs-5.1.1
+ =======================
+diff --git a/modules/lookup_ldap.c b/modules/lookup_ldap.c
+index 959890a..45100ab 100644
+--- a/modules/lookup_ldap.c
++++ b/modules/lookup_ldap.c
+@@ -1752,6 +1752,7 @@ static int do_init(const char *mapfmt,
+ 		 */
+ 		if (!parse_server_string(LOGOPT_NONE, tmp, ctxt)) {
+ 			error(LOGOPT_ANY, MODPREFIX "cannot parse server string");
++			free(tmp);
+ 			return 1;
+ 		}
+ 		free(tmp);

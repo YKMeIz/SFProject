@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=rxvt-unicode multi-language
+Comment=A VT102 emulator for the X window system
+Exec=urxvt-ml
+Terminal=false
+Type=Application
+Icon=utilities-terminal
+Categories=System;TerminalEmulator;
+StartupWMClass=URxvt

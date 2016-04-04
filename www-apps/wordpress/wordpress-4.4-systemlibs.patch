@@ -1,0 +1,20 @@
+--- wordpress/wp-admin/includes/media.php.orig	2015-12-09 17:01:52.453306607 +0100
++++ wordpress/wp-admin/includes/media.php	2015-12-09 17:05:31.477379833 +0100
+@@ -2989,7 +2989,7 @@ function wp_read_video_metadata( $file )
+ 	}
+ 
+ 	if ( ! class_exists( 'getID3', false ) ) {
+-		require( ABSPATH . WPINC . '/ID3/getid3.php' );
++		require( '/usr/share/php/getid3/getid3.php' );
+ 	}
+ 	$id3 = new getID3();
+ 	$data = $id3->analyze( $file );
+@@ -3050,7 +3050,7 @@ function wp_read_audio_metadata( $file )
+ 	}
+ 
+ 	if ( ! class_exists( 'getID3', false ) ) {
+-		require( ABSPATH . WPINC . '/ID3/getid3.php' );
++		require( '/usr/share/php/getid3/getid3.php' );
+ 	}
+ 	$id3 = new getID3();
+ 	$data = $id3->analyze( $file );

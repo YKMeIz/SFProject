@@ -1,0 +1,108 @@
+diff -up wordpress/wp-admin/includes/admin-filters.php.orig wordpress/wp-admin/includes/admin-filters.php
+--- wordpress/wp-admin/includes/admin-filters.php.orig	2015-10-15 00:35:24.000000000 +0200
++++ wordpress/wp-admin/includes/admin-filters.php	2015-12-09 17:08:00.945112230 +0100
+@@ -100,7 +100,6 @@ add_action( 'profile_update', 'default_p
+ add_action( 'admin_init', 'wp_plugin_update_rows' );
+ add_action( 'admin_init', 'wp_theme_update_rows'  );
+ 
+-add_action( 'admin_notices', 'update_nag',      3  );
+ add_action( 'admin_notices', 'maintenance_nag', 10 );
+ 
+ add_filter( 'update_footer', 'core_update_footer' );
+diff -up wordpress/wp-admin/includes/class-wp-upgrader.php.orig wordpress/wp-admin/includes/class-wp-upgrader.php
+--- wordpress/wp-admin/includes/class-wp-upgrader.php.orig	2015-11-16 03:47:25.000000000 +0100
++++ wordpress/wp-admin/includes/class-wp-upgrader.php	2015-12-09 17:09:34.735571806 +0100
+@@ -2465,6 +2465,9 @@ class Core_Upgrader extends WP_Upgrader
+ 			}
+ 		}
+ 
++		// RPM: nether allow core update
++		return false;
++
+ 		// 1: If we're already on that version, not much point in updating?
+ 		if ( $offered_ver == $wp_version )
+ 			return false;
+@@ -2706,7 +2709,7 @@ class WP_Automatic_Updater {
+ 	 */
+ 	public function is_disabled() {
+ 		// Background updates are disabled if you don't want file changes.
+-		if ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS )
++		if ( !defined( 'DISALLOW_FILE_MODS' ) || DISALLOW_FILE_MODS )
+ 			return true;
+ 
+ 		if ( wp_installing() )
+diff -up wordpress/wp-admin/includes/update.php.orig wordpress/wp-admin/includes/update.php
+--- wordpress/wp-admin/includes/update.php.orig	2015-12-09 17:08:00.946112235 +0100
++++ wordpress/wp-admin/includes/update.php	2015-12-09 17:10:27.642831054 +0100
+@@ -251,7 +251,7 @@ function update_right_now_message() {
+ 		$cur = get_preferred_from_update_core();
+ 
+ 		if ( isset( $cur->response ) && $cur->response == 'upgrade' )
+-			$msg .= '<a href="' . network_admin_url( 'update-core.php' ) . '" class="button" aria-describedby="wp-version">' . sprintf( __( 'Update to %s' ), $cur->current ? $cur->current : __( 'Latest' ) ) . '</a> ';
++			$msg .= '';
+ 	}
+ 
+ 	/* translators: 1: version number, 2: theme name */
+diff -up wordpress/wp-includes/capabilities.php.orig wordpress/wp-includes/capabilities.php
+--- wordpress/wp-includes/capabilities.php.orig	2015-11-29 03:27:18.000000000 +0100
++++ wordpress/wp-includes/capabilities.php	2015-12-09 17:08:00.946112235 +0100
+@@ -310,7 +310,7 @@ function map_meta_cap( $cap, $user_id )
+ 		// Disallow the file editors.
+ 		if ( defined( 'DISALLOW_FILE_EDIT' ) && DISALLOW_FILE_EDIT )
+ 			$caps[] = 'do_not_allow';
+-		elseif ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS )
++		elseif ( !defined( 'DISALLOW_FILE_MODS' ) || DISALLOW_FILE_MODS )
+ 			$caps[] = 'do_not_allow';
+ 		elseif ( is_multisite() && ! is_super_admin( $user_id ) )
+ 			$caps[] = 'do_not_allow';
+@@ -328,7 +328,7 @@ function map_meta_cap( $cap, $user_id )
+ 	case 'update_core':
+ 		// Disallow anything that creates, deletes, or updates core, plugin, or theme files.
+ 		// Files in uploads are excepted.
+-		if ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) {
++		if ( !defined( 'DISALLOW_FILE_MODS' ) || DISALLOW_FILE_MODS ) {
+ 			$caps[] = 'do_not_allow';
+ 		} elseif ( is_multisite() && ! is_super_admin( $user_id ) ) {
+ 			$caps[] = 'do_not_allow';
+diff -up wordpress/wp-includes/update.php.orig wordpress/wp-includes/update.php
+--- wordpress/wp-includes/update.php.orig	2015-12-06 16:44:27.000000000 +0100
++++ wordpress/wp-includes/update.php	2015-12-09 17:12:09.038327895 +0100
+@@ -653,9 +653,6 @@ function _maybe_update_themes() {
+  * @since 3.1.0
+  */
+ function wp_schedule_update_checks() {
+-	if ( ! wp_next_scheduled( 'wp_version_check' ) && ! wp_installing() )
+-		wp_schedule_event(time(), 'twicedaily', 'wp_version_check');
+-
+ 	if ( ! wp_next_scheduled( 'wp_update_plugins' ) && ! wp_installing() )
+ 		wp_schedule_event(time(), 'twicedaily', 'wp_update_plugins');
+ 
+@@ -683,8 +680,6 @@ if ( ( ! is_main_site() && ! is_network_
+ }
+ 
+ add_action( 'admin_init', '_maybe_update_core' );
+-add_action( 'wp_version_check', 'wp_version_check' );
+-add_action( 'upgrader_process_complete', 'wp_version_check', 10, 0 );
+ 
+ add_action( 'load-plugins.php', 'wp_update_plugins' );
+ add_action( 'load-update.php', 'wp_update_plugins' );
+--- wordpress/wp-admin/includes/translation-install.php.orig	2016-03-25 14:48:58.616147092 +0100
++++ wordpress/wp-admin/includes/translation-install.php	2016-03-25 14:50:43.841612441 +0100
+@@ -181,7 +181,7 @@ function wp_download_language_pack( $dow
+ 		return $download;
+ 	}
+ 
+-	if ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) {
++	if ( !defined( 'DISALLOW_FILE_MODS' ) || DISALLOW_FILE_MODS ) {
+ 		return false;
+ 	}
+ 
+@@ -224,7 +224,7 @@ function wp_download_language_pack( $dow
+  * @return bool Returns true on success, false on failure.
+  */
+ function wp_can_install_language_pack() {
+-	if ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) {
++	if ( !defined( 'DISALLOW_FILE_MODS' ) || DISALLOW_FILE_MODS ) {
+ 		return false;
+ 	}
+ 

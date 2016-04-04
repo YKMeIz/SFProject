@@ -1,0 +1,55 @@
+diff --git a/support/sdbinutils/include/objalloc.h b/support/sdbinutils/include/objalloc.h
+index 36772d1..5285766 100644
+--- a/support/sdbinutils/include/objalloc.h
++++ b/support/sdbinutils/include/objalloc.h
+@@ -1,5 +1,5 @@
+ /* objalloc.h -- routines to allocate memory for objects
+-   Copyright 1997, 2001 Free Software Foundation, Inc.
++   Copyright 1997-2012 Free Software Foundation, Inc.
+    Written by Ian Lance Taylor, Cygnus Solutions.
+ 
+ This program is free software; you can redistribute it and/or modify it
+@@ -91,7 +91,7 @@ extern void *_objalloc_alloc (struct objalloc *, unsigned long);
+      if (__len == 0)							\
+        __len = 1;							\
+      __len = (__len + OBJALLOC_ALIGN - 1) &~ (OBJALLOC_ALIGN - 1);	\
+-     (__len <= __o->current_space					\
++     (__len != 0 && __len <= __o->current_space				\
+       ? (__o->current_ptr += __len,					\
+ 	 __o->current_space -= __len,					\
+ 	 (void *) (__o->current_ptr - __len))				\
+diff --git a/support/sdbinutils/libiberty/objalloc.c b/support/sdbinutils/libiberty/objalloc.c
+index 3ddac2c..72e92d2 100644
+--- a/support/sdbinutils/libiberty/objalloc.c
++++ b/support/sdbinutils/libiberty/objalloc.c
+@@ -1,5 +1,5 @@
+ /* objalloc.c -- routines to allocate memory for objects
+-   Copyright 1997 Free Software Foundation, Inc.
++   Copyright 1997-2012 Free Software Foundation, Inc.
+    Written by Ian Lance Taylor, Cygnus Solutions.
+ 
+ This program is free software; you can redistribute it and/or modify it
+@@ -112,8 +112,10 @@ objalloc_create (void)
+ /* Allocate space from an objalloc structure.  */
+ 
+ PTR
+-_objalloc_alloc (struct objalloc *o, unsigned long len)
++_objalloc_alloc (struct objalloc *o, unsigned long original_len)
+ {
++  unsigned long len = original_len;
++
+   /* We avoid confusion from zero sized objects by always allocating
+      at least 1 byte.  */
+   if (len == 0)
+@@ -121,6 +123,11 @@ _objalloc_alloc (struct objalloc *o, unsigned long len)
+ 
+   len = (len + OBJALLOC_ALIGN - 1) &~ (OBJALLOC_ALIGN - 1);
+ 
++  /* Check for overflow in the alignment operation above and the
++     malloc argument below. */
++  if (len + CHUNK_HEADER_SIZE < original_len)
++    return NULL;
++
+   if (len <= o->current_space)
+     {
+       o->current_ptr += len;

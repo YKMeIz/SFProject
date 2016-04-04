@@ -1,0 +1,37 @@
+autofs-5.1.1 - fix use after free in sun parser parse_init()
+
+From: Ian Kent <raven@themaw.net>
+
+Change to free context in function it was allocated (parse_init) on
+error to avoid use after free.
+
+Signed-off-by: Ian Kent <raven@themaw.net>
+---
+ CHANGELOG           |    1 +
+ modules/parse_sun.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CHANGELOG b/CHANGELOG
+index 0c467e0..76e0a27 100644
+--- a/CHANGELOG
++++ b/CHANGELOG
+@@ -35,6 +35,7 @@
+ - fix sasl connection concurrancy problem.
+ - fix memory leak in nisplus lookup_reinit().
+ - fix memory leak in ldap do_init().
++- fix use after free in sun parser parse_init().
+ 
+ 21/04/2015 autofs-5.1.1
+ =======================
+diff --git a/modules/parse_sun.c b/modules/parse_sun.c
+index a164fba..a9689f0 100644
+--- a/modules/parse_sun.c
++++ b/modules/parse_sun.c
+@@ -345,7 +345,6 @@ static int do_init(int argc, const char *const *argv, struct parse_context *ctxt
+ 			}
+ 			if (!noptstr) {
+ 				char *estr = strerror_r(errno, buf, MAX_ERR_BUF);
+-				kill_context(ctxt);
+ 				logerr(MODPREFIX "%s", estr);
+ 				return 1;
+ 			}

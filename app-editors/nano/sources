@@ -1,0 +1,4 @@
+06842e28ca6675372cb7007a384aecbf  0002-use-futimens-if-available-instead-of-utime.patch
+8775c930446e06e49fa44bbfdf12eca3  nano-2.3.3-warnings.patch
+a04d77611422ab4b6a7b489650c7a793  nano-2.5.3.tar.gz
+7ece1550a5c35375c4966d405b3ba67a  nanorc

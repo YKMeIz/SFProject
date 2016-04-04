@@ -1,0 +1,199 @@
+--- barry-0.18.4/tools/btool.cc.orig	2016-01-28 22:36:10.425241414 +0000
++++ barry-0.18.4/tools/btool.cc	2016-01-28 22:36:12.025244900 +0000
+@@ -51,7 +51,6 @@
+ #include <string>
+ #include <algorithm>
+ #include <stdlib.h>
+-#include <tr1/memory>
+ #include "i18n.h"
+ #include "util.h"
+ #include "boostwrap.h"
+@@ -59,7 +58,6 @@
+ #include "barrygetopt.h"
+ 
+ using namespace std;
+-using namespace std::tr1;
+ using namespace Barry;
+ 
+ std::map<std::string, std::string> SortKeys;
+--- barry-0.18.4/tools/bio.cc.orig	2016-01-28 23:00:41.545875679 +0000
++++ barry-0.18.4/tools/bio.cc	2016-01-28 23:00:43.921882060 +0000
+@@ -34,7 +34,6 @@
+ #include <vector>
+ #include <algorithm>
+ #include <stdexcept>
+-#include <tr1/memory>
+ #include <strings.h>
+ #include <unistd.h>
+ 
+@@ -42,7 +41,6 @@
+ #include "i18n.h"
+ 
+ using namespace std;
+-using namespace std::tr1;
+ using namespace Barry;
+ 
+ // keeping a record of all the -i device / -o device pin numbers, so
+--- barry-0.18.4/src/usbwrap.h.orig	2016-01-28 23:17:56.285616559 +0000
++++ barry-0.18.4/src/usbwrap.h	2016-01-28 23:17:58.659622739 +0000
+@@ -27,7 +27,6 @@
+ #include "dll.h"
+ 
+ #include <memory>
+-#include <tr1/memory>
+ #include <vector>
+ #include <map>
+ #include "error.h"
+@@ -82,7 +81,7 @@
+ class BXEXPORT DeviceID
+ {
+ public:
+-	std::tr1::shared_ptr<DeviceIDImpl> m_impl;
++	std::shared_ptr<DeviceIDImpl> m_impl;
+ public:
+ 	// Takes ownership of impl
+ 	DeviceID(DeviceIDImpl* impl = NULL);
+@@ -146,7 +145,7 @@
+ 		InvalidType = 0xff
+ 	};
+ private:
+-	const std::auto_ptr<EndpointDescriptorImpl> m_impl;
++	const std::unique_ptr<EndpointDescriptorImpl> m_impl;
+ 	bool m_read;
+ 	uint8_t m_addr;
+ 	EpType m_type;
+@@ -173,7 +172,7 @@
+ public:
+ 	typedef std::vector<EndpointDescriptor*> base_type;
+ private:
+-	const std::auto_ptr<InterfaceDescriptorImpl> m_impl;
++	const std::unique_ptr<InterfaceDescriptorImpl> m_impl;
+ private:
+ 	InterfaceDescriptor(const InterfaceDescriptor& rhs); // Prevent copying
+ public:
+@@ -199,7 +198,7 @@
+ public:
+ 	typedef std::map<int, InterfaceDescriptor*> base_type;
+ private:
+-	const std::auto_ptr<ConfigDescriptorImpl> m_impl;
++	const std::unique_ptr<ConfigDescriptorImpl> m_impl;
+ private:
+ 	ConfigDescriptor(const ConfigDescriptor& rhs); // Prevent copying
+ public:
+@@ -221,7 +220,7 @@
+ public:
+ 	typedef std::map<int, ConfigDescriptor*> base_type;
+ private:
+-	const std::auto_ptr<DeviceDescriptorImpl> m_impl;
++	const std::unique_ptr<DeviceDescriptorImpl> m_impl;
+ private:
+ 	DeviceDescriptor(const DeviceDescriptor& rhs); // Prevent copying
+ public:
+@@ -237,7 +236,7 @@
+ {
+ private:
+ 	// Private implementation structure
+-	const std::auto_ptr<DeviceListImpl> m_impl;
++	const std::unique_ptr<DeviceListImpl> m_impl;
+ private:
+ 	DeviceList(const DeviceList& rhs); // Prevent copying
+ public:
+@@ -255,7 +254,7 @@
+ {
+ private:
+ 	Usb::DeviceID m_id;
+-	const std::auto_ptr<Usb::DeviceHandle> m_handle;
++	const std::unique_ptr<Usb::DeviceHandle> m_handle;
+ 
+ 	int m_timeout;
+ 	int m_lasterror;
+--- barry-0.18.4/src/socket.h.orig	2016-01-28 23:20:46.844060604 +0000
++++ barry-0.18.4/src/socket.h	2016-01-28 23:20:38.710039428 +0000
+@@ -42,7 +42,7 @@
+ 
+ class SocketBase;
+ class Socket;
+-typedef std::auto_ptr<SocketBase>	SocketHandle;
++typedef std::unique_ptr<SocketBase>	SocketHandle;
+ 
+ class BXEXPORT SocketZero
+ {
+@@ -202,7 +202,7 @@
+ 	bool m_registered;
+ 
+ 	// buffer data
+-	std::auto_ptr<Data> m_sequence;
++	std::unique_ptr<Data> m_sequence;
+ 
+ protected:
+ 	void ForceClosed();
+--- barry-0.18.4/opensync-plugin/src/environment.h.orig	2016-01-29 00:18:43.620316307 +0000
++++ barry-0.18.4/opensync-plugin/src/environment.h	2016-01-29 00:18:45.483320943 +0000
+@@ -88,7 +88,7 @@
+ 	bool m_DebugMode;
+ 
+ 	// device communication
+-	std::auto_ptr<Barry::DesktopConnector> m_con;
++	std::unique_ptr<Barry::DesktopConnector> m_con;
+ 
+ 	// sync data
+ 	DatabaseSyncState m_CalendarSync, m_ContactsSync;
+--- barry-0.18.4/src/ldifio.h.orig	2016-01-29 00:33:31.928533147 +0000
++++ barry-0.18.4/src/ldifio.h	2016-01-29 00:33:40.394555098 +0000
+@@ -49,8 +49,8 @@
+ ///
+ class BXEXPORT LdifStore
+ {
+-	std::auto_ptr<std::ifstream> m_ifs;
+-	std::auto_ptr<std::ofstream> m_ofs;
++	std::unique_ptr<std::ifstream> m_ifs;
++	std::unique_ptr<std::ofstream> m_ofs;
+ 	std::istream &m_is;
+ 	std::ostream &m_os;
+ 	bool m_end_of_file;
+--- barry-0.18.4/src/controller.h.orig	2016-01-29 00:51:50.210391670 +0000
++++ barry-0.18.4/src/controller.h	2016-01-29 00:50:39.227205391 +0000
+@@ -92,7 +92,7 @@
+ 	};
+ 
+ private:
+-	const std::auto_ptr<PrivateControllerData> m_priv;
++	const std::unique_ptr<PrivateControllerData> m_priv;
+ 
+ private:
+ 	Controller(const Controller& rhs); // prevent copying
+--- barry-0.18.4/src/iconv.h.orig	2016-01-29 00:52:18.395465635 +0000
++++ barry-0.18.4/src/iconv.h	2016-01-29 00:52:28.506492170 +0000
+@@ -42,7 +42,7 @@
+ {
+ 	friend class IConverter;
+ 
+-	std::auto_ptr<IConvHandlePrivate> m_priv;
++	std::unique_ptr<IConvHandlePrivate> m_priv;
+ 
+ 	bool m_throw_on_conv_err;
+ 
+--- barry-0.18.4/src/connector.h.orig	2016-01-29 00:52:41.099525217 +0000
++++ barry-0.18.4/src/connector.h	2016-01-29 00:52:48.420544429 +0000
+@@ -134,8 +134,8 @@
+ class BXEXPORT DesktopConnector : public Connector
+ {
+ 	Barry::SocketRoutingQueue *m_router;
+-	std::auto_ptr<Barry::Controller> m_con;
+-	std::auto_ptr<Mode::Desktop> m_desktop;
++	std::unique_ptr<Barry::Controller> m_con;
++	std::unique_ptr<Mode::Desktop> m_desktop;
+ 	int m_connect_timeout;
+ 
+ protected:
+--- barry-0.18.4/src/j_server.h.orig	2016-01-29 00:53:09.069598618 +0000
++++ barry-0.18.4/src/j_server.h	2016-01-29 00:53:16.178617275 +0000
+@@ -58,7 +58,7 @@
+ 	JDWAppList appList;								// List of BlackBerry application (an application contents several COD files)
+ 	Barry::JDG::ClassList visibleClassList;		// Visible class list from JDB
+ 
+-	std::auto_ptr<Thread> handler;
++	std::unique_ptr<Thread> handler;
+ 	ConsoleCallbackType printConsoleMessage;
+ 
+ 	void CommandsetProcess(Barry::Data &cmd);

@@ -1,0 +1,5 @@
+2d00ae5e4c7431f93945d0be232fdab5  binutils-2.25-bfd.patch
+5c940f0d5fe3bf7cc72c7a0f64d7a5ab  libboost1.60.patch
+ae14999c86f45d8e9ff2919893922052  README.fedora
+40ac3e0ed7033016dc83656e638bdfa7  sdcc-3.5.0-libiberty.patch
+e0a1df72747c481cdedbbd328b0fceae  sdcc-src-3.5.0.tar.bz2

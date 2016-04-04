@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Xedit
+GenericName=Text Editor
+Comment=Simple text editor for X
+Exec=xedit %f
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
