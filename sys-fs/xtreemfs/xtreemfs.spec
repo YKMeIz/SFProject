@@ -1,12 +1,11 @@
 Name:           xtreemfs
 Version:        1.5.1
-Release:        1%{?dist}
-License:        BSD-3-Clause
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Release:        2%{?dist}
+License:        BSD
 Group:          System/Filesystems
 URL:            http://www.XtreemFS.org
 Summary:        XtreemFS base package
-Source0:        www.xtreemfs.org/downloads/XtreemFS-%{version}.tar.gz
+Source0:        http://www.xtreemfs.org/downloads/XtreemFS-%{version}.tar.gz
 
 BuildRequires:  ant >= 1.6.5
 BuildRequires:  java-devel >= 1.6.0
@@ -75,33 +74,33 @@ This package contains XtreemFS administration tools.
 
 %build
 export ANT_OPTS=-D"file.encoding=UTF-8"
-export CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+export CFLAGS="%{optflags} -fno-strict-aliasing"
 export CXXFLAGS=$CFLAGS
 
-make %{?jobs:-j%jobs}
+make %{?_smp_mflags}
 
 %install
 export NO_BRP_CHECK_BYTECODE_VERSION=true
 
-make install DESTDIR=$RPM_BUILD_ROOT
-ln -sf /usr/bin/mount.xtreemfs ${RPM_BUILD_ROOT}/sbin/mount.xtreemfs
-ln -sf /usr/bin/umount.xtreemfs ${RPM_BUILD_ROOT}/sbin/umount.xtreemfs
+make install DESTDIR=%{buildroot}
+ln -sf /usr/bin/mount.xtreemfs %{buildroot}/sbin/mount.xtreemfs
+ln -sf /usr/bin/umount.xtreemfs %{buildroot}/sbin/umount.xtreemfs
 
 # add /etc/xos/xtreemfs/truststore/certs/ folder used for storing certificates
-mkdir -p $RPM_BUILD_ROOT/etc/xos/xtreemfs/truststore/certs/
+mkdir -p %{buildroot}/etc/xos/xtreemfs/truststore/certs/
 
 # Create log directory.
-mkdir -p $RPM_BUILD_ROOT/var/log/xtreemfs
+mkdir -p %{buildroot}/var/log/xtreemfs
 
 # remove copyright notes (let rpm handle that)
-rm $RPM_BUILD_ROOT/usr/share/doc/xtreemfs-client/LICENSE
-rmdir $RPM_BUILD_ROOT/usr/share/doc/xtreemfs-client
-rm $RPM_BUILD_ROOT/usr/share/doc/xtreemfs-server/LICENSE
-rmdir $RPM_BUILD_ROOT/usr/share/doc/xtreemfs-server
-rm $RPM_BUILD_ROOT/usr/share/doc/xtreemfs-tools/LICENSE
-rmdir $RPM_BUILD_ROOT/usr/share/doc/xtreemfs-tools
+rm %{buildroot}/usr/share/doc/xtreemfs-client/LICENSE
+rmdir %{buildroot}/usr/share/doc/xtreemfs-client
+rm %{buildroot}/usr/share/doc/xtreemfs-server/LICENSE
+rmdir %{buildroot}/usr/share/doc/xtreemfs-server
+rm %{buildroot}/usr/share/doc/xtreemfs-tools/LICENSE
+rmdir %{buildroot}/usr/share/doc/xtreemfs-tools
 
-rm $RPM_BUILD_ROOT/etc/xos/xtreemfs/postinstall_setup.sh
+rm %{buildroot}/etc/xos/xtreemfs/postinstall_setup.sh
 
 %pre server
 /usr/sbin/groupadd xtreemfs 2>/dev/null || :
@@ -214,7 +213,7 @@ fi
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files client
 %defattr(-,root,root,-)
@@ -227,16 +226,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files backend
 %defattr(-,root,root,-)
-/usr/share/java/XtreemFS.jar
-/usr/share/java/Foundation.jar
-/usr/share/java/protobuf-java-2.5.0.jar
-/usr/share/java/Flease.jar
-/usr/share/java/BabuDB.jar
-/usr/share/java/BabuDB_replication_plugin.jar
-/usr/share/java/jdmkrt.jar
-/usr/share/java/jdmktk.jar
-/usr/share/java/commons-codec-1.3.jar
-%doc LICENSE
+%{_javadir}/XtreemFS.jar
+%{_javadir}/Foundation.jar
+%{_javadir}/protobuf-java-2.5.0.jar
+%{_javadir}/Flease.jar
+%{_javadir}/BabuDB.jar
+%{_javadir}/BabuDB_replication_plugin.jar
+%{_javadir}/jdmkrt.jar
+%{_javadir}/jdmktk.jar
+%{_javadir}/commons-codec-1.3.jar
+%license LICENSE
 
 %files server
 %defattr(-,root,xtreemfs,-)
@@ -253,15 +252,18 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %attr(0640,root,xtreemfs) /etc/xos/xtreemfs/server-repl-plugin/dir.properties
 %config(noreplace) %attr(0640,root,xtreemfs) /etc/xos/xtreemfs/server-repl-plugin/mrc.properties
 %dir %attr(0750,xtreemfs,xtreemfs) /var/log/xtreemfs
-%doc LICENSE
+%license LICENSE
 
 %files tools
 %defattr(-,root,root,-)
 %config(noreplace) /etc/xos/xtreemfs/default_dir
 /usr/bin/xtfs_*
 /usr/share/man/man1/xtfs_*
-%doc LICENSE
+%license LICENSE
 
 %changelog
-* Sun Apr 3 2016 Neil Ge <neilgechn@gmail.com> - 1.5.1-1
+* Tue Apr 5 2016 Neil Ge <neil@gyz.io> - 1.5.1-2
+- Fix spec file macros.
+
+* Sun Apr 3 2016 Neil Ge <neil@gyz.io> - 1.5.1-1
 - New package.
