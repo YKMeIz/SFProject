@@ -6,7 +6,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Group:          System/Filesystems
 URL:            http://www.XtreemFS.org
 Summary:        XtreemFS base package
-Source0:        XtreemFS-%{version}.tar.gz
+Source0:        www.xtreemfs.org/downloads/XtreemFS-%{version}.tar.gz
 
 BuildRequires:  ant >= 1.6.5
 BuildRequires:  java-devel >= 1.6.0
