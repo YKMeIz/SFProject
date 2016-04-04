@@ -1,0 +1,57 @@
+#
+# Fedora Drupal 8 RPM macros and scriptlets
+#
+# Copyright (c) 2013-2016 Shawn Iwinski <shawn@iwin.ski>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+%drupal8_core_version  __DRUPAL8_CORE_VERSION__
+%drupal8_php_min_ver   __DRUPAL8_PHP_MIN_VER__
+
+%drupal8               __DRUPAL8__
+%drupal8_modules       %{drupal8}/modules/rpm
+%drupal8_profiles      %{drupal8}/profiles/rpm
+%drupal8_themes        %{drupal8}/themes/rpm
+%drupal8_libraries     %{drupal8}/libraries
+
+%drupal8_var           __DRUPAL8_VAR__
+%drupal8_conf          __DRUPAL8_CONF__
+
+%drupal8_name          drupal8-%{drupal8_project}
+
+%drupal8_release       %{?drupal8_pre_release:.%{drupal8_pre_release}}%{?drupal8_commit:.%{?drupal8_commit_date}git%(c=%{drupal8_commit}; echo ${c:0:7})}%{?dist}
+
+%drupal8_url           https://www.drupal.org/project/%{drupal8_project}
+
+%drupal8_source        %{!?drupal8_commit:https://ftp.drupal.org/files/projects/%{drupal8_project}-8.x-%{?version}%{?drupal8_pre_release:-%{drupal8_pre_release}}.tar.gz}%{?drupal8_commit:%{drupal8_project}-8.x-%{?version}-%{drupal8_commit}.tar.gz}
+
+%drupal8_files         .rpm/files.txt
+
+%drupal8_prep() \
+%setup -qn %{drupal8_project} \
+%{_rpmconfigdir}/drupal8-prep-licenses-and-docs.sh
+
+%drupal8_install() \
+%define drupal8_type_dir %{expand:%%{drupal8_%{drupal8_type}s}} \
+mkdir -p %{buildroot}%{drupal8_type_dir}/%{drupal8_project} \
+cp -pr * %{buildroot}%{drupal8_type_dir}/%{drupal8_project}/ \
+cp .rpm/licenses-and-docs.txt .rpm/files.txt \
+echo "%{drupal8_type_dir}/%{drupal8_project}" >> .rpm/files.txt \
+cat .rpm/files.txt
