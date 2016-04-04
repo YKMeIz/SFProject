@@ -8,7 +8,7 @@ Group:		Applications/Internet
 License:	LGPLv2+
 URL:		http://midori-browser.org/
 
-Source0:        midori_%{version}_all_.tar.bz2
+Source0:        http://midori-browser.org/downloads/midori_%{version}_all_.tar.bz2
 
 # Disable sslv3
 Patch0:         midori-0.5.9-disable-sslv3.patch
